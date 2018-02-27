@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "687415393631",
+    "firebase_url": "https://workoutpal-6c197.firebaseio.com",
+    "project_id": "workoutpal-6c197",
+    "storage_bucket": "workoutpal-6c197.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687415393631:android:b3debf73f9e5580f",
+        "android_client_info": {
+          "package_name": "com.suzanneaitchison.workoutpal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "687415393631-lo0g5stiaf5t20rf2fjrmr2ndb4rndcg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.suzanneaitchison.workoutpal",
+            "certificate_hash": "bbfae7fdd7ee331c1c4a7ab7b0a1621864f562d7"
+          }
+        },
+        {
+          "client_id": "687415393631-8r4mv0hh9cki5r76ac8ioiclh50l6sf1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAj73RyyfjpvFdqvBZO7xbWrzSHjNzd4YQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687415393631-8r4mv0hh9cki5r76ac8ioiclh50l6sf1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
