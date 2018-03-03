@@ -1,4 +1,4 @@
-package com.suzanneaitchison.workoutpal.data;
+package com.suzanneaitchison.workoutpal.models;
 
 /**
  * Created by suzanne on 03/03/2018.
