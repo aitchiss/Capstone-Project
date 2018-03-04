@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         ButterKnife.bind(this);
+//        TODO - only want to do a full immediate sync if it's their first use of the app - move to new user block
         ExerciseSyncUtils.startImmediateSync(this);
 
 

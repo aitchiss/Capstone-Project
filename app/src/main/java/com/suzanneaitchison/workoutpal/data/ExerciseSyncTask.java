@@ -3,6 +3,11 @@ package com.suzanneaitchison.workoutpal.data;
 import android.content.Context;
 import android.util.Log;
 
+import com.suzanneaitchison.workoutpal.models.Exercise;
+import com.suzanneaitchison.workoutpal.utils.ExerciseJsonUtils;
+
+import org.json.JSONException;
+
 import java.io.IOException;
 
 /**
@@ -17,6 +22,20 @@ public class ExerciseSyncTask {
         try {
             result = dataFetcher.fetchLatestApiData(context);
             Log.d("results", result);
+            try {
+                Exercise[] exercises = ExerciseJsonUtils.convertJsonToExercises(result);
+                for (Exercise exercise : exercises){
+                    String exerciseImageDetail = dataFetcher.fetchExerciseImage(context, exercise.getId());
+                    ExerciseJsonUtils.updateExerciseWithImage(exercise, exerciseImageDetail);
+                    if (exercise.getImageURL() != null){
+                        Log.d("exercise image", exercise.getImageURL());
+                    }
+
+                }
+            } catch (JSONException e){
+                e.printStackTrace();
+            }
+
 //            todo - do something with the result - e.g. delete old exercise data and add the new
         } catch (IOException e){
             e.printStackTrace();

@@ -12,43 +12,43 @@ public class Exercise {
     private String mImageURL;
     private String[] mMuscleGroups;
 
-    public int getmId() {
+    public int getId() {
         return mId;
     }
 
-    public void setmId(int mId) {
+    public void setId(int mId) {
         this.mId = mId;
     }
 
-    public String getmName() {
+    public String getName() {
         return mName;
     }
 
-    public void setmName(String mName) {
+    public void setName(String mName) {
         this.mName = mName;
     }
 
-    public String getmDescription() {
+    public String getDescription() {
         return mDescription;
     }
 
-    public void setmDescription(String mDescription) {
+    public void setDescription(String mDescription) {
         this.mDescription = mDescription;
     }
 
-    public String getmImageURL() {
+    public String getImageURL() {
         return mImageURL;
     }
 
-    public void setmImageURL(String mImageURL) {
+    public void setImageURL(String mImageURL) {
         this.mImageURL = mImageURL;
     }
 
-    public String[] getmMuscleGroups() {
+    public String[] getMuscleGroups() {
         return mMuscleGroups;
     }
 
-    public void setmMuscleGroups(String[] mMuscleGroups) {
+    public void setMuscleGroups(String[] mMuscleGroups) {
         this.mMuscleGroups = mMuscleGroups;
     }
 }
