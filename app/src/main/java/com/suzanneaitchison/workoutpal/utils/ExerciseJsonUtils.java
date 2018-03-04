@@ -54,4 +54,13 @@ public class ExerciseJsonUtils {
         exercise.setExerciseCategory(categoryObject.getString("name"));
         return exercise;
     }
+
+    public static boolean isAnotherPage(String jsonString) throws JSONException{
+        JSONObject jsonDetail = new JSONObject(jsonString);
+        String next = jsonDetail.getString("next");
+        if(next.equals("null") || next.equals("") || next == null){
+            return false;
+        }
+        return true;
+    }
 }

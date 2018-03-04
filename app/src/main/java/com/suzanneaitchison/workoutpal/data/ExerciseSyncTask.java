@@ -13,6 +13,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by suzanne on 04/03/2018.
@@ -22,39 +24,58 @@ public class ExerciseSyncTask {
 
 
     synchronized public static void syncExercises(Context context) {
+        int pageNumber = 1;
+        boolean continueLoading = true;
         ExerciseDataFetcher dataFetcher = new ExerciseDataFetcher();
-        String result = "";
-        try {
-            result = dataFetcher.fetchLatestApiData(context);
-            try {
-                Exercise[] exercises = ExerciseJsonUtils.convertJsonToExercises(result);
-                for (Exercise exercise : exercises) {
-                    String exerciseImageDetail = dataFetcher.fetchExerciseImage(context, exercise.getId());
-                    ExerciseJsonUtils.updateExerciseWithImage(exercise, exerciseImageDetail);
-                    String exerciseCategoryDetail = dataFetcher.fetchExerciseCategory(context, exercise.getId());
-                    ExerciseJsonUtils.updateExerciseWithCategory(exercise, exerciseCategoryDetail);
+        ArrayList<Exercise> exercises = new ArrayList<>();
+        int currentIndex = 0;
 
+        while(continueLoading){
+            String result = "";
+            try {
+                result = dataFetcher.fetchLatestApiData(context, pageNumber);
+                Log.d("result", result);
+                try {
+                    Collections.addAll(exercises, ExerciseJsonUtils.convertJsonToExercises(result));
+                    for (int i = currentIndex; i < exercises.size(); i++) {
+                        String exerciseImageDetail = dataFetcher.fetchExerciseImage(context, exercises.get(i).getId());
+                        ExerciseJsonUtils.updateExerciseWithImage(exercises.get(i), exerciseImageDetail);
+                        String exerciseCategoryDetail = dataFetcher.fetchExerciseCategory(context, exercises.get(i).getId());
+                        ExerciseJsonUtils.updateExerciseWithCategory(exercises.get(i), exerciseCategoryDetail);
+
+                    }
+                    currentIndex = exercises.size() - 1;
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
-                final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference ref = database.getReference("exercises");
+                try{
+                    continueLoading = ExerciseJsonUtils.isAnotherPage(result);
 
-                Gson gson = new Gson();
-                String jsonExercises = gson.toJson(exercises);
-                ref.setValue(jsonExercises);
-            } catch (JSONException e) {
+                } catch (JSONException e1){
+                    e1.printStackTrace();
+                }
+                pageNumber++;
+
+
+            } catch (IOException e) {
                 e.printStackTrace();
+                continueLoading = false;
             }
 
 
-//todo - check if we're on the final page of results, if not, keep going
-
-//            todo - do something with the result - e.g. delete old exercise data and add the new
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+        if(exercises.size() > 0){
+//            If exercises have synced, replace the exercises DB with the full results
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference ref = database.getReference("exercises");
 
-//        todo Save everything to the database
+            Gson gson = new Gson();
+            String jsonExercises = gson.toJson(exercises);
+            ref.setValue(jsonExercises);
+
+
+        }
     }
 
 

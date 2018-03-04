@@ -25,10 +25,10 @@ public class ExerciseDataFetcher {
     private final String AUTH_HEADER_NAME = "Authorization";
 
 
-    public String fetchLatestApiData(Context context) throws IOException{
+    public String fetchLatestApiData(Context context, int pageNumber) throws IOException{
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(REQUEST_EXERCISES_URL)
+                .url(REQUEST_EXERCISES_URL + "&page=" + pageNumber)
                 .header(AUTH_HEADER_NAME, "Token " + context.getResources().getString(R.string.wger_api_key))
                 .build();
 
