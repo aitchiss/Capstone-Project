@@ -22,5 +22,9 @@ public class ExerciseSyncTask {
             e.printStackTrace();
         }
 
+//        todo image url and muscle groups need to be fetched separately
+//        Create the Exercise Objects
+//        For each object, fetch the additional data
+//        Save everything to the database
     }
 }

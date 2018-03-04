@@ -19,15 +19,28 @@ import okhttp3.Response;
 
 public class ExerciseDataFetcher {
 
-    private final String REQUEST_URL = "https://wger.de/api/v2/exercise/?language=2&status=2";
+    private final String REQUEST_EXERCISES_URL = "https://wger.de/api/v2/exercise/?language=2&status=2";
+    private final String EXERCISE_DETAIL_REQUEST_URL = "api/v2/exerciseiinfo/";
+    private final String AUTH_HEADER_NAME = "Authorization";
     private final int EXERCISE_LOADER_ID = 100;
 
 
     public String fetchLatestApiData(Context context) throws IOException{
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(REQUEST_URL)
-                .header("Authorization", "Token " + context.getResources().getString(R.string.wger_api_key))
+                .url(REQUEST_EXERCISES_URL)
+                .header(AUTH_HEADER_NAME, "Token " + context.getResources().getString(R.string.wger_api_key))
+                .build();
+
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+    }
+
+    public String fetchExerciseDetail(Context context, int id) throws IOException{
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(EXERCISE_DETAIL_REQUEST_URL + id + "/")
+                .header(AUTH_HEADER_NAME, "Token " + context.getResources().getString(R.string.wger_api_key))
                 .build();
 
         Response response = client.newCall(request).execute();
