@@ -31,8 +31,7 @@ public class ExerciseDataFetcher {
                 .build();
 
         Response response = client.newCall(request).execute();
-        Log.d("api return", response.body().string());
-        return response.body().toString();
+        return response.body().string();
     }
 
 

@@ -15,12 +15,13 @@ import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.suzanneaitchison.workoutpal.data.ExerciseDataFetcher;
+import com.suzanneaitchison.workoutpal.utils.ExerciseSyncUtils;
 
 import java.io.IOException;
 
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
+public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private static final String TAG = "MainActivity";
@@ -34,8 +35,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         ButterKnife.bind(this);
-
-        fetchData();
+        ExerciseSyncUtils.startImmediateSync(this);
 
 
         if(mAuth.getCurrentUser() != null){
@@ -71,48 +71,4 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
-    private void fetchData(){
-        LoaderManager loaderManager = getSupportLoaderManager();
-        Loader loader = loaderManager.getLoader(100);
-        if(loader == null){
-            loaderManager.initLoader(100, null, this);
-        } else {
-            loaderManager.restartLoader(100, null, this);
-        }
-    }
-
-    @Override
-    public Loader<String> onCreateLoader(int id, Bundle args){
-        return new AsyncTaskLoader<String>(this) {
-
-            @Override
-            protected void onStartLoading() {
-                super.onStartLoading();
-                forceLoad();
-            }
-
-            @Nullable
-            @Override
-            public String loadInBackground() {
-                ExerciseDataFetcher dataFetcher = new ExerciseDataFetcher();
-                String result = "";
-                try {
-                    result = dataFetcher.fetchLatestApiData(MainActivity.this);
-                } catch (IOException e){
-                    e.printStackTrace();
-                }
-                return result;
-            }
-        };
-    }
-
-    @Override
-    public void onLoadFinished(Loader<String> loader, String data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<String> loader) {
-
-    }
 }
