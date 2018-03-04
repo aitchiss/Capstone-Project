@@ -31,6 +31,9 @@ public class ExerciseSyncTask {
                         Log.d("exercise image", exercise.getImageURL());
                     }
 
+                    String exerciseCategoryDetail = dataFetcher.fetchExerciseCategory(context, exercise.getId());
+                    ExerciseJsonUtils.updateExerciseWithCategory(exercise, exerciseCategoryDetail);
+
                 }
             } catch (JSONException e){
                 e.printStackTrace();

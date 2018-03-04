@@ -6,49 +6,49 @@ package com.suzanneaitchison.workoutpal.models;
 
 public class Exercise {
 
-    private int mId;
-    private String mName;
-    private String mDescription;
-    private String mImageURL;
-    private String[] mMuscleGroups;
+    private int id;
+    private String name;
+    private String description;
+    private String imageURL;
+    private String exerciseCategory;
 
     public int getId() {
-        return mId;
+        return id;
     }
 
-    public void setId(int mId) {
-        this.mId = mId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
-    public void setName(String mName) {
-        this.mName = mName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
-    public void setDescription(String mDescription) {
-        this.mDescription = mDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getImageURL() {
-        return mImageURL;
+        return imageURL;
     }
 
-    public void setImageURL(String mImageURL) {
-        this.mImageURL = mImageURL;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
-    public String[] getMuscleGroups() {
-        return mMuscleGroups;
+    public String getExerciseCategory() {
+        return exerciseCategory;
     }
 
-    public void setMuscleGroups(String[] mMuscleGroups) {
-        this.mMuscleGroups = mMuscleGroups;
+    public void setExerciseCategory(String exerciseCategory) {
+        this.exerciseCategory = exerciseCategory;
     }
 }

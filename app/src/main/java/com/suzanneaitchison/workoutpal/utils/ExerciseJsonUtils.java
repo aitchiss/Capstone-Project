@@ -47,4 +47,11 @@ public class ExerciseJsonUtils {
         }
         return exercise;
     }
+
+    public static Exercise updateExerciseWithCategory(Exercise exercise, String jsonString) throws JSONException{
+        JSONObject jsonDetail = new JSONObject(jsonString);
+        JSONObject categoryObject = jsonDetail.getJSONObject("category");
+        exercise.setExerciseCategory(categoryObject.getString("name"));
+        return exercise;
+    }
 }
