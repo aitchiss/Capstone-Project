@@ -67,14 +67,7 @@ public class ExerciseSyncTask {
         }
         if(exercises.size() > 0){
 //            If exercises have synced, replace the exercises DB with the full results
-            final FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference ref = database.getReference("exercises");
-
-            Gson gson = new Gson();
-            String jsonExercises = gson.toJson(exercises);
-            ref.setValue(jsonExercises);
-
-
+            FirebaseDatabaseHelper.replaceAllExercises(exercises);
         }
     }
 
