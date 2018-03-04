@@ -23,7 +23,6 @@ public class ExerciseDataFetcher {
     private final String EXERCISE_IMAGE_REQUEST_URL = "https://wger.de/api/v2/exerciseimage/?exercise=";
     private final String EXERCISE_CATEGORY_REQUEST_URL = "https://wger.de/api/v2/exerciseinfo/";
     private final String AUTH_HEADER_NAME = "Authorization";
-    private final int EXERCISE_LOADER_ID = 100;
 
 
     public String fetchLatestApiData(Context context) throws IOException{
