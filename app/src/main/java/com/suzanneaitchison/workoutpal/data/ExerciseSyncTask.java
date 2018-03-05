@@ -34,7 +34,6 @@ public class ExerciseSyncTask {
             String result = "";
             try {
                 result = dataFetcher.fetchLatestApiData(context, pageNumber);
-                Log.d("result", result);
                 try {
                     Collections.addAll(exercises, ExerciseJsonUtils.convertJsonToExercises(result));
                     for (int i = currentIndex; i < exercises.size(); i++) {

@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by suzanne on 04/03/2018.
  */
@@ -62,5 +64,29 @@ public class ExerciseJsonUtils {
             return false;
         }
         return true;
+    }
+
+    public static ArrayList<Exercise> convertFirebaseExerciseString(String jsonString) throws JSONException{
+        JSONArray jsonArray = new JSONArray(jsonString);
+        ArrayList<Exercise> exercises = new ArrayList<>();
+        for(int i= 0; i < jsonArray.length(); i++){
+            JSONObject jsonExercise = jsonArray.getJSONObject(i);
+
+            Exercise exercise = new Exercise();
+            exercise.setId(jsonExercise.getInt("id"));
+            if(jsonExercise.has("description")){
+                exercise.setDescription(jsonExercise.getString("description"));
+            }
+
+            if(jsonExercise.has("imageURL")){
+                exercise.setImageURL(jsonExercise.getString("imageURL"));
+            }
+            if(jsonExercise.has("exerciseCategory")){
+                exercise.setExerciseCategory(jsonExercise.getString("exerciseCategory"));
+            }
+            exercises.add(exercise);
+
+        }
+        return exercises;
     }
 }

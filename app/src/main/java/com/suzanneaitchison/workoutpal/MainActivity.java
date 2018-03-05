@@ -14,10 +14,21 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.suzanneaitchison.workoutpal.data.ExerciseDataFetcher;
+import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
+import com.suzanneaitchison.workoutpal.models.User;
 import com.suzanneaitchison.workoutpal.utils.ExerciseSyncUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import butterknife.ButterKnife;
 
@@ -27,6 +38,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final int RC_SIGN_IN = 123;
 
+    private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference mUsersRef = mRootRef.child("users");
+    private DatabaseReference mCurrentUserRef;
+
+    private User mCurrentUser;
+
 //    Todo - make the UI for this page a splashscreen replaced by the UI activity for result?
 
     @Override
@@ -35,18 +52,48 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         ButterKnife.bind(this);
+
+        if(FirebaseDatabaseHelper.getAllExercises() != null && FirebaseDatabaseHelper.getAllExercises().size() == 0){
+//            If the database of exercises is empty, complete the sync
+            ExerciseSyncUtils.startImmediateSync(this);
+        }
 //        TODO - only want to do a full immediate sync if it's their first use of the app - move to new user block
-        ExerciseSyncUtils.startImmediateSync(this);
+
 
 
         if(mAuth.getCurrentUser() != null){
+            retrieveUserFromFirebase(mAuth.getCurrentUser().getEmail());
+
 
         } else {
             startActivityForResult(
                     // Get an instance of AuthUI based on the default app
-                    AuthUI.getInstance().createSignInIntentBuilder().build(),
+                    AuthUI.getInstance().createSignInIntentBuilder()
+                            .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build()))
+                            .build(),
                     RC_SIGN_IN);
         }
+    }
+
+    private void retrieveUserFromFirebase(String email){
+        //            Retrieve the user from the database
+        FirebaseUser user = mAuth.getCurrentUser();
+        Query userQueryRef = mUsersRef.orderByChild("email").equalTo(user.getEmail());
+
+        userQueryRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+//                        There should only be one user in the list returned
+                    mCurrentUser = userSnapshot.getValue(User.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+//todo - show some sort of error
+            }
+        });
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -54,6 +101,22 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == RC_SIGN_IN){
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if(resultCode == RESULT_OK){
+//          Check if the user already exists in the database
+
+                retrieveUserFromFirebase(mAuth.getCurrentUser().getEmail());
+
+                if(mCurrentUser == null){
+//                    Create the user in the database
+                    String userEmail = mAuth.getCurrentUser().getEmail();
+                    mCurrentUser = new User();
+                    mCurrentUser.setEmail(userEmail);
+
+                    mCurrentUserRef = mUsersRef.push();
+                    mCurrentUserRef.setValue(mCurrentUser);
+                    String userId = mCurrentUserRef.getKey();
+                    mCurrentUser.setId(userId);
+                }
+
 //                TODO start the signed in activity
                 finish();
             } else {
