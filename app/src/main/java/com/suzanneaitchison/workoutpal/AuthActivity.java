@@ -32,10 +32,10 @@ import java.util.Arrays;
 
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class AuthActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "AuthActivity";
     private static final int RC_SIGN_IN = 123;
 
     private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mCurrentUserRef;
 
     private User mCurrentUser;
-
-//    Todo - make the UI for this page a splashscreen replaced by the UI activity for result?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

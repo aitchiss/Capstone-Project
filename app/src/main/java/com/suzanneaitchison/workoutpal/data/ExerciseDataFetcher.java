@@ -1,10 +1,7 @@
 package com.suzanneaitchison.workoutpal.data;
 
-import android.app.LoaderManager;
 import android.content.Context;
-import android.util.Log;
 
-import com.suzanneaitchison.workoutpal.MainActivity;
 import com.suzanneaitchison.workoutpal.R;
 
 import java.io.IOException;
