@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.suzanneaitchison.workoutpal">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".data.ExerciseSyncIntentService" android:exported="false"/>
+
+        <service
+            android:name=".data.ExerciseSyncIntentService"
+            android:exported="false" />
+
+        <activity android:name=".WorkoutListActivity"></activity>
     </application>
 
 </manifest>

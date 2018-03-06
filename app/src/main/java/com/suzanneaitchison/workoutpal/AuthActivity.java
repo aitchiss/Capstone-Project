@@ -51,17 +51,18 @@ public class AuthActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         ButterKnife.bind(this);
 
-        if(FirebaseDatabaseHelper.getAllExercises() != null && FirebaseDatabaseHelper.getAllExercises().size() == 0){
-//            If the database of exercises is empty, complete the sync
-            ExerciseSyncUtils.startImmediateSync(this);
-        }
+//        if(FirebaseDatabaseHelper.getAllExercises() != null && FirebaseDatabaseHelper.getAllExercises().size() == 0){
+////            If the database of exercises is empty, complete the sync
+//            ExerciseSyncUtils.startImmediateSync(this);
+//        }
 //        TODO - only want to do a full immediate sync if it's their first use of the app - move to new user block
 
 
 
         if(mAuth.getCurrentUser() != null){
             retrieveUserFromFirebase(mAuth.getCurrentUser().getEmail());
-
+            Intent intent = new Intent(this, WorkoutListActivity.class);
+            startActivity(intent);
 
         } else {
             startActivityForResult(
@@ -114,7 +115,8 @@ public class AuthActivity extends AppCompatActivity {
                     String userId = mCurrentUserRef.getKey();
                     mCurrentUser.setId(userId);
                 }
-
+                Intent intent = new Intent(this, WorkoutListActivity.class);
+                startActivity(intent);
 //                TODO start the signed in activity
                 finish();
             } else {
