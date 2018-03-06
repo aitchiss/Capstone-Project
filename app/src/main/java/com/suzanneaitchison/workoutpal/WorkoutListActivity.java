@@ -1,17 +1,34 @@
 package com.suzanneaitchison.workoutpal;
 
+import android.content.Intent;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.suzanneaitchison.workoutpal.models.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class WorkoutListActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference mUsersRef = mRootRef.child("users");
+    private User mCurrentUser;
 
     @BindView(R.id.nav_drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -25,10 +42,38 @@ public class WorkoutListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
+        mAuth = FirebaseAuth.getInstance();
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white);
+
+        retrieveUserFromFirebase();
+
+
+
+    }
+
+    private void retrieveUserFromFirebase(){
+        FirebaseUser user = mAuth.getCurrentUser();
+        Query userQueryRef = mUsersRef.orderByChild("email").equalTo(user.getEmail());
+        userQueryRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                    mCurrentUser = userSnapshot.getValue(User.class);
+                    Log.d("current user", mCurrentUser.getEmail());
+//                    TODO - call the function that updates the list view with the users workouts
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //todo - show some sort of error
+            }
+        });
+
     }
 
     @Override

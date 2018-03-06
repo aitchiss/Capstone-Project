@@ -1,5 +1,8 @@
 package com.suzanneaitchison.workoutpal.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -51,4 +54,5 @@ public class User {
     public void setCompletedWorkouts(ArrayList<Workout> completedWorkouts) {
         this.completedWorkouts = completedWorkouts;
     }
+
 }
