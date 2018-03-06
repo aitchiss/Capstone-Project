@@ -23,7 +23,8 @@
             android:name=".data.ExerciseSyncIntentService"
             android:exported="false" />
 
-        <activity android:name=".WorkoutListActivity"></activity>
+        <activity android:name=".WorkoutListActivity" />
+        <activity android:name=".WorkoutDetailActivity"></activity>
     </application>
 
 </manifest>

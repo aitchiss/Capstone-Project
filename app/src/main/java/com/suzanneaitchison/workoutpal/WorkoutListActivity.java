@@ -43,7 +43,7 @@ public class WorkoutListActivity extends AppCompatActivity {
 
     @BindView(R.id.nav_view)
     NavigationView mNavView;
-    
+
     TextView mNavHeaderText;
 
     @Override
@@ -75,7 +75,6 @@ public class WorkoutListActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()){
                     mCurrentUser = userSnapshot.getValue(User.class);
-                    Log.d("current user", mCurrentUser.getEmail());
                     setNavDrawerTitle(mCurrentUser.getEmail());
 //                    TODO - call the function that updates the list view with the users workouts
                 }
