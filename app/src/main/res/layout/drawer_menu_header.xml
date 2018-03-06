@@ -10,7 +10,7 @@
     android:layout_height="192dp">
 
     <TextView
-        android:text="You are signed in as... text"
+        android:id="@+id/nav_drawer_header_text"
         android:textColor="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

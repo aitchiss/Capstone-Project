@@ -1,6 +1,8 @@
 package com.suzanneaitchison.workoutpal;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -8,7 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,10 +35,16 @@ public class WorkoutListActivity extends AppCompatActivity {
     private DatabaseReference mUsersRef = mRootRef.child("users");
     private User mCurrentUser;
 
+
     @BindView(R.id.nav_drawer_layout)
     DrawerLayout mDrawerLayout;
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
+
+    @BindView(R.id.nav_view)
+    NavigationView mNavView;
+    
+    TextView mNavHeaderText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +60,8 @@ public class WorkoutListActivity extends AppCompatActivity {
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white);
 
         retrieveUserFromFirebase();
-
+        View mNavHeaderView = mNavView.getHeaderView(0);
+        mNavHeaderText = (TextView) mNavHeaderView.findViewById(R.id.nav_drawer_header_text);
 
 
     }
@@ -64,6 +76,7 @@ public class WorkoutListActivity extends AppCompatActivity {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()){
                     mCurrentUser = userSnapshot.getValue(User.class);
                     Log.d("current user", mCurrentUser.getEmail());
+                    setNavDrawerTitle(mCurrentUser.getEmail());
 //                    TODO - call the function that updates the list view with the users workouts
                 }
             }
@@ -74,6 +87,10 @@ public class WorkoutListActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setNavDrawerTitle(String userEmail){
+        mNavHeaderText.setText("You're signed in as " + userEmail);
     }
 
     @Override
