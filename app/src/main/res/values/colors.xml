@@ -3,4 +3,7 @@
     <color name="colorPrimary">#FF009687</color>
     <color name="colorPrimaryDark">#00766c</color>
     <color name="colorAccent">#FFF50056</color>
+
+    <!--   WorkoutDetailActivity   -->
+    <color name="colorWorkoutNameHeaderLayout">#FFFAF5FA</color>
 </resources>

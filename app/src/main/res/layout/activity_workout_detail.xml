@@ -8,4 +8,62 @@
 
     <include layout="@layout/app_toolbar"/>
 
+    <FrameLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/workout_name_layout_height"
+            android:background="@color/colorWorkoutNameHeaderLayout"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:layout_width="@dimen/workout_name_edit_text_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_marginTop="50dp" />
+
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/fab_button_margin"
+            android:layout_marginTop="@dimen/fab_margin_top_height"
+            android:clickable="true"
+            android:elevation="@dimen/standard_fab_elevation"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_add_white" />
+
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btn_start_workout"
+        style="@style/start_workout_btn_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/start_workout"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
 </android.support.constraint.ConstraintLayout>
