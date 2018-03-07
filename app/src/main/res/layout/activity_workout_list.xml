@@ -24,6 +24,7 @@
 
         <android.support.design.widget.FloatingActionButton
             app:fabSize="normal"
+            android:onClick="onNewWorkoutButtonClick"
             android:src="@drawable/ic_add_white"
             android:elevation="@dimen/standard_fab_elevation"
             android:layout_gravity="bottom|end"

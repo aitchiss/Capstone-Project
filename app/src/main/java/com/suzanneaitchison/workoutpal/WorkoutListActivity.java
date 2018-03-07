@@ -101,4 +101,10 @@ public class WorkoutListActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onNewWorkoutButtonClick(View view){
+        Intent intent = new Intent(this, WorkoutDetailActivity.class);
+        intent.putExtra(WorkoutDetailActivity.WORKOUT_ID_EXTRA, -1);
+        startActivity(intent);
+    }
 }

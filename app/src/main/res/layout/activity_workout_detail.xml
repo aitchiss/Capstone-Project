@@ -27,6 +27,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <EditText
+                android:id="@+id/et_workout_name"
                 android:layout_width="@dimen/workout_name_edit_text_width"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
