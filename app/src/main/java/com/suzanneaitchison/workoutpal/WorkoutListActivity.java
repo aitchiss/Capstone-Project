@@ -2,7 +2,9 @@ package com.suzanneaitchison.workoutpal;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -13,6 +15,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewPropertyAnimator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +41,7 @@ public class WorkoutListActivity extends AppCompatActivity {
     private DatabaseReference mUsersRef = mRootRef.child("users");
     private User mCurrentUser;
 
+    @BindView(R.id.fab_add_workout) FloatingActionButton mFab;
 
     @BindView(R.id.nav_drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -103,8 +110,11 @@ public class WorkoutListActivity extends AppCompatActivity {
     }
 
     public void onNewWorkoutButtonClick(View view){
+
         Intent intent = new Intent(this, WorkoutDetailActivity.class);
         intent.putExtra(WorkoutDetailActivity.WORKOUT_ID_EXTRA, -1);
-        startActivity(intent);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mFab, "transition_fab");
+        startActivity(intent, options.toBundle());
     }
 }
