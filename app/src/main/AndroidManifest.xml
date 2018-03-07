@@ -24,7 +24,7 @@
             android:exported="false" />
 
         <activity android:name=".WorkoutListActivity" />
-        <activity android:name=".WorkoutDetailActivity"></activity>
+        <activity android:name=".WorkoutDetailActivity" android:parentActivityName=".WorkoutListActivity"></activity>
     </application>
 
 </manifest>
