@@ -47,7 +47,7 @@
             android:clickable="true"
             android:elevation="@dimen/standard_fab_elevation"
             app:fabSize="normal"
-            app:srcCompat="@drawable/ic_add_white" />
+            app:srcCompat="@drawable/ic_play_arrow" />
 
 
     </FrameLayout>
@@ -60,7 +60,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="@string/start_workout"
+        android:text="@string/add_to_workout"
         app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
