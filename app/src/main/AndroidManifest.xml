@@ -27,7 +27,10 @@
         <activity
             android:name=".WorkoutDetailActivity"
             android:parentActivityName=".WorkoutListActivity" />
-        <activity android:name=".AddExerciseActivity" android:parentActivityName=".WorkoutDetailActivity"></activity>
+        <activity
+            android:name=".AddExerciseActivity"
+            android:parentActivityName=".WorkoutDetailActivity" />
+        <activity android:name=".CustomiseExerciseActivity" android:theme="@style/dialog_theme"></activity>
     </application>
 
 </manifest>

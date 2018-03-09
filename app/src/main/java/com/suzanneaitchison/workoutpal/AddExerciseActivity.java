@@ -2,13 +2,12 @@ package com.suzanneaitchison.workoutpal;
 
 
 
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.transition.Slide;
-import android.transition.Transition;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +42,12 @@ public class AddExerciseActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    public void onAddTap(View view){
+//        Create the dialog to make further selections
+        Intent intent = new Intent(this, CustomiseExerciseActivity.class);
+        startActivity(intent);
     }
 
 

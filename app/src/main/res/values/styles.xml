@@ -9,6 +9,8 @@
         <item name="android:windowContentTransitions">true</item>
     </style>
 
+    <style name="dialog_theme" parent="Theme.AppCompat.Dialog"></style>
+
     <!--   WorkoutDetailActivity   -->
     <style name="add_exercise_btn_style">
         <item name="android:background">@color/fui_transparent</item>
