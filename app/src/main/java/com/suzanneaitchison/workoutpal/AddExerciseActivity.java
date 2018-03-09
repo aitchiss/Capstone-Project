@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -13,6 +14,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AddExerciseActivity extends AppCompatActivity {
+
+    private static final int ADD_EXERCISE_REQUEST_CODE = 220;
 
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar mToolbar;
@@ -47,9 +50,16 @@ public class AddExerciseActivity extends AppCompatActivity {
     public void onAddTap(View view){
 //        Create the dialog to make further selections
         Intent intent = new Intent(this, CustomiseExerciseActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, ADD_EXERCISE_REQUEST_CODE);
     }
 
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == ADD_EXERCISE_REQUEST_CODE){
+            if(resultCode == RESULT_OK){
+//               Add the exercise to the workout
+                Log.d("add exercise", "received ok result");
+            }
+        }
+    }
 }

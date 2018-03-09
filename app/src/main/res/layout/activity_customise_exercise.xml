@@ -9,5 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="testing"/>
+    <Button
+        android:id="@+id/btn_add_customised_exercise"
+        android:onClick="onAddTap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADD"/>
 
 </android.support.constraint.ConstraintLayout>
