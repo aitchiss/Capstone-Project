@@ -9,12 +9,18 @@
         <item name="android:windowContentTransitions">true</item>
     </style>
 
-    <style name="dialog_theme" parent="Theme.AppCompat.Dialog"></style>
-
     <!--   WorkoutDetailActivity   -->
     <style name="add_exercise_btn_style">
         <item name="android:background">@color/fui_transparent</item>
         <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <!--   CustomiseExerciseActivity   -->
+    <style name="dialog_theme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
 
