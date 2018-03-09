@@ -24,7 +24,10 @@
             android:exported="false" />
 
         <activity android:name=".WorkoutListActivity" />
-        <activity android:name=".WorkoutDetailActivity" android:parentActivityName=".WorkoutListActivity"></activity>
+        <activity
+            android:name=".WorkoutDetailActivity"
+            android:parentActivityName=".WorkoutListActivity" />
+        <activity android:name=".AddExerciseActivity" android:parentActivityName=".WorkoutDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -10,9 +10,10 @@
     </style>
 
     <!--   WorkoutDetailActivity   -->
-    <style name="start_workout_btn_style">
+    <style name="add_exercise_btn_style">
         <item name="android:background">@color/fui_transparent</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
+
 
 </resources>

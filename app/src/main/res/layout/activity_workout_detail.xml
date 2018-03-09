@@ -37,7 +37,7 @@
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add_to_workout"
+            android:id="@+id/fab_play_workout"
             android:transitionName="transition_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,8 +53,9 @@
     </FrameLayout>
 
     <Button
-        android:id="@+id/btn_start_workout"
-        style="@style/start_workout_btn_style"
+        android:id="@+id/btn_add_exercise"
+        android:onClick="onAddExerciseClick"
+        style="@style/add_exercise_btn_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"

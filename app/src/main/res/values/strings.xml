@@ -2,6 +2,8 @@
     <string name="app_name">WorkoutPal</string>
     <string name="start_workout">START WORKOUT</string>
     <string name="add_to_workout">ADD EXERCISE</string>
+    <string name="add_to_workout_text_btn">ADD</string>
+    <string name="add_activity">Add activity</string>
 
     <!--   WorkoutListActivity   -->
 
