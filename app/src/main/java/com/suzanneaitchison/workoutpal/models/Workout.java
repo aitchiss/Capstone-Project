@@ -37,4 +37,11 @@ public class Workout {
     public void setPlannedExercises(ArrayList<PlannedExercise> plannedExercises) {
         this.plannedExercises = plannedExercises;
     }
+
+    public void addExercise(PlannedExercise exercise){
+        if(this.plannedExercises == null){
+            this.plannedExercises = new ArrayList<>();
+        }
+        this.plannedExercises.add(exercise);
+    }
 }

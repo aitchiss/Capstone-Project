@@ -20,4 +20,24 @@ public class CustomiseExerciseSpinnerUtils {
         return options;
     }
 
+    public static int getRestTimeInSeconds(String restText){
+        if(restText.equals("None")){
+            return 0;
+        } else if (restText.equals("30 seconds")){
+            return 30;
+        } else if(restText.equals("1 minute")){
+            return 60;
+        } else if(restText.equals("2 minutes")){
+            return 120;
+        } else if (restText.equals("3 minutes")){
+            return 180;
+        } else if (restText.equals("4 minutes")){
+            return 240;
+        } else if(restText.equals("5 minutes")){
+            return 300;
+        } else {
+            return 0;
+        }
+    }
+
 }

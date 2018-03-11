@@ -7,7 +7,25 @@ package com.suzanneaitchison.workoutpal.models;
 public class PlannedExercise extends Exercise {
 
     private int weight;
-    private int seconds;
+    private int duration;
+    private int reps;
+    private int restTime;
+
+    public int getReps() {
+        return reps;
+    }
+
+    public void setReps(int reps) {
+        this.reps = reps;
+    }
+
+    public int getRestTime() {
+        return restTime;
+    }
+
+    public void setRestTime(int restTime) {
+        this.restTime = restTime;
+    }
 
     public int getWeight() {
         return weight;
@@ -17,11 +35,11 @@ public class PlannedExercise extends Exercise {
         this.weight = weight;
     }
 
-    public int getSeconds() {
-        return seconds;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setSeconds(int seconds) {
-        this.seconds = seconds;
+    public void setDuration(int seconds) {
+        this.duration = seconds;
     }
 }

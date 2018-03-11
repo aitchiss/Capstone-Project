@@ -21,6 +21,7 @@ public class WorkoutDetailActivity extends AppCompatActivity {
 
     private User mUser;
     private Workout mWorkout;
+    private int mWorkoutIndex;
 
     @BindView(R.id.et_workout_name)
     EditText mWorkoutName;
@@ -39,8 +40,8 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if(intent.hasExtra(WORKOUT_INDEX_EXTRA)){
-            int index = intent.getIntExtra(WORKOUT_INDEX_EXTRA, -1);
-            mWorkout = mUser.getWorkoutPlans().get(index);
+            mWorkoutIndex  = intent.getIntExtra(WORKOUT_INDEX_EXTRA, -1);
+            mWorkout = mUser.getWorkoutPlans().get(mWorkoutIndex);
             mWorkoutName.setText(mWorkout.getWorkoutName());
             getSupportActionBar().setTitle(mWorkout.getWorkoutName());
 
@@ -66,6 +67,7 @@ public class WorkoutDetailActivity extends AppCompatActivity {
 
     public void onAddExerciseClick(View view){
         Intent intent = new Intent(this, AddExerciseActivity.class);
+        intent.putExtra(WORKOUT_INDEX_EXTRA, mWorkoutIndex);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_up_anim, R.anim.static_anim);
 

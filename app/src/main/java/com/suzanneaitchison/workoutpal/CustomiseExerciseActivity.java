@@ -93,6 +93,14 @@ public class CustomiseExerciseActivity extends AppCompatActivity {
 
     public void onAddTap(View view){
         Intent data = new Intent();
+
+        if(mRepsLayout.getVisibility() == View.VISIBLE){
+            data.putExtra(AddExerciseActivity.EXTRA_SETS, Integer.valueOf(mSetsRepsLayout.getText().toString()));
+            data.putExtra(AddExerciseActivity.EXTRA_REPS, Integer.valueOf(mRepsRepsLayout.getText().toString()));
+            data.putExtra(AddExerciseActivity.EXTRA_WEIGHT, Integer.valueOf(mWeightRepsLayout.getText().toString()));
+            data.putExtra(AddExerciseActivity.EXTRA_REST, CustomiseExerciseSpinnerUtils.getRestTimeInSeconds(mRestReps.getSelectedItem().toString()));
+        }
+
         if(getParent() == null){
             setResult(Activity.RESULT_OK, data);
         } else {
