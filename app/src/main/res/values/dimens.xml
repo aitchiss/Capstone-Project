@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="standard_fab_elevation">6dp</dimen>
+    <dimen name="standard_mobile_side_margin">16dp</dimen>
 
     <!--   WorkoutListActivity   -->
     <dimen name="fab_button_margin">16dp</dimen>

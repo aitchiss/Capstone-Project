@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.suzanneaitchison.workoutpal.AddExerciseActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.suzanneaitchison.workoutpal.AddExerciseActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
     <include
         layout="@layout/app_toolbar"
@@ -53,24 +57,27 @@
         android:id="@+id/tv_exercise_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="@dimen/standard_mobile_side_margin"
+        android:layout_marginStart="@dimen/standard_mobile_side_margin"
         android:layout_marginTop="32dp"
         tools:text="description of the exercise"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_confirm_add_exercise"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_exercises" />
 
     <Button
         android:id="@+id/btn_confirm_add_exercise"
-        android:onClick="onAddTap"
+        style="@style/add_exercise_btn_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        style="@style/add_exercise_btn_style"
+        android:layout_marginBottom="@dimen/standard_mobile_side_margin"
+        android:layout_marginEnd="@dimen/standard_mobile_side_margin"
+        android:layout_marginTop="@dimen/standard_mobile_side_margin"
+        android:onClick="onAddTap"
         android:text="@string/add_to_workout_text_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
+</ScrollView>
