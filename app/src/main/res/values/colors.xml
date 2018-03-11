@@ -3,6 +3,8 @@
     <color name="colorPrimary">#FF009687</color>
     <color name="colorPrimaryDark">#00766c</color>
     <color name="colorAccent">#FFF50056</color>
+    <color name="colorPlaceholder">#D8D8D8</color>
+    <color name="colorWhite">#FFFFFF</color>
 
     <!--   WorkoutDetailActivity   -->
     <color name="colorWorkoutNameHeaderLayout">#FFFAF5FA</color>

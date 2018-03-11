@@ -17,7 +17,7 @@ import okhttp3.Response;
 public class ExerciseDataFetcher {
 
     private final String REQUEST_EXERCISES_URL = "https://wger.de/api/v2/exercise/?language=2&status=2";
-    private final String EXERCISE_IMAGE_REQUEST_URL = "https://wger.de/api/v2/exerciseimage/?exercise=";
+    private final String EXERCISE_IMAGE_REQUEST_URL = "https://wger.de/api/v2/exerciseimage/?is_main=True&exercise=";
     private final String EXERCISE_CATEGORY_REQUEST_URL = "https://wger.de/api/v2/exerciseinfo/";
     private final String AUTH_HEADER_NAME = "Authorization";
 

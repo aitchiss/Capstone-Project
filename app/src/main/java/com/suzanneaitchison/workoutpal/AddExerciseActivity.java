@@ -3,15 +3,21 @@ package com.suzanneaitchison.workoutpal;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
 import com.suzanneaitchison.workoutpal.models.Exercise;
 
@@ -36,6 +42,12 @@ public class AddExerciseActivity extends AppCompatActivity {
 
     @BindView(R.id.spinner_exercise_category) Spinner mExerciseCategorySpinner;
 
+    @BindView(R.id.tv_exercise_desc)
+    TextView mExerciseDescription;
+
+    @BindView(R.id.iv_exercise_image)
+    ImageView mExerciseImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +58,27 @@ public class AddExerciseActivity extends AppCompatActivity {
         mExercises = FirebaseDatabaseHelper.getAllExercises();
         populateCategorySpinner();
         populateExercisesSpinner();
+
+        mExerciseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Exercise exercise = getSelectedExercise();
+                mExerciseDescription.setText(Html.fromHtml(exercise.getDescription()));
+
+                if(exercise.getImageURL() == null || exercise.getImageURL().isEmpty()){
+                    mExerciseImage.setBackgroundColor(getResources().getColor(R.color.colorPlaceholder));
+                } else {
+                    mExerciseImage.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                }
+                Picasso.get().load(exercise.getImageURL())
+                        .placeholder(R.drawable.no_img_placeholder).into(mExerciseImage);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void setUpToolbar(){
@@ -71,7 +104,17 @@ public class AddExerciseActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mExerciseCategorySpinner.setAdapter(adapter);
 
-        
+        mExerciseCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                populateExercisesSpinner();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void populateExercisesSpinner(){
@@ -89,6 +132,16 @@ public class AddExerciseActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mExerciseSpinner.setAdapter(adapter);
+    }
+
+    private Exercise getSelectedExercise(){
+        String exerciseName = mExerciseSpinner.getSelectedItem().toString();
+        for(Exercise exercise : mExercises){
+            if(exercise.getName().equals(exerciseName)){
+                return exercise;
+            }
+        }
+        return new Exercise();
     }
 
     @Override
