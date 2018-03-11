@@ -2,10 +2,13 @@ package com.suzanneaitchison.workoutpal.data;
 
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.suzanneaitchison.workoutpal.models.Exercise;
@@ -22,7 +25,15 @@ import java.util.ArrayList;
 
 public class FirebaseDatabaseHelper {
 
+    private static User mCurrentUser;
+    private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private static DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    private static DatabaseReference mUsersRef = mRootRef.child("users");
+    private static DatabaseReference mCurrentUserRef;
+
     private static ArrayList<Exercise> mExercises;
+
+
 
     public static void replaceAllExercises(ArrayList<Exercise> exercises){
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -57,5 +68,46 @@ public class FirebaseDatabaseHelper {
         return mExercises;
     }
 
+    public static boolean checkForAuthenticatedUser(){
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user != null){
+            return true;
+        }
+        return false;
+    }
+
+    public static void listenForUser(){
+        FirebaseUser user = mAuth.getCurrentUser();
+        Query userQueryRef = mUsersRef.orderByChild("email").equalTo(user.getEmail());
+
+        userQueryRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+//                        There should only be one user in the list returned
+                    mCurrentUser = userSnapshot.getValue(User.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+//todo - show some sort of error
+            }
+        });
+    }
+
+    public static User getUser(){
+        return mCurrentUser;
+    }
+
+    public static void createNewUser() {
+        String userEmail = mAuth.getCurrentUser().getEmail();
+        mCurrentUser = new User();
+        mCurrentUser.setEmail(userEmail);
+        mCurrentUserRef = mUsersRef.push();
+        mCurrentUserRef.setValue(mCurrentUser);
+        String userId = mCurrentUserRef.getKey();
+        mCurrentUser.setId(userId);
+    }
 
 }
