@@ -4,6 +4,7 @@ package com.suzanneaitchison.workoutpal;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -46,6 +48,9 @@ public class AddExerciseActivity extends AppCompatActivity {
     private Workout mWorkout;
 
     private ArrayList<Exercise> mExercises;
+
+    @BindView(R.id.scroll_view)
+    ScrollView mScrollView;
 
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar mToolbar;
@@ -240,6 +245,8 @@ public class AddExerciseActivity extends AppCompatActivity {
                 updatedWorkouts.set(mWorkoutIndex, mWorkout);
                 FirebaseDatabaseHelper.saveUsersPlannedWorkouts(updatedWorkouts);
 
+                Snackbar snackbar = Snackbar.make(mScrollView, "Exercise added", Snackbar.LENGTH_LONG);
+                snackbar.show();
             }
         }
     }

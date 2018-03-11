@@ -99,6 +99,11 @@ public class CustomiseExerciseActivity extends AppCompatActivity {
             data.putExtra(AddExerciseActivity.EXTRA_REPS, Integer.valueOf(mRepsRepsLayout.getText().toString()));
             data.putExtra(AddExerciseActivity.EXTRA_WEIGHT, Integer.valueOf(mWeightRepsLayout.getText().toString()));
             data.putExtra(AddExerciseActivity.EXTRA_REST, CustomiseExerciseSpinnerUtils.getRestTimeInSeconds(mRestReps.getSelectedItem().toString()));
+        } else {
+            data.putExtra(AddExerciseActivity.EXTRA_SETS, Integer.valueOf(mSetsTimedLayout.getText().toString()));
+            data.putExtra(AddExerciseActivity.EXTRA_DURATION, Integer.valueOf(mDurationTimedLayout.getText().toString()));
+            data.putExtra(AddExerciseActivity.EXTRA_WEIGHT, Integer.valueOf(mWeightTimedLayout.getText().toString()));
+            data.putExtra(AddExerciseActivity.EXTRA_REST, CustomiseExerciseSpinnerUtils.getRestTimeInSeconds(mRestTimed.getSelectedItem().toString()));
         }
 
         if(getParent() == null){
