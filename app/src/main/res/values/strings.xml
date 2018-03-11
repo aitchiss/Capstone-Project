@@ -7,4 +7,9 @@
 
     <!--   WorkoutListActivity   -->
 
+
+    <!--   CustomiseExerciseActivity   -->
+    <string name="reps_string">Reps</string>
+    <string name="timed_string">Timed</string>
+
 </resources>
