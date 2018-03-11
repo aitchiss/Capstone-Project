@@ -8,12 +8,19 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toolbar;
 
+import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
+import com.suzanneaitchison.workoutpal.models.User;
+import com.suzanneaitchison.workoutpal.models.Workout;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class WorkoutDetailActivity extends AppCompatActivity {
 
-    public static final String WORKOUT_ID_EXTRA = "workoutId";
+    public static final String WORKOUT_INDEX_EXTRA = "workoutId";
+
+    private User mUser;
+    private Workout mWorkout;
 
     @BindView(R.id.et_workout_name)
     EditText mWorkoutName;
@@ -27,13 +34,17 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_workout_detail);
         ButterKnife.bind(this);
         setUpToolbar();
-
+        mUser = FirebaseDatabaseHelper.getUser();
 
         Intent intent = getIntent();
 
-        if(intent.hasExtra(WORKOUT_ID_EXTRA) && intent.getIntExtra(WORKOUT_ID_EXTRA, -1) == -1){
-            mWorkoutName.setText("New workout");
-            getSupportActionBar().setTitle("New workout");
+        if(intent.hasExtra(WORKOUT_INDEX_EXTRA)){
+            int index = intent.getIntExtra(WORKOUT_INDEX_EXTRA, -1);
+            mWorkout = mUser.getWorkoutPlans().get(index);
+            mWorkoutName.setText(mWorkout.getWorkoutName());
+            getSupportActionBar().setTitle(mWorkout.getWorkoutName());
+
+//            todo create the workout in firebase and get the id
         }
     }
 

@@ -31,6 +31,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
 import com.suzanneaitchison.workoutpal.models.User;
+import com.suzanneaitchison.workoutpal.models.Workout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,9 +90,15 @@ public class WorkoutListActivity extends AppCompatActivity {
     }
 
     public void onNewWorkoutButtonClick(View view){
+//      create the new workout, add it to the users arraylist, then pass the index through to the next activity
+        Workout workout = new Workout();
+        workout.setWorkoutName("New workout");
+        int workoutIndex = mCurrentUser.addNewWorkoutPlan(workout);
+
+        FirebaseDatabaseHelper.saveUsersPlannedWorkouts(mCurrentUser.getWorkoutPlans());
 
         Intent intent = new Intent(this, WorkoutDetailActivity.class);
-        intent.putExtra(WorkoutDetailActivity.WORKOUT_ID_EXTRA, -1);
+        intent.putExtra(WorkoutDetailActivity.WORKOUT_INDEX_EXTRA, workoutIndex);
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mFab, "transition_fab");
         startActivity(intent, options.toBundle());

@@ -15,8 +15,8 @@ public class User {
     private String id;
 
 
-    private ArrayList<Workout> workoutPlans;
-    private ArrayList<Workout> completedWorkouts;
+    private ArrayList<Workout> workoutPlans = new ArrayList<>();
+    private ArrayList<Workout> completedWorkouts = new ArrayList<>();
 
     public User(){
 
@@ -53,6 +53,11 @@ public class User {
 
     public void setCompletedWorkouts(ArrayList<Workout> completedWorkouts) {
         this.completedWorkouts = completedWorkouts;
+    }
+
+    public int addNewWorkoutPlan(Workout workout){
+        workoutPlans.add(workout);
+        return workoutPlans.indexOf(workout);
     }
 
 }

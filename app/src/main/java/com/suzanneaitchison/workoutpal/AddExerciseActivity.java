@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
 import com.suzanneaitchison.workoutpal.models.Exercise;
+import com.suzanneaitchison.workoutpal.models.Workout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,12 @@ import butterknife.ButterKnife;
 
 public class AddExerciseActivity extends AppCompatActivity {
 
+    public static final String WORKOUT_KEY = "workout";
+
     private static final int ADD_EXERCISE_REQUEST_CODE = 220;
     private static final String EXERCISE_CATEGORY_ALL = "All";
+
+    private Workout mWorkout;
 
     private ArrayList<Exercise> mExercises;
 

@@ -13,11 +13,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.suzanneaitchison.workoutpal.models.Exercise;
 import com.suzanneaitchison.workoutpal.models.User;
+import com.suzanneaitchison.workoutpal.models.Workout;
 import com.suzanneaitchison.workoutpal.utils.ExerciseJsonUtils;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by suzanne on 04/03/2018.
@@ -110,6 +113,15 @@ public class FirebaseDatabaseHelper {
         mCurrentUserRef.setValue(mCurrentUser);
         String userId = mCurrentUserRef.getKey();
         mCurrentUser.setId(userId);
+        mCurrentUserRef.setValue(mCurrentUser);
+    }
+
+    public static void saveUsersPlannedWorkouts(ArrayList<Workout> updatedPlannedWorkouts){
+        mCurrentUser.setWorkoutPlans(updatedPlannedWorkouts);
+        DatabaseReference userToUpdateRef = mUsersRef.child(mCurrentUser.getId());
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("workoutPlans", updatedPlannedWorkouts);
+        userToUpdateRef.updateChildren(updates);
     }
 
 }

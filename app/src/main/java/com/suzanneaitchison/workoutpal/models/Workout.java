@@ -9,6 +9,16 @@ import java.util.Date;
 
 public class Workout {
 
+    private String workoutName;
+
+    public String getWorkoutName() {
+        return workoutName;
+    }
+
+    public void setWorkoutName(String workoutName) {
+        this.workoutName = workoutName;
+    }
+
     private Date completedDate;
     private ArrayList<PlannedExercise> plannedExercises;
 
