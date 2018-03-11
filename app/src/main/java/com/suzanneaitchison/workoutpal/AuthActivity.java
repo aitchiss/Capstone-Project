@@ -33,7 +33,7 @@ import java.util.Arrays;
 import butterknife.ButterKnife;
 
 public class AuthActivity extends AppCompatActivity {
-    
+
     private static final String TAG = "AuthActivity";
     private static final int RC_SIGN_IN = 123;
 
@@ -55,6 +55,7 @@ public class AuthActivity extends AppCompatActivity {
         boolean authenticatedUserExists = FirebaseDatabaseHelper.checkForAuthenticatedUser();
         if(authenticatedUserExists){
             FirebaseDatabaseHelper.listenForUser();
+            FirebaseDatabaseHelper.listenForExercises();
         }
 
         if(FirebaseDatabaseHelper.getUser() != null){
@@ -78,6 +79,7 @@ public class AuthActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK){
 //          Check if the user already exists in the database
                 FirebaseDatabaseHelper.listenForUser();
+                FirebaseDatabaseHelper.listenForExercises();
 
                 if(FirebaseDatabaseHelper.getUser() == null){
 //                    Create the user in the database

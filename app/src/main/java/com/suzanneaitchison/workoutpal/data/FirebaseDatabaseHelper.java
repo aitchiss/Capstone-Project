@@ -44,7 +44,7 @@ public class FirebaseDatabaseHelper {
         ref.setValue(jsonExercises);
     }
 
-    public static ArrayList<Exercise> getAllExercises(){
+    public static void listenForExercises(){
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("exercises");
         ref.addValueEventListener(new ValueEventListener() {
@@ -64,7 +64,9 @@ public class FirebaseDatabaseHelper {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
+    }
 
+    public static ArrayList<Exercise> getAllExercises(){
         return mExercises;
     }
 

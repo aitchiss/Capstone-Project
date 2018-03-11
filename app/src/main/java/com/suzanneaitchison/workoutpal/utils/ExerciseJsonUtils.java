@@ -74,6 +74,11 @@ public class ExerciseJsonUtils {
 
             Exercise exercise = new Exercise();
             exercise.setId(jsonExercise.getInt("id"));
+
+            if(jsonExercise.has("name")){
+                exercise.setName(jsonExercise.getString("name"));
+            }
+
             if(jsonExercise.has("description")){
                 exercise.setDescription(jsonExercise.getString("description"));
             }
