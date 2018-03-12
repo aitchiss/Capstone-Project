@@ -59,8 +59,6 @@ public class WorkoutDetailActivity extends AppCompatActivity {
             mWorkout = mUser.getWorkoutPlans().get(mWorkoutIndex);
             mWorkoutName.setText(mWorkout.getWorkoutName());
             getSupportActionBar().setTitle(mWorkout.getWorkoutName());
-
-//            todo create the workout in firebase and get the id - do it on back button click?
         }
 
         mDetailAdapter = new WorkoutDetailRecyclerAdapter(mWorkout.getPlannedExercises(), this);
