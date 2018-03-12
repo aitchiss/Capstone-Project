@@ -72,7 +72,6 @@ public class WorkoutListActivity extends AppCompatActivity implements WorkoutLis
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white);
 
-//        retrieveUserFromFirebase();
         mCurrentUser = FirebaseDatabaseHelper.getUser();
         View mNavHeaderView = mNavView.getHeaderView(0);
         mNavHeaderText = (TextView) mNavHeaderView.findViewById(R.id.nav_drawer_header_text);
@@ -107,7 +106,6 @@ public class WorkoutListActivity extends AppCompatActivity implements WorkoutLis
         int workoutIndex = mCurrentUser.addNewWorkoutPlan(workout);
 
         FirebaseDatabaseHelper.saveUsersPlannedWorkouts(mCurrentUser.getWorkoutPlans());
-
         startDetailActivityWithIndex(workoutIndex);
     }
 
