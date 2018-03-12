@@ -23,7 +23,7 @@
             android:name=".data.ExerciseSyncIntentService"
             android:exported="false" />
 
-        <activity android:name=".WorkoutListActivity" />
+        <activity android:name=".WorkoutListActivity" android:launchMode="singleTop" />
         <activity
             android:launchMode="singleTop"
             android:name=".WorkoutDetailActivity"

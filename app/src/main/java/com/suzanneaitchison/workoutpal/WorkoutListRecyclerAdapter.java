@@ -20,10 +20,19 @@ import butterknife.ButterKnife;
 
 public class WorkoutListRecyclerAdapter extends RecyclerView.Adapter<WorkoutListRecyclerAdapter.WorkoutListViewHolder> {
 
-    ArrayList<Workout> mWorkoutData;
+    public interface WorkoutClickHandler {
+        void onClick(Workout workout);
+    }
 
-    public WorkoutListRecyclerAdapter(ArrayList<Workout> workouts){
+    private ArrayList<Workout> mWorkoutData;
+    private Context mContext;
+    private WorkoutClickHandler mClickHandler;
+
+
+    public WorkoutListRecyclerAdapter(ArrayList<Workout> workouts, Context context, WorkoutClickHandler clickHandler){
         mWorkoutData = workouts;
+        mClickHandler = clickHandler;
+        mContext = context;
     }
 
     @Override
@@ -54,7 +63,7 @@ public class WorkoutListRecyclerAdapter extends RecyclerView.Adapter<WorkoutList
         }
     }
 
-    class WorkoutListViewHolder extends RecyclerView.ViewHolder {
+    class WorkoutListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.tv_workout_name)
         TextView workoutName;
@@ -62,6 +71,14 @@ public class WorkoutListRecyclerAdapter extends RecyclerView.Adapter<WorkoutList
         public WorkoutListViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            Workout selectedWorkout = mWorkoutData.get(position);
+            mClickHandler.onClick(selectedWorkout);
         }
     }
 }

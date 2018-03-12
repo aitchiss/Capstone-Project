@@ -79,6 +79,8 @@ public class WorkoutDetailActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 //  todo              update the workout name in the db and the view - save in FB
                 mWorkout.setWorkoutName(s.toString());
+                mUser.getWorkoutPlans().set(mWorkoutIndex, mWorkout);
+                FirebaseDatabaseHelper.saveUsersPlannedWorkouts(mUser.getWorkoutPlans());
                 getSupportActionBar().setTitle(s.toString());
             }
         });

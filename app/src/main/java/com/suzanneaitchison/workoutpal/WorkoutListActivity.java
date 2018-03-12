@@ -38,7 +38,7 @@ import com.suzanneaitchison.workoutpal.models.Workout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WorkoutListActivity extends AppCompatActivity {
+public class WorkoutListActivity extends AppCompatActivity implements WorkoutListRecyclerAdapter.WorkoutClickHandler {
 
 
     private User mCurrentUser;
@@ -80,7 +80,7 @@ public class WorkoutListActivity extends AppCompatActivity {
 
 //        Populate the view
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, 1, false);
-        mAdapter = new WorkoutListRecyclerAdapter(mCurrentUser.getWorkoutPlans());
+        mAdapter = new WorkoutListRecyclerAdapter(mCurrentUser.getWorkoutPlans(), this, this);
         mWorkoutRecyclerView.setLayoutManager(layoutManager);
         mWorkoutRecyclerView.setAdapter(mAdapter);
     }
@@ -108,9 +108,25 @@ public class WorkoutListActivity extends AppCompatActivity {
 
         FirebaseDatabaseHelper.saveUsersPlannedWorkouts(mCurrentUser.getWorkoutPlans());
 
-        Intent intent = new Intent(this, WorkoutDetailActivity.class);
-        intent.putExtra(WorkoutDetailActivity.WORKOUT_INDEX_EXTRA, workoutIndex);
+        startDetailActivityWithIndex(workoutIndex);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mCurrentUser = FirebaseDatabaseHelper.getUser();
+        mAdapter.setWorkoutData(mCurrentUser.getWorkoutPlans());
+    }
+
+    @Override
+    public void onClick(Workout workout) {
+        int workoutIndex = mCurrentUser.getWorkoutPlans().indexOf(workout);
+        startDetailActivityWithIndex(workoutIndex);
+    }
+
+    private void startDetailActivityWithIndex(int index){
+        Intent intent = new Intent(this, WorkoutDetailActivity.class);
+        intent.putExtra(WorkoutDetailActivity.WORKOUT_INDEX_EXTRA, index);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mFab, "transition_fab");
         startActivity(intent, options.toBundle());
     }
