@@ -24,6 +24,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_add_exercise"
             app:layout_constraintTop_toTopOf="parent">
 
             <EditText
@@ -33,8 +34,14 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginTop="50dp" />
 
-
         </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="@dimen/workout_name_layout_height"
+            android:id="@+id/exercises_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_play_workout"

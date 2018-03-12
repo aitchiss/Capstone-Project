@@ -25,6 +25,7 @@
 
         <activity android:name=".WorkoutListActivity" />
         <activity
+            android:launchMode="singleTop"
             android:name=".WorkoutDetailActivity"
             android:parentActivityName=".WorkoutListActivity" />
         <activity

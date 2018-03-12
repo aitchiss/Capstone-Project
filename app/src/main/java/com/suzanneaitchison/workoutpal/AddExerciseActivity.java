@@ -229,6 +229,7 @@ public class AddExerciseActivity extends AppCompatActivity {
 //                Add the exercise to the mWorkout, as many as sets dictates
                 for(int i=0; i < sets; i++){
                     PlannedExercise plannedExercise = new PlannedExercise();
+                    plannedExercise.setName(selectedExercise.getName());
                     plannedExercise.setId(selectedExercise.getId());
                     plannedExercise.setDescription(selectedExercise.getDescription());
                     plannedExercise.setExerciseCategory(selectedExercise.getExerciseCategory());
