@@ -10,6 +10,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -41,6 +43,8 @@ public class WorkoutListActivity extends AppCompatActivity {
 
     private User mCurrentUser;
 
+    private WorkoutListRecyclerAdapter mAdapter;
+
     @BindView(R.id.fab_add_workout) FloatingActionButton mFab;
 
     @BindView(R.id.nav_drawer_layout)
@@ -51,6 +55,9 @@ public class WorkoutListActivity extends AppCompatActivity {
     @BindView(R.id.nav_view)
     NavigationView mNavView;
 
+    @BindView(R.id.recycler_view_workout_list)
+    RecyclerView mWorkoutRecyclerView;
+
     TextView mNavHeaderText;
 
     @Override
@@ -60,7 +67,6 @@ public class WorkoutListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
-//        mAuth = FirebaseAuth.getInstance();
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
@@ -72,6 +78,11 @@ public class WorkoutListActivity extends AppCompatActivity {
         mNavHeaderText = (TextView) mNavHeaderView.findViewById(R.id.nav_drawer_header_text);
         setNavDrawerTitle(mCurrentUser.getEmail());
 
+//        Populate the view
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, 1, false);
+        mAdapter = new WorkoutListRecyclerAdapter(mCurrentUser.getWorkoutPlans());
+        mWorkoutRecyclerView.setLayoutManager(layoutManager);
+        mWorkoutRecyclerView.setAdapter(mAdapter);
     }
 
 

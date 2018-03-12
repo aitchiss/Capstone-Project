@@ -14,13 +14,13 @@
 
         <include layout="@layout/app_toolbar"/>
 
-        <FrameLayout
-            android:id="@+id/workout_list_container"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_workout_list"
             android:layout_marginTop="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </FrameLayout>
+        </android.support.v7.widget.RecyclerView>
 
         <android.support.design.widget.FloatingActionButton
             app:fabSize="normal"
