@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.suzanneaitchison.workoutpal.models.PlannedExercise;
+import com.suzanneaitchison.workoutpal.models.WorkoutEntry;
 
 import java.util.ArrayList;
 
@@ -21,11 +22,11 @@ import butterknife.ButterKnife;
 public class WorkoutDetailRecyclerAdapter extends RecyclerView.Adapter<WorkoutDetailRecyclerAdapter.WorkoutDetailRecyclerAdapterViewHolder> {
 
 
-    private ArrayList<PlannedExercise> mExerciseData;
+    private ArrayList<WorkoutEntry> mWorkoutEntryData;
     private Context mContext;
 
-    public WorkoutDetailRecyclerAdapter(ArrayList<PlannedExercise> exercises, Context context){
-        mExerciseData = exercises;
+    public WorkoutDetailRecyclerAdapter(ArrayList<WorkoutEntry> entries, Context context){
+        mWorkoutEntryData = entries;
         mContext = context;
     }
 
@@ -41,20 +42,20 @@ public class WorkoutDetailRecyclerAdapter extends RecyclerView.Adapter<WorkoutDe
 
     @Override
     public void onBindViewHolder(WorkoutDetailRecyclerAdapterViewHolder holder, int position) {
-        holder.exerciseName.setText(mExerciseData.get(position).getName());
+        holder.exerciseName.setText(mWorkoutEntryData.get(position).getExerciseName());
     }
 
     @Override
     public int getItemCount() {
-        if(mExerciseData == null){
+        if(mWorkoutEntryData == null){
             return 0;
         } else {
-            return mExerciseData.size();
+            return mWorkoutEntryData.size();
         }
     }
 
-    public void setExerciseData(ArrayList<PlannedExercise> exercises){
-        mExerciseData = exercises;
+    public void setWorkoutEntryData(ArrayList<WorkoutEntry> entries){
+        mWorkoutEntryData = entries;
         notifyDataSetChanged();
     }
 

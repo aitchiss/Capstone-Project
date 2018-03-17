@@ -61,7 +61,7 @@ public class WorkoutDetailActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(mWorkout.getWorkoutName());
         }
 
-        mDetailAdapter = new WorkoutDetailRecyclerAdapter(mWorkout.getPlannedExercises(), this);
+        mDetailAdapter = new WorkoutDetailRecyclerAdapter(mWorkout.getWorkoutEntries(), this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, 1, false);
         mExercisesRecyclerView.setLayoutManager(layoutManager);
@@ -84,7 +84,6 @@ public class WorkoutDetailActivity extends AppCompatActivity {
                 mWorkout.setWorkoutName(s.toString());
                 mUser.getWorkoutPlans().set(mWorkoutIndex, mWorkout);
                 FirebaseDatabaseHelper.saveUsersPlannedWorkouts(mUser.getWorkoutPlans());
-                getSupportActionBar().setTitle(s.toString());
             }
         });
     }
@@ -101,7 +100,7 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         mUser = FirebaseDatabaseHelper.getUser();
         if(mWorkoutIndex >= 0){
             mWorkout = mUser.getWorkoutPlans().get(mWorkoutIndex);
-            mDetailAdapter.setExerciseData(mWorkout.getPlannedExercises());
+            mDetailAdapter.setWorkoutEntryData(mWorkout.getWorkoutEntries());
         }
         super.onResume();
     }
@@ -123,7 +122,7 @@ public class WorkoutDetailActivity extends AppCompatActivity {
                 updatedWorkouts.remove(mWorkoutIndex);
                 FirebaseDatabaseHelper.saveUsersPlannedWorkouts(updatedWorkouts);
                 supportFinishAfterTransition();
-                Toast toast = Toast.makeText(this, "Workout deleted", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(this, getResources().getString(R.string.deleted_workout), Toast.LENGTH_LONG);
                 toast.show();
                 return true;
         }
@@ -136,4 +135,5 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(R.anim.slide_up_anim, R.anim.static_anim);
     }
+
 }

@@ -22,5 +22,6 @@
     <string name="kg_unit_label">kg</string>
     <string name="rest_time_label">Rest after:</string>
     <string name="duration_label">Duration:</string>
+    <string name="deleted_workout">Workout deleted</string>
 
 </resources>

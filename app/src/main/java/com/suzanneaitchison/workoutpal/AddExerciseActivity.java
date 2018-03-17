@@ -25,6 +25,7 @@ import com.suzanneaitchison.workoutpal.models.Exercise;
 import com.suzanneaitchison.workoutpal.models.PlannedExercise;
 import com.suzanneaitchison.workoutpal.models.User;
 import com.suzanneaitchison.workoutpal.models.Workout;
+import com.suzanneaitchison.workoutpal.models.WorkoutEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -226,20 +227,17 @@ public class AddExerciseActivity extends AppCompatActivity {
 //                if there are no sets to add, return without proceeding
                 if(sets == 0){ return; }
 
-//                Add the exercise to the mWorkout, as many as sets dictates
-                for(int i=0; i < sets; i++){
-                    PlannedExercise plannedExercise = new PlannedExercise();
-                    plannedExercise.setName(selectedExercise.getName());
-                    plannedExercise.setId(selectedExercise.getId());
-                    plannedExercise.setDescription(selectedExercise.getDescription());
-                    plannedExercise.setExerciseCategory(selectedExercise.getExerciseCategory());
-                    plannedExercise.setImageURL(selectedExercise.getImageURL());
-                    plannedExercise.setWeight(weight);
-                    plannedExercise.setDuration(duration);
-                    plannedExercise.setReps(reps);
-                    plannedExercise.setRestTime(restTime);
-                    mWorkout.addExercise(plannedExercise);
-                }
+//                Add the entry to the mWorkout
+
+                WorkoutEntry workoutEntry = new WorkoutEntry();
+                workoutEntry.setExerciseId(selectedExercise.getId());
+                workoutEntry.setExerciseName(selectedExercise.getName());
+                workoutEntry.setWeight(weight);
+                workoutEntry.setDuration(duration);
+                workoutEntry.setReps(reps);
+                workoutEntry.setRestTime(restTime);
+                mWorkout.addWorkoutEntry(workoutEntry);
+
 //                Update the users workout plans and save in Firebase
 
                 ArrayList<Workout> updatedWorkouts = mUser.getWorkoutPlans();

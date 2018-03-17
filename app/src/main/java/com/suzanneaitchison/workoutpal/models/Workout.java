@@ -20,7 +20,23 @@ public class Workout {
     }
 
     private Date completedDate;
-    private ArrayList<PlannedExercise> plannedExercises;
+
+    private ArrayList<WorkoutEntry> workoutEntries;
+
+    public ArrayList<WorkoutEntry> getWorkoutEntries() {
+        return workoutEntries;
+    }
+
+    public void setWorkoutEntries(ArrayList<WorkoutEntry> workoutEntries) {
+        this.workoutEntries = workoutEntries;
+    }
+
+    public void addWorkoutEntry(WorkoutEntry entry){
+        if(this.workoutEntries == null){
+            this.workoutEntries = new ArrayList<>();
+        }
+        this.workoutEntries.add(entry);
+    }
 
     public Date getCompletedDate() {
         return completedDate;
@@ -30,18 +46,4 @@ public class Workout {
         this.completedDate = completedDate;
     }
 
-    public ArrayList<PlannedExercise> getPlannedExercises() {
-        return plannedExercises;
-    }
-
-    public void setPlannedExercises(ArrayList<PlannedExercise> plannedExercises) {
-        this.plannedExercises = plannedExercises;
-    }
-
-    public void addExercise(PlannedExercise exercise){
-        if(this.plannedExercises == null){
-            this.plannedExercises = new ArrayList<>();
-        }
-        this.plannedExercises.add(exercise);
-    }
 }
