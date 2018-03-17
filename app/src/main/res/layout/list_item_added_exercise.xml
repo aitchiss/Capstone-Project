@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:id="@+id/exercise_list_item_layout"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
+    android:layout_marginStart="@dimen/standard_mobile_side_margin"
+    android:layout_marginEnd="@dimen/standard_mobile_side_margin"
+    android:layout_marginTop="@dimen/standard_mobile_side_margin"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="75dp"
     xmlns:tools="http://schemas.android.com/tools">
-    <TextView
-        android:text="item added g"
+
+    <ImageView
+        android:id="@+id/iv_entry_image"
+        android:padding="10dp"
+        android:layout_width="75dp"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/standard_mobile_side_margin"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        tools:text="exercise name"
-        android:id="@+id/tv_exercise_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_exercise_name"
+            tools:text="Exercise name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            tools:text="Exercise detail"
+            android:id="@+id/tv_exercise_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.suzanneaitchison.workoutpal.models.PlannedExercise;
@@ -42,6 +43,23 @@ public class WorkoutDetailRecyclerAdapter extends RecyclerView.Adapter<WorkoutDe
 
     @Override
     public void onBindViewHolder(WorkoutDetailRecyclerAdapterViewHolder holder, int position) {
+        WorkoutEntry entry = mWorkoutEntryData.get(position);
+        boolean isTimed = entry.getDuration() != 0;
+
+        if(isTimed){
+            holder.exerciseImage.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
+            holder.exerciseImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_timer));
+            String sets = String.valueOf(entry.getSets());
+            String seconds = String.valueOf(entry.getDuration());
+            holder.exerciseDetail.setText(sets + " x " + seconds + "s");
+        } else {
+            holder.exerciseImage.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+            holder.exerciseImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_barbell));
+            String sets = String.valueOf(entry.getSets());
+            String reps = String.valueOf(entry.getReps());
+            holder.exerciseDetail.setText(sets + " x " + reps + "reps");
+        }
+
         holder.exerciseName.setText(mWorkoutEntryData.get(position).getExerciseName());
     }
 
@@ -63,6 +81,12 @@ public class WorkoutDetailRecyclerAdapter extends RecyclerView.Adapter<WorkoutDe
 
         @BindView(R.id.tv_exercise_name)
         TextView exerciseName;
+
+        @BindView(R.id.tv_exercise_detail)
+        TextView exerciseDetail;
+
+        @BindView(R.id.iv_entry_image)
+        ImageView exerciseImage;
 
         public WorkoutDetailRecyclerAdapterViewHolder(View itemView) {
             super(itemView);

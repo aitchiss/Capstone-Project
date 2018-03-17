@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.Toolbar;
 import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
 import com.suzanneaitchison.workoutpal.models.User;
 import com.suzanneaitchison.workoutpal.models.Workout;
+import com.suzanneaitchison.workoutpal.models.WorkoutEntry;
 
 import java.util.ArrayList;
 
@@ -60,6 +62,21 @@ public class WorkoutDetailActivity extends AppCompatActivity {
             mWorkoutName.setText(mWorkout.getWorkoutName());
             getSupportActionBar().setTitle(mWorkout.getWorkoutName());
         }
+
+        ItemTouchHelper.SimpleCallback itemTouchHelper = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                deleteWorkoutEntry(viewHolder.getAdapterPosition());
+            }
+        };
+
+        new ItemTouchHelper(itemTouchHelper).attachToRecyclerView(mExercisesRecyclerView);
 
         mDetailAdapter = new WorkoutDetailRecyclerAdapter(mWorkout.getWorkoutEntries(), this);
 
@@ -135,5 +152,17 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(R.anim.slide_up_anim, R.anim.static_anim);
     }
+
+    private void deleteWorkoutEntry(int position){
+        ArrayList<WorkoutEntry> entries = mWorkout.getWorkoutEntries();
+        entries.remove(position);
+        ArrayList<Workout> updatedWorkouts = mUser.getWorkoutPlans();
+        updatedWorkouts.set(mWorkoutIndex, mWorkout);
+        FirebaseDatabaseHelper.saveUsersPlannedWorkouts(updatedWorkouts);
+
+        mDetailAdapter.setWorkoutEntryData(entries);
+    }
+
+
 
 }

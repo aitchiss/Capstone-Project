@@ -232,6 +232,7 @@ public class AddExerciseActivity extends AppCompatActivity {
                 WorkoutEntry workoutEntry = new WorkoutEntry();
                 workoutEntry.setExerciseId(selectedExercise.getId());
                 workoutEntry.setExerciseName(selectedExercise.getName());
+                workoutEntry.setSets(sets);
                 workoutEntry.setWeight(weight);
                 workoutEntry.setDuration(duration);
                 workoutEntry.setReps(reps);
