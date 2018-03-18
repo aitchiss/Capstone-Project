@@ -23,15 +23,21 @@
             android:name=".data.ExerciseSyncIntentService"
             android:exported="false" />
 
-        <activity android:name=".WorkoutListActivity" android:launchMode="singleTop" />
         <activity
-            android:launchMode="singleTop"
+            android:name=".WorkoutListActivity"
+            android:launchMode="singleTop" />
+        <activity
             android:name=".WorkoutDetailActivity"
+            android:launchMode="singleTop"
             android:parentActivityName=".WorkoutListActivity" />
         <activity
             android:name=".AddExerciseActivity"
             android:parentActivityName=".WorkoutDetailActivity" />
-        <activity android:name=".CustomiseExerciseActivity" android:theme="@style/dialog_theme"></activity>
+        <activity
+            android:name=".CustomiseExerciseActivity"
+            android:theme="@style/dialog_theme" />
+        <activity android:name=".PlayWorkoutActivity"
+            android:parentActivityName=".WorkoutDetailActivity"></activity>
     </application>
 
 </manifest>

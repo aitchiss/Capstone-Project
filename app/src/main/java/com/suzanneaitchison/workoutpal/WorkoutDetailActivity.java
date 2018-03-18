@@ -97,7 +97,6 @@ public class WorkoutDetailActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-//  todo              update the workout name in the db and the view - save in FB
                 mWorkout.setWorkoutName(s.toString());
                 mUser.getWorkoutPlans().set(mWorkoutIndex, mWorkout);
                 FirebaseDatabaseHelper.saveUsersPlannedWorkouts(mUser.getWorkoutPlans());
@@ -161,6 +160,12 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         FirebaseDatabaseHelper.saveUsersPlannedWorkouts(updatedWorkouts);
 
         mDetailAdapter.setWorkoutEntryData(entries);
+    }
+
+    public void onPlayButtonTap(View view){
+        Intent intent = new Intent(this, PlayWorkoutActivity.class);
+        intent.putExtra(WORKOUT_INDEX_EXTRA, mWorkoutIndex);
+        startActivity(intent);
     }
 
 

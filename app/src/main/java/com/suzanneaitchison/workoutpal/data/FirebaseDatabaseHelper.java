@@ -69,6 +69,15 @@ public class FirebaseDatabaseHelper {
         });
     }
 
+    public static Exercise getExerciseWithId(int id){
+        for(Exercise exercise : mExercises){
+            if(exercise.getId() == id){
+                return exercise;
+            }
+        }
+        return null;
+    }
+
     public static ArrayList<Exercise> getAllExercises(){
         return mExercises;
     }

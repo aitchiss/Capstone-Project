@@ -10,6 +10,21 @@ public class PlannedExercise extends Exercise {
     private int duration;
     private int reps;
     private int restTime;
+    private boolean isComplete;
+
+    public PlannedExercise(){
+        isComplete = false;
+    }
+
+    public PlannedExercise(WorkoutEntry entry){
+        isComplete = false;
+        this.setId(entry.getExerciseId());
+        this.setName(entry.getExerciseName());
+        this.setReps(entry.getReps());
+        this.setRestTime(entry.getRestTime());
+        this.setDuration(entry.getDuration());
+        this.setWeight(entry.getWeight());
+    }
 
     public int getReps() {
         return reps;
@@ -41,5 +56,13 @@ public class PlannedExercise extends Exercise {
 
     public void setDuration(int seconds) {
         this.duration = seconds;
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
     }
 }
