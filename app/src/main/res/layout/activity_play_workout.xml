@@ -10,6 +10,7 @@
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout_exercise_names"
+        android:elevation="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="?attr/actionBarSize"
@@ -19,28 +20,40 @@
 
     </android.support.design.widget.TabLayout>
 
-
-
-    <ImageView
-        android:id="@+id/iv_exercise"
+    <android.support.v4.widget.NestedScrollView
+        app:layout_constraintTop_toBottomOf="@id/tab_layout_exercise_names"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/exercise_image_height"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tab_layout_exercise_names" />
+        android:layout_height="wrap_content">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_sets_list"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/standard_mobile_side_margin"
-        android:layout_marginEnd="@dimen/standard_mobile_side_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_exercise">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+            <ImageView
+                android:id="@+id/iv_exercise"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/exercise_image_height"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_sets_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginStart="@dimen/standard_mobile_side_margin"
+                android:layout_marginEnd="@dimen/standard_mobile_side_margin">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
 
 
 </android.support.constraint.ConstraintLayout>

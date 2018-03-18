@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.suzanneaitchison.workoutpal.models.PlannedExercise;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -60,14 +62,14 @@ public class PlayWorkoutSetsAdapter extends RecyclerView.Adapter<PlayWorkoutSets
                 holder.timedWeight.setText(String.valueOf(exercise.getWeight()));
             } else {
                 holder.timedWeight.setVisibility(View.INVISIBLE);
+                holder.timedKgLabel.setVisibility(View.INVISIBLE);
+                holder.timedXLabel.setVisibility(View.INVISIBLE);
             }
 
             if(exercise.isComplete()){
                 holder.timedCheckButton.setBackground(mContext.getDrawable(R.drawable.checkbox_complete));
-                holder.timedCheckButton.setText(null);
             } else {
-                holder.timedCheckButton.setBackground(null);
-                holder.timedCheckButton.setText(mContext.getString(R.string.start));
+                holder.timedCheckButton.setBackground(mContext.getDrawable(R.drawable.ic_timer_accent));
             }
 
 
@@ -105,7 +107,7 @@ public class PlayWorkoutSetsAdapter extends RecyclerView.Adapter<PlayWorkoutSets
 
 //        Layout for timed activities
         @BindView(R.id.layout_timed)
-        LinearLayout timedLayout;
+        ConstraintLayout timedLayout;
 
         @BindView(R.id.tv_timed_set_number)
         TextView timedSetNo;
@@ -118,6 +120,12 @@ public class PlayWorkoutSetsAdapter extends RecyclerView.Adapter<PlayWorkoutSets
 
         @BindView(R.id.btn_timed_check)
         Button timedCheckButton;
+
+        @BindView(R.id.tv_timed_weight)
+        TextView timedKgLabel;
+
+        @BindView(R.id.tv_timed_x)
+        TextView timedXLabel;
 
 //        Layout for reps activities
         @BindView(R.id.layout_reps)

@@ -2,9 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:layout_marginStart="@dimen/standard_mobile_side_margin"
+    android:layout_marginEnd="@dimen/standard_mobile_side_margin"
     android:gravity="center_vertical"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="75dp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_reps"
@@ -12,35 +14,38 @@
         android:layout_height="match_parent">
         <TextView
             android:id="@+id/tv_reps_set_number"
-            android:layout_marginBottom="5dp"
+            style="@style/set_detail_text_view_style"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/et_reps_number_of_reps"
+            style="@style/edit_text_set_detail_style"
+            android:layout_marginStart="@dimen/standard_mobile_side_margin"
             app:layout_constraintStart_toEndOf="@id/tv_reps_set_number"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/reps_x_text"
+            style="@style/set_detail_text_view_style"
             android:text="@string/x_string"
-            android:layout_marginBottom="5dp"
+            android:layout_marginStart="@dimen/standard_mobile_side_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/et_reps_number_of_reps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/et_reps_weight"
+            android:layout_marginStart="@dimen/standard_mobile_side_margin"
+            style="@style/edit_text_set_detail_style"
             app:layout_constraintStart_toEndOf="@id/reps_x_text"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/tv_kg"
+            style="@style/set_detail_text_view_style"
             android:text="@string/kg_unit_label"
-            android:layout_marginBottom="5dp"
             app:layout_constraintStart_toEndOf="@id/et_reps_weight"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="wrap_content"
@@ -56,7 +61,7 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:gravity="center_vertical"
         android:id="@+id/layout_timed"
         android:orientation="horizontal"
@@ -65,30 +70,54 @@
 
         <TextView
             android:id="@+id/tv_timed_set_number"
+            style="@style/set_detail_text_view_style"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/tv_timed_duration"
+            android:layout_marginStart="@dimen/standard_mobile_side_margin"
+            style="@style/set_detail_text_view_style"
+            app:layout_constraintStart_toEndOf="@id/tv_timed_set_number"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/tv_timed_x"
             android:text="@string/x_string"
+            android:layout_marginStart="@dimen/standard_mobile_side_margin"
+            style="@style/set_detail_text_view_style"
+            app:layout_constraintStart_toEndOf="@id/tv_timed_duration"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/et_timed_weight"
+            android:layout_marginStart="@dimen/standard_mobile_side_margin"
+            style="@style/edit_text_set_detail_style"
+            app:layout_constraintStart_toEndOf="@id/tv_timed_x"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_timed_weight"
+            style="@style/set_detail_text_view_style"
+            app:layout_constraintStart_toEndOf="@id/et_timed_weight"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/kg_unit_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
             android:id="@+id/btn_timed_check"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/ic_timer_accent"
             android:layout_gravity="end|center_vertical"
-            android:textColor="@color/colorAccent"
-            android:text="@string/start"
             android:layout_width="@dimen/check_button_size"
             android:layout_height="@dimen/check_button_size" />
 
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 
 </LinearLayout>
