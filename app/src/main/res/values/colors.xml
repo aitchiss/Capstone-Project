@@ -8,4 +8,6 @@
 
     <!--   WorkoutDetailActivity   -->
     <color name="colorWorkoutNameHeaderLayout">#FFFAF5FA</color>
+    <color name="timedExercise">#5076BB</color>
+    <color name="repsExercise">#FFC65D</color>
 </resources>

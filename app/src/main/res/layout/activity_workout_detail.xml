@@ -40,6 +40,7 @@
         <android.support.v7.widget.RecyclerView
             android:layout_marginTop="@dimen/workout_name_layout_height"
             android:id="@+id/exercises_recycler_view"
+            android:layout_marginBottom="@dimen/add_exercise_btn_height"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -66,7 +67,7 @@
         android:onClick="onAddExerciseClick"
         style="@style/add_exercise_btn_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/add_exercise_btn_height"
         android:text="@string/add_to_workout"
         app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
         app:layout_constraintEnd_toEndOf="parent"
