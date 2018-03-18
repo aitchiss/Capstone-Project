@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 
 import static com.suzanneaitchison.workoutpal.WorkoutDetailActivity.WORKOUT_INDEX_EXTRA;
 
-public class PlayWorkoutActivity extends AppCompatActivity {
+public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkoutSetsAdapter.SetButtonClickHandler {
 
     private Workout mWorkout;
     private User mUser;
@@ -60,8 +60,6 @@ public class PlayWorkoutActivity extends AppCompatActivity {
             setUpToolbar();
             setUpTabView();
             setUpTabData();
-
-
         }
     }
 
@@ -136,7 +134,7 @@ public class PlayWorkoutActivity extends AppCompatActivity {
             mTabData.add(i, listOfSets);
         }
 
-        mAdapter = new PlayWorkoutSetsAdapter(mTabData.get(0), this);
+        mAdapter = new PlayWorkoutSetsAdapter(mTabData.get(0), this, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, 1, false);
         mSetsRecyclerView.setLayoutManager(layoutManager);
         mSetsRecyclerView.setAdapter(mAdapter);
@@ -149,6 +147,32 @@ public class PlayWorkoutActivity extends AppCompatActivity {
                     .placeholder(getResources().getDrawable(R.drawable.no_img_placeholder))
                     .into(mExerciseImage);
             mExerciseImage.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+        }
+    }
+
+    @Override
+    public void onClick(PlannedExercise editedExercise, int position) {
+        PlannedExercise exercise = mTabData.get(mExerciseTabLayout.getSelectedTabPosition()).get(position);
+        if(!exercise.isComplete()){
+//            If the exercise is already complete, nothing needs to be done
+            boolean isTimedExercise = exercise.getDuration() > 0;
+            if(isTimedExercise){
+//                todo - start a dialog timer, then mark as complete
+            } else {
+//                todo update the exercise with the values in the editText fields
+                exercise.setReps(editedExercise.getReps());
+                exercise.setWeight(editedExercise.getWeight());
+
+//                todo update the isComplete value to true
+                exercise.setComplete(true);
+//                todo save the completed exercise to the users completed exercises
+                mUser.addCompletedExercise(exercise);
+                FirebaseDatabaseHelper.saveUsersCompletedExercises(mUser.getCompletedExercises());
+//                todo mark the set as done by updating the background image
+//                todo kick off the rest timer if needed
+//                todo refresh the adapter data
+                mAdapter.updateExerciseData(mTabData.get(mExerciseTabLayout.getSelectedTabPosition()));
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ public class User {
 
 
     private ArrayList<Workout> workoutPlans = new ArrayList<>();
-    private ArrayList<Workout> completedWorkouts = new ArrayList<>();
+    private ArrayList<PlannedExercise> completedExercises = new ArrayList<>();
 
     public User(){
 
@@ -47,12 +47,16 @@ public class User {
         this.workoutPlans = workoutPlans;
     }
 
-    public ArrayList<Workout> getCompletedWorkouts() {
-        return completedWorkouts;
+    public ArrayList<PlannedExercise> getCompletedExercises() {
+        return completedExercises;
     }
 
-    public void setCompletedWorkouts(ArrayList<Workout> completedWorkouts) {
-        this.completedWorkouts = completedWorkouts;
+    public void setCompletedWorkouts(ArrayList<PlannedExercise> completedExercises) {
+        this.completedExercises = completedExercises;
+    }
+
+    public void addCompletedExercise(PlannedExercise exercise){
+        this.completedExercises.add(exercise);
     }
 
     public int addNewWorkoutPlan(Workout workout){

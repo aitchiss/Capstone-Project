@@ -1,5 +1,9 @@
 package com.suzanneaitchison.workoutpal.models;
 
+import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by suzanne on 05/03/2018.
  */
@@ -11,6 +15,7 @@ public class PlannedExercise extends Exercise {
     private int reps;
     private int restTime;
     private boolean isComplete;
+    private Date completedDate;
 
     public PlannedExercise(){
         isComplete = false;
@@ -64,5 +69,14 @@ public class PlannedExercise extends Exercise {
 
     public void setComplete(boolean complete) {
         isComplete = complete;
+        completedDate = Calendar.getInstance().getTime();
+    }
+
+    public Date getCompletedDate() {
+        return completedDate;
+    }
+
+    public void setCompletedDate(Date completedDate) {
+        this.completedDate = completedDate;
     }
 }

@@ -26,12 +26,18 @@ import butterknife.ButterKnife;
 
 public class PlayWorkoutSetsAdapter extends RecyclerView.Adapter<PlayWorkoutSetsAdapter.PlayWorkoutSetsViewHolder> {
 
+    public interface SetButtonClickHandler {
+        void onClick(PlannedExercise exercise, int position);
+    }
+
     private ArrayList<PlannedExercise> mExercises;
     private Context mContext;
+    private SetButtonClickHandler mClickHandler;
 
-    public PlayWorkoutSetsAdapter(ArrayList<PlannedExercise> exercises, Context context){
+    public PlayWorkoutSetsAdapter(ArrayList<PlannedExercise> exercises, Context context, SetButtonClickHandler clickHandler){
         mContext = context;
         mExercises = exercises;
+        mClickHandler = clickHandler;
     }
 
     @Override
@@ -103,7 +109,7 @@ public class PlayWorkoutSetsAdapter extends RecyclerView.Adapter<PlayWorkoutSets
         notifyDataSetChanged();
     }
 
-    class PlayWorkoutSetsViewHolder extends RecyclerView.ViewHolder {
+    class PlayWorkoutSetsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
 
 //        Layout for timed activities
         @BindView(R.id.layout_timed)
@@ -146,6 +152,28 @@ public class PlayWorkoutSetsAdapter extends RecyclerView.Adapter<PlayWorkoutSets
         public PlayWorkoutSetsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            repsCheckButton.setOnClickListener(this);
+            timedCheckButton.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            PlannedExercise exercise = mExercises.get(position);
+
+            if(repsLayout.getVisibility() == View.VISIBLE){
+                int updatedReps = Integer.valueOf(noOfReps.getText().toString());
+                int updatedWeight = Integer.valueOf(repsWeight.getText().toString());
+                exercise.setWeight(updatedWeight);
+                exercise.setReps(updatedReps);
+
+                mClickHandler.onClick(exercise, position);
+            } else {
+                int updatedWeight = Integer.valueOf(timedWeight.getText().toString());
+                exercise.setWeight(updatedWeight);
+                mClickHandler.onClick(exercise, position);
+            }
         }
     }
 }

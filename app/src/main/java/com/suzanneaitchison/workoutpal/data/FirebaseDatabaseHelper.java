@@ -12,6 +12,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.suzanneaitchison.workoutpal.models.Exercise;
+import com.suzanneaitchison.workoutpal.models.PlannedExercise;
 import com.suzanneaitchison.workoutpal.models.User;
 import com.suzanneaitchison.workoutpal.models.Workout;
 import com.suzanneaitchison.workoutpal.utils.ExerciseJsonUtils;
@@ -130,6 +131,14 @@ public class FirebaseDatabaseHelper {
         DatabaseReference userToUpdateRef = mUsersRef.child(mCurrentUser.getId());
         Map<String, Object> updates = new HashMap<>();
         updates.put("workoutPlans", updatedPlannedWorkouts);
+        userToUpdateRef.updateChildren(updates);
+    }
+
+    public static void saveUsersCompletedExercises(ArrayList<PlannedExercise> updatedExercises){
+        mCurrentUser.setCompletedWorkouts(updatedExercises);
+        DatabaseReference userToUpdateRef = mUsersRef.child(mCurrentUser.getId());
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("completedExercises", updatedExercises);
         userToUpdateRef.updateChildren(updates);
     }
 
