@@ -1,12 +1,20 @@
 package com.suzanneaitchison.workoutpal;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
+import android.os.CountDownTimer;
 import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
@@ -150,6 +158,48 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
         }
     }
 
+    private boolean isWorkoutComplete(){
+        for(ArrayList<PlannedExercise> activity : mTabData){
+            for(PlannedExercise exercise : activity){
+                if(!exercise.isComplete()){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void showRestTimer(int restTime){
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        final TextView countdownTextView = new TextView(this);
+        countdownTextView.setText(String.valueOf(restTime));
+        countdownTextView.setGravity(Gravity.CENTER);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            countdownTextView.setTextAppearance(R.style.set_detail_text_view_style);
+        }
+        alertDialog.setView(countdownTextView);
+        alertDialog.setTitle(getResources().getString(R.string.rest));
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Skip", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+
+        new CountDownTimer(restTime * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                countdownTextView.setText(String.valueOf(millisUntilFinished/1000));
+            }
+
+            @Override
+            public void onFinish() {
+                alertDialog.dismiss();
+            }
+        }.start();
+    }
+
     @Override
     public void onClick(PlannedExercise editedExercise, int position) {
         PlannedExercise exercise = mTabData.get(mExerciseTabLayout.getSelectedTabPosition()).get(position);
@@ -159,19 +209,25 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
             if(isTimedExercise){
 //                todo - start a dialog timer, then mark as complete
             } else {
-//                todo update the exercise with the values in the editText fields
+//                update with the edited fields
                 exercise.setReps(editedExercise.getReps());
                 exercise.setWeight(editedExercise.getWeight());
-
-//                todo update the isComplete value to true
                 exercise.setComplete(true);
-//                todo save the completed exercise to the users completed exercises
+//                save the completed exercise to the users completed exercises
                 mUser.addCompletedExercise(exercise);
                 FirebaseDatabaseHelper.saveUsersCompletedExercises(mUser.getCompletedExercises());
-//                todo mark the set as done by updating the background image
-//                todo kick off the rest timer if needed
-//                todo refresh the adapter data
-                mAdapter.updateExerciseData(mTabData.get(mExerciseTabLayout.getSelectedTabPosition()));
+
+                if(isWorkoutComplete()){
+//                    todo - finish the workout
+                } else {
+//                 kick off the rest timer if needed
+                    if(exercise.getRestTime() > 0){
+                        showRestTimer(exercise.getRestTime());
+                    }
+                    mAdapter.updateExerciseData(mTabData.get(mExerciseTabLayout.getSelectedTabPosition()));
+                }
+
+
             }
         }
     }

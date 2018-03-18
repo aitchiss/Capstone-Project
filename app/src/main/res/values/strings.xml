@@ -25,5 +25,6 @@
     <string name="deleted_workout">Workout deleted</string>
     <string name="x_string">x</string>
     <string name="start">START</string>
+    <string name="rest">Rest</string>
 
 </resources>
