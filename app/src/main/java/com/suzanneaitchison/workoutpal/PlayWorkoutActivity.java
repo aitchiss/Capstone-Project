@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
 import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
 import com.suzanneaitchison.workoutpal.models.Exercise;
 import com.suzanneaitchison.workoutpal.models.PlannedExercise;
@@ -27,7 +30,8 @@ public class PlayWorkoutActivity extends AppCompatActivity {
     private User mUser;
     private int mWorkoutIndex;
 
-    private ArrayList<ArrayList<PlannedExercise>> mTabData;
+    private ArrayList<ArrayList<PlannedExercise>> mTabData = new ArrayList<>();
+    private PlayWorkoutSetsAdapter mAdapter;
 
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar mToolbar;
@@ -37,6 +41,10 @@ public class PlayWorkoutActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler_view_sets_list)
     RecyclerView mSetsRecyclerView;
+
+    @BindView(R.id.iv_exercise)
+    ImageView mExerciseImage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +60,8 @@ public class PlayWorkoutActivity extends AppCompatActivity {
             setUpToolbar();
             setUpTabView();
             setUpTabData();
+
+
         }
     }
 
@@ -59,6 +69,23 @@ public class PlayWorkoutActivity extends AppCompatActivity {
         for(WorkoutEntry entry : mWorkout.getWorkoutEntries()){
             mExerciseTabLayout.addTab(mExerciseTabLayout.newTab().setText(entry.getExerciseName()));
         }
+
+        mExerciseTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                updateWithTabSelection();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     private void setUpToolbar(){
@@ -68,9 +95,22 @@ public class PlayWorkoutActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void onTabSelected(){
+    private void updateWithTabSelection(){
 //  todo access the correct tab's data from mTabData and update the recycler view accordingly
 //        todo update the image
+
+        int selectedTab = mExerciseTabLayout.getSelectedTabPosition();
+        mAdapter.updateExerciseData(mTabData.get(selectedTab));
+
+        if(mTabData.get(selectedTab).get(0).getImageURL() == null || mTabData.get(selectedTab).get(0).getImageURL().isEmpty()){
+            mExerciseImage.setImageDrawable(getResources().getDrawable(R.drawable.no_img_placeholder));
+            mExerciseImage.setBackgroundColor(getResources().getColor(R.color.colorPlaceholder));
+        } else {
+            Picasso.get().load(mTabData.get(selectedTab).get(0).getImageURL())
+                    .placeholder(getResources().getDrawable(R.drawable.no_img_placeholder))
+                    .into(mExerciseImage);
+            mExerciseImage.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+        }
     }
 
     private void setUpTabData(){
@@ -96,6 +136,19 @@ public class PlayWorkoutActivity extends AppCompatActivity {
             mTabData.add(i, listOfSets);
         }
 
+        mAdapter = new PlayWorkoutSetsAdapter(mTabData.get(0), this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, 1, false);
+        mSetsRecyclerView.setLayoutManager(layoutManager);
+        mSetsRecyclerView.setAdapter(mAdapter);
 
+        if(mTabData.get(0).get(0).getImageURL() == null || mTabData.get(0).get(0).getImageURL().isEmpty()){
+            mExerciseImage.setImageDrawable(getResources().getDrawable(R.drawable.no_img_placeholder));
+            mExerciseImage.setBackgroundColor(getResources().getColor(R.color.colorPlaceholder));
+        } else {
+            Picasso.get().load(mTabData.get(0).get(0).getImageURL())
+                    .placeholder(getResources().getDrawable(R.drawable.no_img_placeholder))
+                    .into(mExerciseImage);
+            mExerciseImage.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+        }
     }
 }

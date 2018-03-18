@@ -1,22 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/tv_set_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:id="@+id/et_number_of_reps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:text="@string/x_string"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:id="@+id/et_weight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_reps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_reps_set_number"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/et_reps_number_of_reps"
+            app:layout_constraintStart_toEndOf="@id/tv_reps_set_number"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/reps_x_text"
+            android:text="@string/x_string"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/et_reps_number_of_reps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/et_reps_weight"
+            app:layout_constraintStart_toEndOf="@id/reps_x_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_kg"
+            android:text="@string/kg_unit_label"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintStart_toEndOf="@id/et_reps_weight"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_reps_check"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_gravity="end|center_vertical"
+            android:background="@drawable/checkbox_incomplete"
+            android:layout_width="@dimen/check_button_size"
+            android:layout_height="@dimen/check_button_size" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:id="@+id/layout_timed"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_timed_set_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_timed_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="@string/x_string"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/et_timed_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_timed_check"
+            android:layout_gravity="end|center_vertical"
+            android:textColor="@color/colorAccent"
+            android:text="@string/start"
+            android:layout_width="@dimen/check_button_size"
+            android:layout_height="@dimen/check_button_size" />
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

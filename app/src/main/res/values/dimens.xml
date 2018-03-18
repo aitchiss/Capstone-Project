@@ -16,4 +16,5 @@
 
     <!--   PlayWorkoutActivity   -->
     <dimen name="exercise_image_height">175dp</dimen>
+    <dimen name="check_button_size">40dp</dimen>
 </resources>
