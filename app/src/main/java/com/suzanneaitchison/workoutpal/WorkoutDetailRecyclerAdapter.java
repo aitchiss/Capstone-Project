@@ -46,20 +46,24 @@ public class WorkoutDetailRecyclerAdapter extends RecyclerView.Adapter<WorkoutDe
         WorkoutEntry entry = mWorkoutEntryData.get(position);
         boolean isTimed = entry.getDuration() != 0;
 
+        String detailText = String.valueOf(entry.getSets()) + " x ";
+
         if(isTimed){
             holder.exerciseImage.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
             holder.exerciseImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_timer));
-            String sets = String.valueOf(entry.getSets());
             String seconds = String.valueOf(entry.getDuration());
-            holder.exerciseDetail.setText(sets + " x " + seconds + "s");
+            detailText += seconds + "s";
         } else {
             holder.exerciseImage.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
             holder.exerciseImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_barbell));
-            String sets = String.valueOf(entry.getSets());
             String reps = String.valueOf(entry.getReps());
-            holder.exerciseDetail.setText(sets + " x " + reps + "reps");
+            detailText += reps + " reps";
         }
 
+        if(entry.getWeight() != 0){
+            detailText += " @ " + String.valueOf(entry.getWeight()) + "kg";
+        }
+        holder.exerciseDetail.setText(detailText);
         holder.exerciseName.setText(mWorkoutEntryData.get(position).getExerciseName());
     }
 

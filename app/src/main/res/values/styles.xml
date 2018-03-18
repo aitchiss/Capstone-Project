@@ -11,8 +11,9 @@
 
     <!--   WorkoutDetailActivity   -->
     <style name="add_exercise_btn_style">
-        <item name="android:background">@color/fui_transparent</item>
+        <item name="android:background">@color/colorWhite</item>
         <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:elevation">6dp</item>
     </style>
 
     <!--   CustomiseExerciseActivity   -->
