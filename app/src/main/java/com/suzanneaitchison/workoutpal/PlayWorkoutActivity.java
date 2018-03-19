@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -245,6 +246,45 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
         }.start();
     }
 
+    private void showWorkoutCompleteDialogAndFinish(){
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        LinearLayout completeLayout = new LinearLayout(this);
+        completeLayout.setOrientation(LinearLayout.VERTICAL);
+        completeLayout.setPadding(20,200,20,200);
+        ImageView image = new ImageView(this);
+        image.setImageDrawable(getResources().getDrawable(R.drawable.checkbox_complete));
+        image.setMinimumHeight(75);
+        image.setMinimumWidth(75);
+        TextView completeText = new TextView(this);
+        completeText.setPadding(0,50,0,0);
+        completeText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        completeText.setText(getResources().getString(R.string.workout_complete));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            completeText.setTextAppearance(R.style.set_detail_text_view_style);
+        }
+
+        completeLayout.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+        completeLayout.addView(image);
+        completeLayout.addView(completeText);
+
+        alertDialog.setView(completeLayout);
+        alertDialog.show();
+
+        new CountDownTimer(3000, 1000){
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                alertDialog.dismiss();
+                finish();
+            }
+        }.start();
+    }
+
     @Override
     public void onClick(PlannedExercise editedExercise, int position) {
         PlannedExercise exercise = mTabData.get(mExerciseTabLayout.getSelectedTabPosition()).get(position);
@@ -266,6 +306,7 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
 
                 if(isWorkoutComplete()){
 //                    todo - finish the workout
+                    showWorkoutCompleteDialogAndFinish();
                 } else {
 //                 kick off the rest timer if needed
                     if(exercise.getRestTime() > 0){
