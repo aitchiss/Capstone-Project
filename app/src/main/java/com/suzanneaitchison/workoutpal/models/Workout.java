@@ -1,6 +1,7 @@
 package com.suzanneaitchison.workoutpal.models;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -42,8 +43,8 @@ public class Workout {
         return completedDate;
     }
 
-    public void setCompletedDate(Date completedDate) {
-        this.completedDate = completedDate;
+    public void updateLastCompletedDate() {
+        this.completedDate = Calendar.getInstance().getTime();
     }
 
 }

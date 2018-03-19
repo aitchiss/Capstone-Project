@@ -234,7 +234,7 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
                 FirebaseDatabaseHelper.saveUsersCompletedExercises(mUser.getCompletedExercises());
 
                 if(isWorkoutComplete()){
-//                   todo handle completed workout
+                    finishWorkout();
                 } else {
                     if(exercise.getRestTime() > 0){
                         showRestTimer(exercise.getRestTime());
@@ -285,6 +285,12 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
         }.start();
     }
 
+    private void finishWorkout(){
+        showWorkoutCompleteDialogAndFinish();
+        mWorkout.updateLastCompletedDate();
+        FirebaseDatabaseHelper.saveUsersPlannedWorkouts(mUser.getWorkoutPlans());
+    }
+
     @Override
     public void onClick(PlannedExercise editedExercise, int position) {
         PlannedExercise exercise = mTabData.get(mExerciseTabLayout.getSelectedTabPosition()).get(position);
@@ -292,7 +298,6 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
 //            If the exercise is already complete, nothing needs to be done
             boolean isTimedExercise = exercise.getDuration() > 0;
             if(isTimedExercise){
-//                todo - start a dialog timer, then mark as complete
                 exercise.setWeight(editedExercise.getWeight());
                 completeTimedExercise(exercise);
             } else {
@@ -306,7 +311,7 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
 
                 if(isWorkoutComplete()){
 //                    todo - finish the workout
-                    showWorkoutCompleteDialogAndFinish();
+                    finishWorkout();
                 } else {
 //                 kick off the rest timer if needed
                     if(exercise.getRestTime() > 0){
