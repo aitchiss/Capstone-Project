@@ -179,7 +179,7 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
         }
         alertDialog.setView(countdownTextView);
         alertDialog.setTitle(getResources().getString(R.string.rest));
-        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Skip", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getResources().getString(R.string.skip), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 alertDialog.dismiss();
@@ -200,6 +200,51 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
         }.start();
     }
 
+    private void completeTimedExercise(final PlannedExercise exercise){
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        final TextView countdownTextView = new TextView(this);
+        countdownTextView.setText(String.valueOf(exercise.getDuration()));
+        countdownTextView.setGravity(Gravity.CENTER);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            countdownTextView.setTextAppearance(R.style.set_detail_text_view_style);
+        }
+        alertDialog.setView(countdownTextView);
+        alertDialog.setTitle(getResources().getString(R.string.title_timed_exercise));
+        alertDialog.setCanceledOnTouchOutside(false);
+
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+
+        new CountDownTimer(exercise.getDuration() * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                countdownTextView.setText(String.valueOf(millisUntilFinished/1000));
+            }
+
+            @Override
+            public void onFinish() {
+                exercise.setComplete(true);
+                mUser.addCompletedExercise(exercise);
+                FirebaseDatabaseHelper.saveUsersCompletedExercises(mUser.getCompletedExercises());
+
+                if(isWorkoutComplete()){
+//                   todo handle completed workout
+                } else {
+                    if(exercise.getRestTime() > 0){
+                        showRestTimer(exercise.getRestTime());
+                    }
+                    mAdapter.updateExerciseData(mTabData.get(mExerciseTabLayout.getSelectedTabPosition()));
+                }
+                alertDialog.dismiss();
+            }
+        }.start();
+    }
+
     @Override
     public void onClick(PlannedExercise editedExercise, int position) {
         PlannedExercise exercise = mTabData.get(mExerciseTabLayout.getSelectedTabPosition()).get(position);
@@ -208,6 +253,8 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
             boolean isTimedExercise = exercise.getDuration() > 0;
             if(isTimedExercise){
 //                todo - start a dialog timer, then mark as complete
+                exercise.setWeight(editedExercise.getWeight());
+                completeTimedExercise(exercise);
             } else {
 //                update with the edited fields
                 exercise.setReps(editedExercise.getReps());

@@ -26,5 +26,8 @@
     <string name="x_string">x</string>
     <string name="start">START</string>
     <string name="rest">Rest</string>
+    <string name="title_timed_exercise">Seconds remaining on exercise</string>
+    <string name="cancel">Cancel</string>
+    <string name="skip">Skip</string>
 
 </resources>
