@@ -163,6 +163,10 @@ public class WorkoutDetailActivity extends AppCompatActivity {
     }
 
     public void onPlayButtonTap(View view){
+        if (mWorkout.getWorkoutEntries() == null || mWorkout.getWorkoutEntries().size() == 0)
+        {
+            return;
+        }
         Intent intent = new Intent(this, PlayWorkoutActivity.class);
         intent.putExtra(WORKOUT_INDEX_EXTRA, mWorkoutIndex);
         startActivity(intent);

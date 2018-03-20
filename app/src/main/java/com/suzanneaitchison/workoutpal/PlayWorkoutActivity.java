@@ -72,6 +72,16 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
     private void setUpTabView(){
         for(WorkoutEntry entry : mWorkout.getWorkoutEntries()){
             mExerciseTabLayout.addTab(mExerciseTabLayout.newTab().setText(entry.getExerciseName()));
@@ -103,9 +113,6 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
     }
 
     private void updateWithTabSelection(){
-//  todo access the correct tab's data from mTabData and update the recycler view accordingly
-//        todo update the image
-
         int selectedTab = mExerciseTabLayout.getSelectedTabPosition();
         mAdapter.updateExerciseData(mTabData.get(selectedTab));
 
@@ -121,9 +128,6 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
     }
 
     private void setUpTabData(){
-//        todo create an arrayList of all the exercises for that tab (i.e. each set)
-//        todo add this to the correct tab position in mTabData
-//        todo set a recycler view adapter onCreate with initial set of exercises - do this in onCreate?
 
         int numberOfTabs = mWorkout.getWorkoutEntries().size();
 
@@ -310,7 +314,6 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
                 FirebaseDatabaseHelper.saveUsersCompletedExercises(mUser.getCompletedExercises());
 
                 if(isWorkoutComplete()){
-//                    todo - finish the workout
                     finishWorkout();
                 } else {
 //                 kick off the rest timer if needed
