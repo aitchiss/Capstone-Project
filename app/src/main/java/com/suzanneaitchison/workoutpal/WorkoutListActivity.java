@@ -1,6 +1,7 @@
 package com.suzanneaitchison.workoutpal;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -72,6 +73,8 @@ public class WorkoutListActivity extends AppCompatActivity implements WorkoutLis
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white);
 
+        setUpDrawerMenuListeners();
+
         mCurrentUser = FirebaseDatabaseHelper.getUser();
         View mNavHeaderView = mNavView.getHeaderView(0);
         mNavHeaderText = (TextView) mNavHeaderView.findViewById(R.id.nav_drawer_header_text);
@@ -87,6 +90,17 @@ public class WorkoutListActivity extends AppCompatActivity implements WorkoutLis
 
     private void setNavDrawerTitle(String userEmail){
         mNavHeaderText.setText("You're signed in as " + userEmail);
+    }
+
+    private void setUpDrawerMenuListeners(){
+        mNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
     }
 
     @Override
