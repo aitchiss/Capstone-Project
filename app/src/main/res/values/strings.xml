@@ -30,5 +30,7 @@
     <string name="cancel">Cancel</string>
     <string name="skip">Skip</string>
     <string name="workout_complete">Workout complete!</string>
+    <string name="sign_out">Sign out</string>
+    <string name="progress">Progress</string>
 
 </resources>
