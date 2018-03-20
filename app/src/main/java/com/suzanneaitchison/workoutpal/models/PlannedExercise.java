@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -132,5 +133,6 @@ public class PlannedExercise extends Exercise implements Parcelable{
         public PlannedExercise[] newArray(int size) {
             return new PlannedExercise[size];
         }
+
     };
 }

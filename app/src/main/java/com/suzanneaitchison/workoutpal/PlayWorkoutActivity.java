@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,12 @@ import com.squareup.picasso.Picasso;
 import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
 import com.suzanneaitchison.workoutpal.models.Exercise;
 import com.suzanneaitchison.workoutpal.models.PlannedExercise;
+import com.suzanneaitchison.workoutpal.models.TabDataLog;
 import com.suzanneaitchison.workoutpal.models.User;
 import com.suzanneaitchison.workoutpal.models.Workout;
 import com.suzanneaitchison.workoutpal.models.WorkoutEntry;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -34,6 +37,9 @@ import butterknife.ButterKnife;
 import static com.suzanneaitchison.workoutpal.WorkoutDetailActivity.WORKOUT_INDEX_EXTRA;
 
 public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkoutSetsAdapter.SetButtonClickHandler {
+
+    private static final String TAB_DATA_KEY = "tab_data";
+    private static final String SELECTED_TAB_KEY = "selected_tab";
 
     private Workout mWorkout;
     private User mUser;
@@ -74,11 +80,22 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        TabDataLog tabLog = new TabDataLog(mTabData);
+        outState.putParcelable(TAB_DATA_KEY, tabLog);
+        outState.putInt(SELECTED_TAB_KEY, mExerciseTabLayout.getSelectedTabPosition());
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        if(savedInstanceState != null){
+            TabDataLog tabLog = savedInstanceState.getParcelable(TAB_DATA_KEY);
+            mTabData = tabLog.getTabData();
+            int selectedPosition = savedInstanceState.getInt(SELECTED_TAB_KEY);
+            TabLayout.Tab tab = mExerciseTabLayout.getTabAt(selectedPosition);
+            tab.select();
+            updateWithTabSelection(selectedPosition);
+        }
         super.onRestoreInstanceState(savedInstanceState);
     }
 
@@ -90,7 +107,7 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
         mExerciseTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                updateWithTabSelection();
+                updateWithTabSelection(mExerciseTabLayout.getSelectedTabPosition());
             }
 
             @Override
@@ -112,15 +129,14 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void updateWithTabSelection(){
-        int selectedTab = mExerciseTabLayout.getSelectedTabPosition();
-        mAdapter.updateExerciseData(mTabData.get(selectedTab));
+    private void updateWithTabSelection(int position){
+        mAdapter.updateExerciseData(mTabData.get(position));
 
-        if(mTabData.get(selectedTab).get(0).getImageURL() == null || mTabData.get(selectedTab).get(0).getImageURL().isEmpty()){
+        if(mTabData.get(position).get(0).getImageURL() == null || mTabData.get(position).get(0).getImageURL().isEmpty()){
             mExerciseImage.setImageDrawable(getResources().getDrawable(R.drawable.no_img_placeholder));
             mExerciseImage.setBackgroundColor(getResources().getColor(R.color.colorPlaceholder));
         } else {
-            Picasso.get().load(mTabData.get(selectedTab).get(0).getImageURL())
+            Picasso.get().load(mTabData.get(position).get(0).getImageURL())
                     .placeholder(getResources().getDrawable(R.drawable.no_img_placeholder))
                     .into(mExerciseImage);
             mExerciseImage.setBackgroundColor(getResources().getColor(R.color.colorWhite));
