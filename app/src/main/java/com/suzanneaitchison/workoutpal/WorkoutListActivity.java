@@ -42,25 +42,25 @@ import com.suzanneaitchison.workoutpal.models.Workout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WorkoutListActivity extends AppCompatActivity implements WorkoutListRecyclerAdapter.WorkoutClickHandler {
+public class WorkoutListActivity extends AppCompatActivity implements WorkoutListFragment.StartActivityFromList {
 
 
     private User mCurrentUser;
-
-    private WorkoutListRecyclerAdapter mAdapter;
-
-    @BindView(R.id.fab_add_workout) FloatingActionButton mFab;
-
+//
+//    private WorkoutListRecyclerAdapter mAdapter;
+//
+//    @BindView(R.id.fab_add_workout) FloatingActionButton mFab;
+//
     @BindView(R.id.nav_drawer_layout)
     DrawerLayout mDrawerLayout;
-
-    @BindView(R.id.toolbar) Toolbar mToolbar;
+//
+//    @BindView(R.id.toolbar) Toolbar mToolbar;
 
     @BindView(R.id.nav_view)
     NavigationView mNavView;
 
-    @BindView(R.id.recycler_view_workout_list)
-    RecyclerView mWorkoutRecyclerView;
+//    @BindView(R.id.recycler_view_workout_list)
+//    RecyclerView mWorkoutRecyclerView;
 
     TextView mNavHeaderText;
 
@@ -70,11 +70,11 @@ public class WorkoutListActivity extends AppCompatActivity implements WorkoutLis
         setContentView(R.layout.activity_workout_list);
         ButterKnife.bind(this);
 
-        setSupportActionBar(mToolbar);
+//        setSupportActionBar(mToolbar);
 
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white);
+//        ActionBar actionbar = getSupportActionBar();
+//        actionbar.setDisplayHomeAsUpEnabled(true);
+//        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white);
 
         setUpDrawerMenuListeners();
 
@@ -83,11 +83,16 @@ public class WorkoutListActivity extends AppCompatActivity implements WorkoutLis
         mNavHeaderText = (TextView) mNavHeaderView.findViewById(R.id.nav_drawer_header_text);
         setNavDrawerTitle(mCurrentUser.getEmail());
 
-//        Populate the view
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, 1, false);
-        mAdapter = new WorkoutListRecyclerAdapter(mCurrentUser.getWorkoutPlans(), this, this);
-        mWorkoutRecyclerView.setLayoutManager(layoutManager);
-        mWorkoutRecyclerView.setAdapter(mAdapter);
+////        Populate the view
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, 1, false);
+//        mAdapter = new WorkoutListRecyclerAdapter(mCurrentUser.getWorkoutPlans(), this, this);
+//        mWorkoutRecyclerView.setLayoutManager(layoutManager);
+//        mWorkoutRecyclerView.setAdapter(mAdapter);
+
+        WorkoutListFragment workoutListFragment = new WorkoutListFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, workoutListFragment)
+                .commit();
     }
 
 
@@ -122,37 +127,38 @@ public class WorkoutListActivity extends AppCompatActivity implements WorkoutLis
         return super.onOptionsItemSelected(item);
     }
 
-    public void onNewWorkoutButtonClick(View view){
-//      create the new workout, add it to the users arraylist, then pass the index through to the next activity
-        Workout workout = new Workout();
-        workout.setWorkoutName("New workout");
-        int workoutIndex = mCurrentUser.addNewWorkoutPlan(workout);
 
-        FirebaseDatabaseHelper.saveUsersPlannedWorkouts(mCurrentUser.getWorkoutPlans());
-        startDetailActivityWithIndex(workoutIndex);
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
         mCurrentUser = FirebaseDatabaseHelper.getUser();
-        mAdapter.setWorkoutData(mCurrentUser.getWorkoutPlans());
+//        mAdapter.setWorkoutData(mCurrentUser.getWorkoutPlans());
     }
 
-    @Override
-    public void onClick(Workout workout) {
-        int workoutIndex = mCurrentUser.getWorkoutPlans().indexOf(workout);
-        startDetailActivityWithIndex(workoutIndex);
-    }
+//    @Override
+//    public void onClick(Workout workout) {
+////        int workoutIndex = mCurrentUser.getWorkoutPlans().indexOf(workout);
+////        startDetailActivityWithIndex(workoutIndex);
+//    }
 
-    private void startDetailActivityWithIndex(int index){
-        Intent intent = new Intent(this, WorkoutDetailActivity.class);
-        intent.putExtra(WorkoutDetailActivity.WORKOUT_INDEX_EXTRA, index);
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mFab, "transition_fab");
-        startActivity(intent, options.toBundle());
-    }
+//    private void startDetailActivityWithIndex(int index){
+//        Intent intent = new Intent(this, WorkoutDetailActivity.class);
+//        intent.putExtra(WorkoutDetailActivity.WORKOUT_INDEX_EXTRA, index);
+//        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mFab, "transition_fab");
+//        startActivity(intent, options.toBundle());
+//    }
 
     private void signUserOut(){
         FirebaseDatabaseHelper.signUserOut(this);
+    }
+
+    @Override
+    public void startDetailActivity(int workoutIndex, FloatingActionButton fab) {
+        Intent intent = new Intent(getBaseContext(), WorkoutDetailActivity.class);
+        intent.putExtra(WorkoutDetailActivity.WORKOUT_INDEX_EXTRA, workoutIndex);
+//        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, fab, "transition_fab");
+//        startActivity(intent, options.toBundle());
+        startActivity(intent);
     }
 }

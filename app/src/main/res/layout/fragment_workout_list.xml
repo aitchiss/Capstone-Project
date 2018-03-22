@@ -1,0 +1,30 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.suzanneaitchison.workoutpal.WorkoutListFragment">
+
+    <include layout="@layout/app_toolbar"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_workout_list"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.design.widget.FloatingActionButton
+        app:fabSize="normal"
+        android:transitionName="transition_fab"
+        android:id="@+id/fab_add_workout"
+        android:src="@drawable/ic_add_white"
+        android:elevation="@dimen/standard_fab_elevation"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="@dimen/fab_button_margin"
+        android:layout_marginBottom="@dimen/fab_button_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</FrameLayout>
