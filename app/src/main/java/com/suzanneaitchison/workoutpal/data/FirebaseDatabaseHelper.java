@@ -1,7 +1,13 @@
 package com.suzanneaitchison.workoutpal.data;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -11,6 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.suzanneaitchison.workoutpal.AuthActivity;
+import com.suzanneaitchison.workoutpal.WorkoutListActivity;
 import com.suzanneaitchison.workoutpal.models.Exercise;
 import com.suzanneaitchison.workoutpal.models.PlannedExercise;
 import com.suzanneaitchison.workoutpal.models.User;
@@ -20,14 +28,19 @@ import com.suzanneaitchison.workoutpal.utils.ExerciseJsonUtils;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 /**
  * Created by suzanne on 04/03/2018.
  */
 
 public class FirebaseDatabaseHelper {
+
+    private static final int RC_SIGN_IN = 123;
 
     private static User mCurrentUser;
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -83,15 +96,7 @@ public class FirebaseDatabaseHelper {
         return mExercises;
     }
 
-    public static boolean checkForAuthenticatedUser(){
-        FirebaseUser user = mAuth.getCurrentUser();
-        if(user != null){
-            return true;
-        }
-        return false;
-    }
-
-    public static void listenForUser(){
+    public static void listenForUser(final Context context, final Intent intent){
         FirebaseUser user = mAuth.getCurrentUser();
         Query userQueryRef = mUsersRef.orderByChild("email").equalTo(user.getEmail());
 
@@ -101,6 +106,10 @@ public class FirebaseDatabaseHelper {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()){
 //                        There should only be one user in the list returned
                     mCurrentUser = userSnapshot.getValue(User.class);
+                }
+
+                if(mCurrentUser != null){
+                    context.startActivity(intent);
                 }
             }
 
@@ -141,5 +150,21 @@ public class FirebaseDatabaseHelper {
         updates.put("completedExercises", updatedExercises);
         userToUpdateRef.updateChildren(updates);
     }
+
+    public static void signUserOut(final Context context){
+        mCurrentUser = null;
+        mCurrentUserRef = null;
+        AuthUI.getInstance()
+                .signOut(context)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Intent intent = new Intent(context, AuthActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        context.startActivity(intent);
+                    }
+                });
+    }
+
+
 
 }

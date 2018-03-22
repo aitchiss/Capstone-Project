@@ -24,6 +24,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -97,6 +100,12 @@ public class WorkoutListActivity extends AppCompatActivity implements WorkoutLis
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 item.setChecked(true);
+
+                switch(item.getItemId()){
+                    case R.id.sign_out:
+                        signUserOut();
+                        break;
+                }
                 mDrawerLayout.closeDrawers();
                 return true;
             }
@@ -141,5 +150,9 @@ public class WorkoutListActivity extends AppCompatActivity implements WorkoutLis
         intent.putExtra(WorkoutDetailActivity.WORKOUT_INDEX_EXTRA, index);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mFab, "transition_fab");
         startActivity(intent, options.toBundle());
+    }
+
+    private void signUserOut(){
+        FirebaseDatabaseHelper.signUserOut(this);
     }
 }
