@@ -61,6 +61,14 @@ public class WorkoutDetailActivity extends AppCompatActivity {
             mWorkout = mUser.getWorkoutPlans().get(mWorkoutIndex);
             mWorkoutName.setText(mWorkout.getWorkoutName());
             getSupportActionBar().setTitle(mWorkout.getWorkoutName());
+        } else {
+//            this is a new workout
+            mWorkout = new Workout();
+            mWorkout.setWorkoutName("New workout");
+            mWorkoutIndex = mUser.addNewWorkoutPlan(mWorkout);
+            mWorkoutName.setText(mWorkout.getWorkoutName());
+            getSupportActionBar().setTitle(mWorkout.getWorkoutName());
+            FirebaseDatabaseHelper.saveUsersPlannedWorkouts(mUser.getWorkoutPlans());
         }
 
         ItemTouchHelper.SimpleCallback itemTouchHelper = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
@@ -102,7 +110,12 @@ public class WorkoutDetailActivity extends AppCompatActivity {
                 FirebaseDatabaseHelper.saveUsersPlannedWorkouts(mUser.getWorkoutPlans());
             }
         });
+
+
     }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

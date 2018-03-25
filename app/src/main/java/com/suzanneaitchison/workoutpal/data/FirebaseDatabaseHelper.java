@@ -100,7 +100,7 @@ public class FirebaseDatabaseHelper {
         FirebaseUser user = mAuth.getCurrentUser();
         Query userQueryRef = mUsersRef.orderByChild("email").equalTo(user.getEmail());
 
-        userQueryRef.addValueEventListener(new ValueEventListener() {
+        userQueryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()){

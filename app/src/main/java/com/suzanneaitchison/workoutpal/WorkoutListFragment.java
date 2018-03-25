@@ -77,15 +77,20 @@ public class WorkoutListFragment extends Fragment implements WorkoutListRecycler
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Workout workout = new Workout();
-                workout.setWorkoutName("New workout");
-                int workoutIndex = mCurrentUser.addNewWorkoutPlan(workout);
-
-                FirebaseDatabaseHelper.saveUsersPlannedWorkouts(mCurrentUser.getWorkoutPlans());
-                Intent intent = new Intent(rootView.getContext(), WorkoutDetailActivity.class);
-                intent.putExtra(WorkoutDetailActivity.WORKOUT_INDEX_EXTRA, workoutIndex);
-                getActivity().startActivity(intent);
+//                Workout workout = new Workout();
+//                workout.setWorkoutName("New workout");
+//                int workoutIndex = mCurrentUser.addNewWorkoutPlan(workout);
+//
+//
+//                Intent intent = new Intent(rootView.getContext(), WorkoutDetailActivity.class);
+//                intent.putExtra(WorkoutDetailActivity.WORKOUT_INDEX_EXTRA, workoutIndex);
+//                getActivity().startActivity(intent);
+//                FirebaseDatabaseHelper.saveUsersPlannedWorkouts(mCurrentUser.getWorkoutPlans());
 //                ((StartActivityFromList)getActivity()).startDetailActivity(workoutIndex, mFab);
+
+                Intent intent = new Intent(rootView.getContext(), WorkoutDetailActivity.class);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), mFab, "transition_fab");
+                startActivity(intent, options.toBundle());
             }
         });
 
