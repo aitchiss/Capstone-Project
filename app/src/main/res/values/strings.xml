@@ -6,7 +6,6 @@
     <string name="add_activity">Add activity</string>
 
 
-
     <!--   CustomiseExerciseActivity   -->
     <string name="reps_string">Reps</string>
     <string name="timed_string">Timed</string>
@@ -32,5 +31,8 @@
     <string name="sign_out">Sign out</string>
     <string name="progress">Progress</string>
     <string name="home">Home</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

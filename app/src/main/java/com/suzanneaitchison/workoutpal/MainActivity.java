@@ -92,6 +92,18 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.sign_out:
                         signUserOut();
                         break;
+                    case R.id.history:
+                        HistoryFragment fragment = new HistoryFragment();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, fragment)
+                                .commit();
+                        break;
+                    case R.id.home:
+                        WorkoutListFragment listFragement = new WorkoutListFragment();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, listFragement)
+                                .commit();
+                        break;
                 }
                 mDrawerLayout.closeDrawers();
                 return true;
