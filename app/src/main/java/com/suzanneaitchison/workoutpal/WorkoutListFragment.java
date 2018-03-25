@@ -95,27 +95,14 @@ public class WorkoutListFragment extends Fragment implements WorkoutListRecycler
         mAdapter.setWorkoutData(mCurrentUser.getWorkoutPlans());
     }
 
-    public void onNewWorkoutButtonClick(){
-//      create the new workout, add it to the users arraylist, then pass the index through to the next activity
-        Workout workout = new Workout();
-        workout.setWorkoutName("New workout");
-        int workoutIndex = mCurrentUser.addNewWorkoutPlan(workout);
-
-        FirebaseDatabaseHelper.saveUsersPlannedWorkouts(mCurrentUser.getWorkoutPlans());
-        startDetailActivityWithIndex(workoutIndex);
-    }
-
 
     @Override
     public void onClick(Workout workout) {
         int workoutIndex = mCurrentUser.getWorkoutPlans().indexOf(workout);
-        startDetailActivityWithIndex(workoutIndex);
-    }
-
-    private void startDetailActivityWithIndex(int index){
         Intent intent = new Intent(getActivity(), WorkoutDetailActivity.class);
-        intent.putExtra(WorkoutDetailActivity.WORKOUT_INDEX_EXTRA, index);
-
-
+        intent.putExtra(WorkoutDetailActivity.WORKOUT_INDEX_EXTRA, workoutIndex);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), mFab, "transition_fab");
+        startActivity(intent, options.toBundle());
     }
+
 }
