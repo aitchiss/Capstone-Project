@@ -3,7 +3,6 @@ package com.suzanneaitchison.workoutpal.data;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,7 +17,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.suzanneaitchison.workoutpal.AuthActivity;
-import com.suzanneaitchison.workoutpal.WorkoutListActivity;
 import com.suzanneaitchison.workoutpal.models.Exercise;
 import com.suzanneaitchison.workoutpal.models.PlannedExercise;
 import com.suzanneaitchison.workoutpal.models.User;
@@ -28,11 +26,8 @@ import com.suzanneaitchison.workoutpal.utils.ExerciseJsonUtils;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 /**
  * Created by suzanne on 04/03/2018.

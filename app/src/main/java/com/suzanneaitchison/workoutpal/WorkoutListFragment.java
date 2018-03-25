@@ -1,14 +1,12 @@
 package com.suzanneaitchison.workoutpal;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,10 +25,6 @@ import butterknife.ButterKnife;
 
 
 public class WorkoutListFragment extends Fragment implements WorkoutListRecyclerAdapter.WorkoutClickHandler {
-
-    public interface StartActivityFromList {
-        public void startDetailActivity(int workoutIndex, FloatingActionButton fab);
-    }
 
     private User mCurrentUser;
 
@@ -77,17 +71,6 @@ public class WorkoutListFragment extends Fragment implements WorkoutListRecycler
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Workout workout = new Workout();
-//                workout.setWorkoutName("New workout");
-//                int workoutIndex = mCurrentUser.addNewWorkoutPlan(workout);
-//
-//
-//                Intent intent = new Intent(rootView.getContext(), WorkoutDetailActivity.class);
-//                intent.putExtra(WorkoutDetailActivity.WORKOUT_INDEX_EXTRA, workoutIndex);
-//                getActivity().startActivity(intent);
-//                FirebaseDatabaseHelper.saveUsersPlannedWorkouts(mCurrentUser.getWorkoutPlans());
-//                ((StartActivityFromList)getActivity()).startDetailActivity(workoutIndex, mFab);
-
                 Intent intent = new Intent(rootView.getContext(), WorkoutDetailActivity.class);
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), mFab, "transition_fab");
                 startActivity(intent, options.toBundle());

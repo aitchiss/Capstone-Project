@@ -13,7 +13,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUserMetadata;
 
 import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
-import com.suzanneaitchison.workoutpal.models.User;
 
 import java.util.Arrays;
 
@@ -43,7 +42,7 @@ public class AuthActivity extends AppCompatActivity {
         if(mAuth.getCurrentUser() != null){
 //            user is already signed in - no need to re-authenticate
 //            set up the Helper with their details
-            Intent intent = new Intent(this, WorkoutListActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             FirebaseDatabaseHelper.listenForUser(this, intent);
             FirebaseDatabaseHelper.listenForExercises();
 
@@ -69,7 +68,7 @@ public class AuthActivity extends AppCompatActivity {
                 if (metadata.getCreationTimestamp() == metadata.getLastSignInTimestamp()){
                     FirebaseDatabaseHelper.createNewUser();
                 }
-                Intent intent = new Intent(this, WorkoutListActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 FirebaseDatabaseHelper.listenForUser(this, intent);
                 FirebaseDatabaseHelper.listenForExercises();
 
