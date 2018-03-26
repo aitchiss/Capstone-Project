@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         mNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                item.setChecked(true);
+//                item.setChecked(true);
 
                 switch(item.getItemId()){
                     case R.id.sign_out:
@@ -99,17 +99,19 @@ public class MainActivity extends AppCompatActivity {
                                 .commit();
                         break;
                     case R.id.home:
-                        WorkoutListFragment listFragement = new WorkoutListFragment();
+                        WorkoutListFragment listFragment = new WorkoutListFragment();
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, listFragement)
+                                .replace(R.id.fragment_container, listFragment)
                                 .commit();
                         break;
                 }
+
                 mDrawerLayout.closeDrawers();
                 return true;
             }
         });
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
