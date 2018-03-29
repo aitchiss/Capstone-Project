@@ -76,17 +76,17 @@ public class User {
 //            Update the achievement if necessary
             Achievement previousBest = achievements.get(completedExercise.getId());
             if(completedExercise.getWeight() > previousBest.getWeight()){
-                Achievement newBest = new Achievement(completedExercise.getId(), completedExercise.getWeight());
+                Achievement newBest = new Achievement(completedExercise.getId(), completedExercise.getWeight(), completedExercise.getName());
                 achievements.put(completedExercise.getId(), newBest);
             }
         } else {
 //            It's the first time it's been achieved, so log this is a best
-            Achievement newAchievement = new Achievement(completedExercise.getId(), completedExercise.getWeight());
+            Achievement newAchievement = new Achievement(completedExercise.getId(), completedExercise.getWeight(), completedExercise.getName());
             achievements.put(completedExercise.getId(), newAchievement);
         }
     }
 
-    public HashMap<Integer, Achievement> getAchievements() {
-        return achievements;
+    public ArrayList<Achievement> getAllAchievements() {
+        return new ArrayList<>(achievements.values());
     }
 }

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -44,6 +45,9 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Fragment mCurrentFragment;
+    private boolean mIsListView;
+    private static final String IS_LIST_VIEW_KEY = "isListView";
 
     private User mCurrentUser;
 
@@ -62,21 +66,54 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_workout_list);
         ButterKnife.bind(this);
 
-
         setUpDrawerMenuListeners();
+
+        if(savedInstanceState == null){
+//            Default to the listView
+            mIsListView = true;
+            mCurrentFragment = new WorkoutListFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, mCurrentFragment)
+                    .commit();
+        } else {
+            mIsListView = savedInstanceState.getBoolean(IS_LIST_VIEW_KEY, true);
+            if(mIsListView){
+                mCurrentFragment = new WorkoutListFragment();
+            } else {
+                mCurrentFragment = new HistoryFragment();
+            }
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, mCurrentFragment)
+                    .commit();
+        }
 
         mCurrentUser = FirebaseDatabaseHelper.getUser();
         View mNavHeaderView = mNavView.getHeaderView(0);
         mNavHeaderText = (TextView) mNavHeaderView.findViewById(R.id.nav_drawer_header_text);
         setNavDrawerTitle(mCurrentUser.getEmail());
 
-//      Show the workoutList fragment
-        WorkoutListFragment workoutListFragment = new WorkoutListFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, workoutListFragment)
-                .commit();
+
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(IS_LIST_VIEW_KEY, mIsListView);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mIsListView = savedInstanceState.getBoolean(IS_LIST_VIEW_KEY, true);
+        if(mIsListView){
+            mCurrentFragment = new WorkoutListFragment();
+        } else {
+            mCurrentFragment = new HistoryFragment();
+        }
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, mCurrentFragment)
+                .commit();
+    }
 
     private void setNavDrawerTitle(String userEmail){
         mNavHeaderText.setText("You're signed in as " + userEmail);
@@ -86,19 +123,20 @@ public class MainActivity extends AppCompatActivity {
         mNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                item.setChecked(true);
 
                 switch(item.getItemId()){
                     case R.id.sign_out:
                         signUserOut();
                         break;
                     case R.id.history:
+                        mIsListView = false;
                         HistoryFragment fragment = new HistoryFragment();
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_container, fragment)
                                 .commit();
                         break;
                     case R.id.home:
+                        mIsListView = true;
                         WorkoutListFragment listFragment = new WorkoutListFragment();
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_container, listFragment)

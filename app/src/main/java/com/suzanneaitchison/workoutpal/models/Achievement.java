@@ -11,13 +11,15 @@ import java.util.Date;
 public class Achievement {
 
     private int exerciseId;
-    private Date achievmentDate;
+    private Date achievementDate;
     private int weight;
+    private String exerciseName;
 
-    public Achievement(int exerciseId, int weight){
-        this.achievmentDate = Calendar.getInstance().getTime();
+    public Achievement(int exerciseId, int weight, String name){
+        this.achievementDate = Calendar.getInstance().getTime();
         this.exerciseId = exerciseId;
         this.weight = weight;
+        this.exerciseName = name;
     }
 
     public int getExerciseId() {
@@ -28,12 +30,12 @@ public class Achievement {
         this.exerciseId = exerciseId;
     }
 
-    public Date getAchievmentDate() {
-        return achievmentDate;
+    public Date getAchievementDate() {
+        return achievementDate;
     }
 
-    public void setAchievmentDate(Date achievmentDate) {
-        this.achievmentDate = achievmentDate;
+    public void setAchievementDate(Date achievmentDate) {
+        this.achievementDate = achievmentDate;
     }
 
     public int getWeight() {
@@ -42,5 +44,13 @@ public class Achievement {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    public String getExerciseName() {
+        return exerciseName;
+    }
+
+    public void setExerciseName(String exerciseName) {
+        this.exerciseName = exerciseName;
     }
 }
