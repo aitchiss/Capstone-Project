@@ -15,6 +15,7 @@ public class User {
     private String email;
     private String id;
     private HashMap<Integer, Achievement> achievements = new HashMap<>();
+    private ArrayList<Achievement> achievementList = new ArrayList<>();
 
 
     private ArrayList<Workout> workoutPlans = new ArrayList<>();
@@ -84,9 +85,18 @@ public class User {
             Achievement newAchievement = new Achievement(completedExercise.getId(), completedExercise.getWeight(), completedExercise.getName());
             achievements.put(completedExercise.getId(), newAchievement);
         }
+
+        achievementList.clear();
+        for(Achievement item : achievements.values()){
+            achievementList.add(item);
+        }
     }
 
     public ArrayList<Achievement> getAllAchievements() {
-        return new ArrayList<>(achievements.values());
+        return achievementList;
+    }
+
+    public void setAchievementList(ArrayList<Achievement> list){
+        this.achievementList = list;
     }
 }

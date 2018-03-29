@@ -140,10 +140,11 @@ public class FirebaseDatabaseHelper {
 
     public static void saveUsersCompletedExercises(ArrayList<PlannedExercise> updatedExercises){
         mCurrentUser.setCompletedWorkouts(updatedExercises);
+        mCurrentUser.setAchievementList(mCurrentUser.getAllAchievements());
         DatabaseReference userToUpdateRef = mUsersRef.child(mCurrentUser.getId());
         Map<String, Object> updates = new HashMap<>();
         updates.put("completedExercises", updatedExercises);
-        updates.put("achievements", mCurrentUser.getAllAchievements());
+        updates.put("achievementList", mCurrentUser.getAllAchievements());
         userToUpdateRef.updateChildren(updates);
     }
 

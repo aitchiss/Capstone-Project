@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         setUpDrawerMenuListeners();
 
-        if(savedInstanceState == null){
+        if(savedInstanceState == null || mCurrentFragment == null){
 //            Default to the listView
             mIsListView = true;
             mCurrentFragment = new WorkoutListFragment();
@@ -78,13 +78,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             mIsListView = savedInstanceState.getBoolean(IS_LIST_VIEW_KEY, true);
             if(mIsListView){
-                mCurrentFragment = new WorkoutListFragment();
+                showListFragment();
             } else {
-                mCurrentFragment = new HistoryFragment();
+                showHistoryFragment();
             }
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, mCurrentFragment)
-                    .commit();
         }
 
         mCurrentUser = FirebaseDatabaseHelper.getUser();
@@ -106,13 +103,11 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         mIsListView = savedInstanceState.getBoolean(IS_LIST_VIEW_KEY, true);
         if(mIsListView){
-            mCurrentFragment = new WorkoutListFragment();
+            showListFragment();
         } else {
-            mCurrentFragment = new HistoryFragment();
+            showHistoryFragment();
         }
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, mCurrentFragment)
-                .commit();
+
     }
 
     private void setNavDrawerTitle(String userEmail){
@@ -129,18 +124,10 @@ public class MainActivity extends AppCompatActivity {
                         signUserOut();
                         break;
                     case R.id.history:
-                        mIsListView = false;
-                        HistoryFragment fragment = new HistoryFragment();
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, fragment)
-                                .commit();
+                        showHistoryFragment();
                         break;
                     case R.id.home:
-                        mIsListView = true;
-                        WorkoutListFragment listFragment = new WorkoutListFragment();
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, listFragment)
-                                .commit();
+                        showListFragment();
                         break;
                 }
 
@@ -148,6 +135,27 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void showListFragment(){
+        mIsListView = true;
+        if(!(mCurrentFragment instanceof WorkoutListFragment)){
+            mCurrentFragment = new WorkoutListFragment();
+        }
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, mCurrentFragment)
+                .commit();
+    }
+
+    private void showHistoryFragment(){
+        mIsListView = false;
+        if(!(mCurrentFragment instanceof WorkoutListFragment)){
+            mCurrentFragment = new WorkoutListFragment();
+        }
+        mCurrentFragment = new HistoryFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, mCurrentFragment)
+                .commit();
     }
 
 
