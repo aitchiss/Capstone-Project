@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginStart="@dimen/standard_mobile_side_margin"
+    android:layout_marginEnd="@dimen/standard_mobile_side_margin"
+    android:layout_marginTop="@dimen/standard_mobile_side_margin"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
 
+    <ImageView
+        android:id="@+id/iv_achievement_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            tools:text="name of exercise"
+            android:id="@+id/tv_achievement_exercise_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                tools:text="50kg"
+                android:layout_weight="0.5"
+                android:id="@+id/tv_achievement_details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                tools:text="13 Sep 2017"
+                android:textAlignment="viewEnd"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>
