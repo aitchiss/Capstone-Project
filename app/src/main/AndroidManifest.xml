@@ -39,6 +39,10 @@
         <activity android:name=".PlayWorkoutActivity"
             android:parentActivityName=".WorkoutDetailActivity"
             android:windowSoftInputMode="adjustPan"></activity>
+        <provider
+            android:authorities="com.suzanneaitchison.workoutpal"
+            android:name="com.suzanneaitchison.workoutpal.data.ExerciseContentProvider"
+            android:exported="false"
     </application>
 
 </manifest>
