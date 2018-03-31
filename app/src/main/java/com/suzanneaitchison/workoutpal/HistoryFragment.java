@@ -82,9 +82,14 @@ public class HistoryFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        mUser = FirebaseDatabaseHelper.getUser();
+        mAdapter.setData(mUser.getAchievementList());
+        super.onResume();
+    }
 
     private void showPersonalBests(){
-
         ArrayList<Achievement> personalBests = mUser.getAchievementList();
         mAdapter = new PersonalBestsRecyclerAdapter(personalBests);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), 1, false);

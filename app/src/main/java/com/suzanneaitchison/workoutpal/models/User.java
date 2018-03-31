@@ -99,4 +99,12 @@ public class User {
     public void setAchievementList(ArrayList<Achievement> achievementList) {
         this.achievementList = achievementList;
     }
+
+    public void updateAchievementMap(){
+        if(achievementList != null && achievementList.size()> 0){
+            for(Achievement achievement : achievementList){
+                achievements.put(achievement.getExerciseId(), achievement);
+            }
+        }
+    }
 }

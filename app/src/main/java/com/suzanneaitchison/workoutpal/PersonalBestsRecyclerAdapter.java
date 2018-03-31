@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.suzanneaitchison.workoutpal.models.Achievement;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -41,7 +42,9 @@ public class PersonalBestsRecyclerAdapter extends RecyclerView.Adapter<PersonalB
     public void onBindViewHolder(PersonalBestViewHolder holder, int position) {
         Achievement achievement = mAchievements.get(position);
         holder.exerciseName.setText(achievement.getExerciseName());
-        holder.date.setText(achievement.getAchievementDate().toString());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy");
+        String date = dateFormat.format(achievement.getAchievementDate());
+        holder.date.setText(date);
         holder.achievementDetail.setText(String.valueOf(achievement.getWeight()) + "kg");
     }
 

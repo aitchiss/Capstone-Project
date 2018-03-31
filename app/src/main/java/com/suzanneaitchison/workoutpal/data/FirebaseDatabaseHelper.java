@@ -101,6 +101,8 @@ public class FirebaseDatabaseHelper {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()){
 //                        There should only be one user in the list returned
                     mCurrentUser = userSnapshot.getValue(User.class);
+//                    Firebase can't hold the AchievementMap; update once info recvd from db
+                    mCurrentUser.updateAchievementMap();
                 }
 
                 if(mCurrentUser != null){
