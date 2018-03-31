@@ -1,5 +1,6 @@
 package com.suzanneaitchison.workoutpal.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 
@@ -66,7 +67,21 @@ public class ExerciseSyncTask {
         }
         if(exercises.size() > 0){
 //            If exercises have synced, replace the exercises DB with the full results
-            FirebaseDatabaseHelper.replaceAllExercises(exercises);
+//            FirebaseDatabaseHelper.replaceAllExercises(exercises);
+            ContentValues[] contentValues = new ContentValues[exercises.size()];
+            for(Exercise exercise : exercises){
+                ContentValues values = new ContentValues();
+                values.put(ExerciseContract.ExerciseEntry.COLUMN_EXERCISE_ID, exercise.getId());
+                values.put(ExerciseContract.ExerciseEntry.COLUMN_NAME, exercise.getName());
+                values.put(ExerciseContract.ExerciseEntry.COLUMN_DESCRIPTION, exercise.getDescription());
+                values.put(ExerciseContract.ExerciseEntry.COLUMN_IMAGE_URL, exercise.getImageURL());
+                values.put(ExerciseContract.ExerciseEntry.COLUMN_CATEGORY, exercise.getExerciseCategory());
+                contentValues[exercises.indexOf(exercise)] = values;
+            }
+
+
+            int enteredToDb = context.getContentResolver().bulkInsert(ExerciseContract.ExerciseEntry.CONTENT_URI, contentValues);
+            Log.d("Inserted: ", enteredToDb + " records");
         }
     }
 

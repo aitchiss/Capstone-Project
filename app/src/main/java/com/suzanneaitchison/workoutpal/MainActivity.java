@@ -36,9 +36,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.suzanneaitchison.workoutpal.data.ExerciseSyncIntentService;
+import com.suzanneaitchison.workoutpal.data.ExerciseSyncTask;
 import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
+import com.suzanneaitchison.workoutpal.models.Exercise;
 import com.suzanneaitchison.workoutpal.models.User;
 import com.suzanneaitchison.workoutpal.models.Workout;
+import com.suzanneaitchison.workoutpal.utils.ExerciseSyncUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_list);
         ButterKnife.bind(this);
+
+        ExerciseSyncUtils.startImmediateSync(this);
 
         setUpDrawerMenuListeners();
 
