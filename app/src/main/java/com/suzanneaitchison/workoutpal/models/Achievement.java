@@ -22,6 +22,10 @@ public class Achievement {
         this.exerciseName = name;
     }
 
+    public Achievement(){
+
+    }
+
     public int getExerciseId() {
         return exerciseId;
     }
@@ -34,8 +38,8 @@ public class Achievement {
         return achievementDate;
     }
 
-    public void setAchievementDate(Date achievmentDate) {
-        this.achievementDate = achievmentDate;
+    public void setAchievementDate(Date achievementDate) {
+        this.achievementDate = achievementDate;
     }
 
     public int getWeight() {

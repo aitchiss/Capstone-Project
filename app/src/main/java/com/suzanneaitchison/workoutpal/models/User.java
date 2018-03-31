@@ -92,11 +92,11 @@ public class User {
         }
     }
 
-    public ArrayList<Achievement> getAllAchievements() {
+    public ArrayList<Achievement> getAchievementList() {
         return achievementList;
     }
 
-    public void setAchievementList(ArrayList<Achievement> list){
-        this.achievementList = list;
+    public void setAchievementList(ArrayList<Achievement> achievementList) {
+        this.achievementList = achievementList;
     }
 }

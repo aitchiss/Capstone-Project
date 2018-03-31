@@ -85,7 +85,7 @@ public class HistoryFragment extends Fragment {
 
     private void showPersonalBests(){
 
-        ArrayList<Achievement> personalBests = mUser.getAllAchievements();
+        ArrayList<Achievement> personalBests = mUser.getAchievementList();
         mAdapter = new PersonalBestsRecyclerAdapter(personalBests);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), 1, false);
         mRecylerPersonalBests.setLayoutManager(layoutManager);
