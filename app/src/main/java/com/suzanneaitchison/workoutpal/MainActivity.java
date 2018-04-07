@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_workout_list);
         ButterKnife.bind(this);
 
-        ExerciseSyncUtils.startImmediateSync(this);
+//        Starts a full sync of exercise data if DB is empty
+        ExerciseSyncUtils.initialize(this);
 
         setUpDrawerMenuListeners();
 

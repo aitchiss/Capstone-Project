@@ -66,8 +66,7 @@ public class ExerciseSyncTask {
 
         }
         if(exercises.size() > 0){
-//            If exercises have synced, replace the exercises DB with the full results
-//            FirebaseDatabaseHelper.replaceAllExercises(exercises);
+//            If exercises have synced, save to DB
             ContentValues[] contentValues = new ContentValues[exercises.size()];
             for(Exercise exercise : exercises){
                 ContentValues values = new ContentValues();

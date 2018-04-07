@@ -43,7 +43,20 @@ public class ExerciseContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        return null;
+        final SQLiteDatabase db = mExerciseDbHelper.getReadableDatabase();
+        int match = sUriMatcher.match(uri);
+        Cursor returnCursor;
+        switch(match){
+            case EXERCISES:
+                returnCursor = db.query(TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+
+            default:
+                throw new UnsupportedOperationException("Unknown URI: " + uri);
+        }
+
+        returnCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return returnCursor;
     }
 
     @Nullable
