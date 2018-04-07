@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -28,23 +29,37 @@ public class ExerciseSyncTask {
         int pageNumber = 1;
         boolean continueLoading = true;
         ExerciseDataFetcher dataFetcher = new ExerciseDataFetcher();
-        ArrayList<Exercise> exercises = new ArrayList<>();
-        int currentIndex = 0;
 
         while(continueLoading){
             String result = "";
             try {
                 result = dataFetcher.fetchLatestApiData(context, pageNumber);
                 try {
+                    ArrayList<Exercise> exercises = new ArrayList<>();
                     Collections.addAll(exercises, ExerciseJsonUtils.convertJsonToExercises(result));
-                    for (int i = currentIndex; i < exercises.size(); i++) {
+                    for (int i = 0; i < exercises.size(); i++) {
                         String exerciseImageDetail = dataFetcher.fetchExerciseImage(context, exercises.get(i).getId());
                         ExerciseJsonUtils.updateExerciseWithImage(exercises.get(i), exerciseImageDetail);
                         String exerciseCategoryDetail = dataFetcher.fetchExerciseCategory(context, exercises.get(i).getId());
                         ExerciseJsonUtils.updateExerciseWithCategory(exercises.get(i), exerciseCategoryDetail);
-
                     }
-                    currentIndex = exercises.size() - 1;
+
+                    if(exercises.size() > 0){
+                        ContentValues[] contentValues = new ContentValues[exercises.size()];
+                        for(Exercise exercise : exercises){
+                            ContentValues values = new ContentValues();
+                            values.put(ExerciseContract.ExerciseEntry.COLUMN_EXERCISE_ID, exercise.getId());
+                            values.put(ExerciseContract.ExerciseEntry.COLUMN_NAME, exercise.getName());
+                            values.put(ExerciseContract.ExerciseEntry.COLUMN_DESCRIPTION, exercise.getDescription());
+                            values.put(ExerciseContract.ExerciseEntry.COLUMN_IMAGE_URL, exercise.getImageURL());
+                            values.put(ExerciseContract.ExerciseEntry.COLUMN_CATEGORY, exercise.getExerciseCategory());
+                            contentValues[exercises.indexOf(exercise)] = values;
+                        }
+
+                        int enteredToDb = context.getContentResolver().bulkInsert(ExerciseContract.ExerciseEntry.CONTENT_URI, contentValues);
+                        Log.d("Inserted: ", enteredToDb + " records");
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -65,23 +80,7 @@ public class ExerciseSyncTask {
 
 
         }
-        if(exercises.size() > 0){
-//            If exercises have synced, save to DB
-            ContentValues[] contentValues = new ContentValues[exercises.size()];
-            for(Exercise exercise : exercises){
-                ContentValues values = new ContentValues();
-                values.put(ExerciseContract.ExerciseEntry.COLUMN_EXERCISE_ID, exercise.getId());
-                values.put(ExerciseContract.ExerciseEntry.COLUMN_NAME, exercise.getName());
-                values.put(ExerciseContract.ExerciseEntry.COLUMN_DESCRIPTION, exercise.getDescription());
-                values.put(ExerciseContract.ExerciseEntry.COLUMN_IMAGE_URL, exercise.getImageURL());
-                values.put(ExerciseContract.ExerciseEntry.COLUMN_CATEGORY, exercise.getExerciseCategory());
-                contentValues[exercises.indexOf(exercise)] = values;
-            }
 
-
-            int enteredToDb = context.getContentResolver().bulkInsert(ExerciseContract.ExerciseEntry.CONTENT_URI, contentValues);
-            Log.d("Inserted: ", enteredToDb + " records");
-        }
     }
 
 

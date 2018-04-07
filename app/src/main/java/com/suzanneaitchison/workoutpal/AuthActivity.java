@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUserMetadata;
 
 import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
+import com.suzanneaitchison.workoutpal.utils.ExerciseSyncUtils;
 
 import java.util.Arrays;
 
@@ -32,12 +33,8 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-//        if(FirebaseDatabaseHelper.getAllExercises() != null && FirebaseDatabaseHelper.getAllExercises().size() == 0){
-////            If the database of exercises is empty, complete the sync
-//            ExerciseSyncUtils.startImmediateSync(this);
-//        }
-//        TODO - only want to do a full immediate sync if it's their first use of the app - move to new user block
-
+//        Starts a full sync of exercise data if DB is empty
+        ExerciseSyncUtils.initialize(this);
 
         if(mAuth.getCurrentUser() != null){
 //            user is already signed in - no need to re-authenticate

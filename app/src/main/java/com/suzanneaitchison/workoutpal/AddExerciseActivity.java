@@ -2,14 +2,16 @@ package com.suzanneaitchison.workoutpal;
 
 
 
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.Loader;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,12 +22,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.suzanneaitchison.workoutpal.data.ExerciseContract;
 import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
 import com.suzanneaitchison.workoutpal.models.Exercise;
-import com.suzanneaitchison.workoutpal.models.PlannedExercise;
 import com.suzanneaitchison.workoutpal.models.User;
 import com.suzanneaitchison.workoutpal.models.Workout;
 import com.suzanneaitchison.workoutpal.models.WorkoutEntry;
+import com.suzanneaitchison.workoutpal.utils.ExerciseCursorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +36,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddExerciseActivity extends AppCompatActivity {
+public class AddExerciseActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String EXTRA_SETS = "sets";
     public static final String EXTRA_WEIGHT = "weight";
     public static final String EXTRA_REPS = "reps";
     public static final String EXTRA_DURATION = "duration";
     public static final String EXTRA_REST = "rest";
+
+    private static final int ID_EXERCISE_LOADER = 100;
 
     private static final int ADD_EXERCISE_REQUEST_CODE = 220;
     private static final String EXERCISE_CATEGORY_ALL = "All";
@@ -83,9 +88,11 @@ public class AddExerciseActivity extends AppCompatActivity {
             mWorkout = user.getWorkoutPlans().get(mWorkoutIndex);
         }
 
-        mExercises = FirebaseDatabaseHelper.getAllExercises();
-        populateCategorySpinner();
-        populateExercisesSpinner();
+        if(mExercises == null || mExercises.size() == 0){
+            getSupportLoaderManager().initLoader(ID_EXERCISE_LOADER, null, this);
+        }
+
+
 
         mExerciseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -250,4 +257,31 @@ public class AddExerciseActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    @Override
+    public android.support.v4.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        switch(id){
+            case ID_EXERCISE_LOADER:
+                Uri queryUri = ExerciseContract.ExerciseEntry.CONTENT_URI;
+                return new CursorLoader(this, queryUri, null, null, null, null);
+            default:
+                throw new RuntimeException("Loader Not Implemented: " + id);
+        }
+    }
+
+    @Override
+    public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, Cursor data) {
+ //      Convert to arraylist of exercises, update the spinners
+        mExercises = ExerciseCursorUtils.convertCursorToExercises(data);
+        populateCategorySpinner();
+        populateExercisesSpinner();
+    }
+
+    @Override
+    public void onLoaderReset(android.support.v4.content.Loader<Cursor> loader) {
+//      We don't want to clear the data until a new set of exercise data is available
+    }
+
+
 }
