@@ -89,5 +89,24 @@
             android:layout_width="@dimen/app_progress_bar_size"
             android:layout_height="@dimen/app_progress_bar_size" />
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center_vertical|center_horizontal"
+            android:id="@+id/no_exercise_data_layout"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="@string/no_exercises_string"
+                android:layout_marginStart="@dimen/standard_mobile_side_margin"
+                android:layout_marginEnd="@dimen/standard_mobile_side_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

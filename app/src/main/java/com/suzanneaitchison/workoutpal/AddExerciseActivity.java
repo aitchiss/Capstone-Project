@@ -16,7 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -73,14 +75,22 @@ public class AddExerciseActivity extends AppCompatActivity implements LoaderMana
     @BindView(R.id.iv_exercise_image)
     ImageView mExerciseImage;
 
+    @BindView(R.id.btn_confirm_add_exercise)
+    Button mAddExerciseButton;
+
     @BindView(R.id.add_exercise_progress_bar)
     ProgressBar mProgressBar;
+
+    @BindView(R.id.no_exercise_data_layout)
+    LinearLayout mNoExercisesLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_exercise);
         ButterKnife.bind(this);
+        mNoExercisesLayout.setVisibility(View.INVISIBLE);
+
         showLoading();
         setUpToolbar();
         mUser = FirebaseDatabaseHelper.getUser();
@@ -134,6 +144,15 @@ public class AddExerciseActivity extends AppCompatActivity implements LoaderMana
 
     private void hideLoading(){
         mProgressBar.setVisibility(View.INVISIBLE);
+    }
+
+    private void showNoExerciseError(){
+        mAddExerciseButton.setVisibility(View.INVISIBLE);
+        mExerciseImage.setVisibility(View.INVISIBLE);
+        mExerciseCategorySpinner.setVisibility(View.INVISIBLE);
+        mExerciseSpinner.setVisibility(View.INVISIBLE);
+        mExerciseDescription.setVisibility(View.INVISIBLE);
+        mNoExercisesLayout.setVisibility(View.VISIBLE);
     }
 
     private void populateCategorySpinner(){
@@ -287,8 +306,12 @@ public class AddExerciseActivity extends AppCompatActivity implements LoaderMana
     public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, Cursor data) {
  //      Convert to arraylist of exercises, update the spinners
         mExercises = ExerciseCursorUtils.convertCursorToExercises(data);
-        populateCategorySpinner();
-        populateExercisesSpinner();
+        if(mExercises.size() == 0){
+            showNoExerciseError();
+        } else {
+            populateCategorySpinner();
+            populateExercisesSpinner();
+        }
         hideLoading();
     }
 

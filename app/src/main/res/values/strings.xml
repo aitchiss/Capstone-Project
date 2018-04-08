@@ -35,5 +35,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="history_title">Workout Log</string>
+    <string name="no_exercises_string">Oops! No exercise data has been synced yet. Please connect to wifi to complete the initial sync and try again later.</string>
 
 </resources>
