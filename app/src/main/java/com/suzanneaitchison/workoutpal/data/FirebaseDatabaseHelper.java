@@ -78,6 +78,9 @@ public class FirebaseDatabaseHelper {
         String userEmail = mAuth.getCurrentUser().getEmail();
         mCurrentUser = new User();
         mCurrentUser.setEmail(userEmail);
+        Workout defaultWorkout = new Workout();
+        defaultWorkout.setWorkoutName("Example workout");
+        mCurrentUser.addNewWorkoutPlan(defaultWorkout);
         mCurrentUserRef = mUsersRef.push();
         mCurrentUserRef.setValue(mCurrentUser);
         String userId = mCurrentUserRef.getKey();
