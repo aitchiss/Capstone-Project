@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -72,11 +73,15 @@ public class AddExerciseActivity extends AppCompatActivity implements LoaderMana
     @BindView(R.id.iv_exercise_image)
     ImageView mExerciseImage;
 
+    @BindView(R.id.add_exercise_progress_bar)
+    ProgressBar mProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_exercise);
         ButterKnife.bind(this);
+        showLoading();
         setUpToolbar();
         mUser = FirebaseDatabaseHelper.getUser();
 
@@ -121,6 +126,14 @@ public class AddExerciseActivity extends AppCompatActivity implements LoaderMana
         getSupportActionBar().setTitle(R.string.add_activity);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void showLoading(){
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideLoading(){
+        mProgressBar.setVisibility(View.INVISIBLE);
     }
 
     private void populateCategorySpinner(){
@@ -276,6 +289,7 @@ public class AddExerciseActivity extends AppCompatActivity implements LoaderMana
         mExercises = ExerciseCursorUtils.convertCursorToExercises(data);
         populateCategorySpinner();
         populateExercisesSpinner();
+        hideLoading();
     }
 
     @Override
