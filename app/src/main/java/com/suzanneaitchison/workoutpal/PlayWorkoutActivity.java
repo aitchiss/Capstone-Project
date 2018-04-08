@@ -389,6 +389,7 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
 
 
             }
+            WidgetService.startActionUpdateWidgets(this);
         }
     }
 

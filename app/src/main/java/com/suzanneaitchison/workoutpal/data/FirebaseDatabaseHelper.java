@@ -17,6 +17,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.suzanneaitchison.workoutpal.AuthActivity;
+import com.suzanneaitchison.workoutpal.WidgetService;
 import com.suzanneaitchison.workoutpal.models.Exercise;
 import com.suzanneaitchison.workoutpal.models.PlannedExercise;
 import com.suzanneaitchison.workoutpal.models.User;

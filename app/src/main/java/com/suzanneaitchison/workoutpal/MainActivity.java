@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_list);
         ButterKnife.bind(this);
+        WidgetService.startActionUpdateWidgets(this);
 
         setUpDrawerMenuListeners();
 

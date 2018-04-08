@@ -54,6 +54,8 @@
             </intent-filter>
         </service>
 
+        <service android:name=".WidgetService"/>
+
         <receiver android:name=".WorkoutPalWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

@@ -32,5 +32,6 @@
     <string name="no_exercises_string">Oops! No exercise data has been synced yet. Please connect to wifi to complete the initial sync and try again later.</string>
     <string name="appwidget_text">Your last workout</string>
     <string name="add_widget">Add widget</string>
+    <string name="widget_message">What are you waiting for?</string>
 
 </resources>

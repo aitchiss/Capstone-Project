@@ -2,6 +2,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/ll_widget_layout"
+    android:background="@color/colorWhite"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/widget_margin">
 
@@ -30,9 +32,10 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        tools:text="What are you waiting for?"
+        android:textColor="#000000"
+        android:text="@string/widget_message"
         android:padding="8dp"
-        android:textStyle="bold|italic"
+        android:textStyle="italic"
         android:textSize="18sp"
         android:textAlignment="center"
         android:id="@+id/tv_widget_message"
