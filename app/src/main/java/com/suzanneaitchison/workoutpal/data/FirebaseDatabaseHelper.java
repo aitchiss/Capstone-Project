@@ -97,6 +97,7 @@ public class FirebaseDatabaseHelper {
         mCurrentUser.setAchievementList(mCurrentUser.getAchievementList());
         DatabaseReference userToUpdateRef = mUsersRef.child(mCurrentUser.getId());
         Map<String, Object> updates = new HashMap<>();
+        updates.put("lastWorkoutCompletedDate", mCurrentUser.getLastWorkoutCompletedDate());
         updates.put("completedExercises", updatedExercises);
         updates.put("achievementList", mCurrentUser.getAchievementList());
         userToUpdateRef.updateChildren(updates);

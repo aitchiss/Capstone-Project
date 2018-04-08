@@ -3,7 +3,10 @@ package com.suzanneaitchison.workoutpal.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -16,7 +19,7 @@ public class User {
     private String id;
     private HashMap<Integer, Achievement> achievements = new HashMap<>();
     private ArrayList<Achievement> achievementList = new ArrayList<>();
-
+    private Date lastWorkoutCompletedDate;
 
     private ArrayList<Workout> workoutPlans = new ArrayList<>();
     private ArrayList<PlannedExercise> completedExercises = new ArrayList<>();
@@ -25,6 +28,13 @@ public class User {
 
     }
 
+    public Date getLastWorkoutCompletedDate() {
+        return lastWorkoutCompletedDate;
+    }
+
+    public void setLastWorkoutCompletedDate(Date lastWorkoutCompletedDate) {
+        this.lastWorkoutCompletedDate = lastWorkoutCompletedDate;
+    }
 
     public String getId() {
         return id;
@@ -60,6 +70,7 @@ public class User {
 
     public void addCompletedExercise(PlannedExercise exercise){
         this.completedExercises.add(exercise);
+        this.lastWorkoutCompletedDate = Calendar.getInstance().getTime();
 
         if(exercise.getWeight() > 0){
 //            If a weighted exercise, record the achievement if needed
