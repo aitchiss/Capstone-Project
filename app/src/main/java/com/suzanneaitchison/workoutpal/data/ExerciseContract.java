@@ -16,6 +16,7 @@ public class ExerciseContract {
     public static final class ExerciseEntry implements BaseColumns {
 
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_EXERCISES).build();
+        public static final Uri EXERCISES_WITH_IDS_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_EXERCISES).appendPath("ids").build();
 
         public static final String TABLE_NAME ="exercises";
         public static final String COLUMN_EXERCISE_ID = "exerciseId";

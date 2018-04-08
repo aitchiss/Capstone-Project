@@ -35,61 +35,12 @@ import java.util.Map;
 
 public class FirebaseDatabaseHelper {
 
-    private static final int RC_SIGN_IN = 123;
-
     private static User mCurrentUser;
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     private static DatabaseReference mUsersRef = mRootRef.child("users");
     private static DatabaseReference mCurrentUserRef;
 
-    private static ArrayList<Exercise> mExercises;
-
-
-
-    public static void replaceAllExercises(ArrayList<Exercise> exercises){
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("exercises");
-
-        Gson gson = new Gson();
-        String jsonExercises = gson.toJson(exercises);
-        ref.setValue(jsonExercises);
-    }
-
-    public static void listenForExercises(){
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("exercises");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String exerciseInfo = dataSnapshot.getValue(String.class);
-                try {
-                    mExercises = ExerciseJsonUtils.convertFirebaseExerciseString(exerciseInfo);
-                } catch (JSONException e){
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-    }
-
-    public static Exercise getExerciseWithId(int id){
-        for(Exercise exercise : mExercises){
-            if(exercise.getId() == id){
-                return exercise;
-            }
-        }
-        return null;
-    }
-
-    public static ArrayList<Exercise> getAllExercises(){
-        return mExercises;
-    }
 
     public static void listenForUser(final Context context, final Intent intent){
         FirebaseUser user = mAuth.getCurrentUser();

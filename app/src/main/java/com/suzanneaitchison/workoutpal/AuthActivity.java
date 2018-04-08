@@ -41,7 +41,6 @@ public class AuthActivity extends AppCompatActivity {
 //            set up the Helper with their details
             Intent intent = new Intent(this, MainActivity.class);
             FirebaseDatabaseHelper.listenForUser(this, intent);
-            FirebaseDatabaseHelper.listenForExercises();
 
         } else {
             startActivityForResult(
@@ -67,7 +66,6 @@ public class AuthActivity extends AppCompatActivity {
                 }
                 Intent intent = new Intent(this, MainActivity.class);
                 FirebaseDatabaseHelper.listenForUser(this, intent);
-                FirebaseDatabaseHelper.listenForExercises();
 
             } else {
                 if(response == null){

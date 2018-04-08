@@ -23,12 +23,14 @@ public class ExerciseContentProvider extends ContentProvider {
 
     public static final int EXERCISES = 100;
     public static final int EXERCISE_WITH_ID = 101;
+    public static final int EXERCISES_WITH_IDS = 102;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
     public static UriMatcher buildUriMatcher(){
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(ExerciseContract.AUTHORITY, ExerciseContract.PATH_EXERCISES, EXERCISES);
+        uriMatcher.addURI(ExerciseContract.AUTHORITY, ExerciseContract.PATH_EXERCISES + "/ids", EXERCISES_WITH_IDS);
         uriMatcher.addURI(ExerciseContract.AUTHORITY, ExerciseContract.PATH_EXERCISES + "/#", EXERCISE_WITH_ID);
         return uriMatcher;
     }
@@ -50,7 +52,19 @@ public class ExerciseContentProvider extends ContentProvider {
             case EXERCISES:
                 returnCursor = db.query(TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
-
+            case EXERCISE_WITH_ID:
+                String id = uri.getPathSegments().get(1);
+                String idSelection = ExerciseContract.ExerciseEntry.COLUMN_EXERCISE_ID + "=?";
+                String[] mSelectionArgs = new String[]{id};
+                returnCursor = db.query(TABLE_NAME, projection, idSelection, mSelectionArgs, null, null, sortOrder);
+                break;
+            case EXERCISES_WITH_IDS:
+                String querySelection = ExerciseContract.ExerciseEntry.COLUMN_EXERCISE_ID + "=?";
+                for(int i=1; i < selectionArgs.length; i++){
+                    querySelection += " OR " + ExerciseContract.ExerciseEntry.COLUMN_EXERCISE_ID + "=?";
+                }
+                returnCursor = db.query(TABLE_NAME, projection, querySelection, selectionArgs, null, null, sortOrder);
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown URI: " + uri);
         }

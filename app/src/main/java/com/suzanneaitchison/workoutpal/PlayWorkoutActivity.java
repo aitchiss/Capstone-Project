@@ -2,9 +2,14 @@ package com.suzanneaitchison.workoutpal;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.suzanneaitchison.workoutpal.data.ExerciseContract;
 import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
 import com.suzanneaitchison.workoutpal.models.Exercise;
 import com.suzanneaitchison.workoutpal.models.PlannedExercise;
@@ -26,6 +32,7 @@ import com.suzanneaitchison.workoutpal.models.TabDataLog;
 import com.suzanneaitchison.workoutpal.models.User;
 import com.suzanneaitchison.workoutpal.models.Workout;
 import com.suzanneaitchison.workoutpal.models.WorkoutEntry;
+import com.suzanneaitchison.workoutpal.utils.ExerciseCursorUtils;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -36,7 +43,7 @@ import butterknife.ButterKnife;
 
 import static com.suzanneaitchison.workoutpal.WorkoutDetailActivity.WORKOUT_INDEX_EXTRA;
 
-public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkoutSetsAdapter.SetButtonClickHandler {
+public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkoutSetsAdapter.SetButtonClickHandler, LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAB_DATA_KEY = "tab_data";
     private static final String SELECTED_TAB_KEY = "selected_tab";
@@ -60,6 +67,9 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
     @BindView(R.id.iv_exercise)
     ImageView mExerciseImage;
 
+    private static final int ID_EXERCISE_LOADER = 100;
+    private static final String KEY_EXERCISE_IDS = "exerciseIds";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +82,14 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
         if(intent.hasExtra(WORKOUT_INDEX_EXTRA)){
             mWorkoutIndex  = intent.getIntExtra(WORKOUT_INDEX_EXTRA, -1);
             mWorkout = mUser.getWorkoutPlans().get(mWorkoutIndex);
-            setUpToolbar();
-            setUpTabView();
-            setUpTabData();
+//            TODO show loading
+            Bundle args = new Bundle();
+            String[] exerciseIds = new String[mWorkout.getWorkoutEntries().size()];
+            for(int i = 0; i < mWorkout.getWorkoutEntries().size(); i++){
+                exerciseIds[i] = String.valueOf(mWorkout.getWorkoutEntries().get(i).getExerciseId());
+            }
+            args.putStringArray(KEY_EXERCISE_IDS, exerciseIds);
+            getSupportLoaderManager().initLoader(ID_EXERCISE_LOADER, args, this);
         }
     }
 
@@ -143,14 +158,25 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
         }
     }
 
-    private void setUpTabData(){
+    private Exercise getRelevantExercise(ArrayList<Exercise> allExercises, int id){
+        for(Exercise exercise : allExercises){
+            if(exercise.getId() == id){
+                return exercise;
+            }
+        }
+        return null;
+    }
+
+    private void setUpTabData(ArrayList<Exercise> exerciseData){
 
         int numberOfTabs = mWorkout.getWorkoutEntries().size();
 
         for(int i=0; i < numberOfTabs; i++){
             ArrayList<PlannedExercise> listOfSets = new ArrayList<>();
             WorkoutEntry entry = mWorkout.getWorkoutEntries().get(i);
-            Exercise exerciseInfo = FirebaseDatabaseHelper.getExerciseWithId(entry.getExerciseId());
+
+            Exercise exerciseInfo = getRelevantExercise(exerciseData, entry.getExerciseId());
+
             for(int j = 0; j < entry.getSets(); j++){
                 PlannedExercise plannedExercise = new PlannedExercise(entry);
                 if(exerciseInfo != null){
@@ -342,5 +368,31 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
 
             }
         }
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        switch (id){
+            case ID_EXERCISE_LOADER:
+                Uri queryUri = ExerciseContract.ExerciseEntry.EXERCISES_WITH_IDS_URI;
+                String[] selections = args.getStringArray(KEY_EXERCISE_IDS);
+                return new CursorLoader(this, queryUri, null, null, selections, null);
+            default:
+                throw new RuntimeException("Loader Not Implemented: " + id);
+        }
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        ArrayList<Exercise> exercises = ExerciseCursorUtils.convertCursorToExercises(data);
+        setUpToolbar();
+        setUpTabView();
+        setUpTabData(exercises);
+//        todo stop showing loading
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }

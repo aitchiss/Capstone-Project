@@ -25,7 +25,6 @@ public class ExerciseCursorUtils {
             int imageIndex = cursor.getColumnIndex(ExerciseContract.ExerciseEntry.COLUMN_IMAGE_URL);
             int categoryIndex = cursor.getColumnIndex(ExerciseContract.ExerciseEntry.COLUMN_CATEGORY);
 
-            cursor.moveToFirst();
             while(cursor.moveToNext()){
                 Exercise exercise = new Exercise();
                 exercise.setId(cursor.getInt(idIndex));

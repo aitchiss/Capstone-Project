@@ -72,11 +72,11 @@ public class PlayWorkoutSetsAdapter extends RecyclerView.Adapter<PlayWorkoutSets
                 holder.timedXLabel.setVisibility(View.INVISIBLE);
             }
 
-            if(exercise.isComplete()){
-                holder.timedCheckButton.setBackground(mContext.getDrawable(R.drawable.checkbox_complete));
-            } else {
-                holder.timedCheckButton.setBackground(mContext.getDrawable(R.drawable.ic_timer_accent));
-            }
+//            if(exercise.isComplete()){
+//                holder.timedCheckButton.setBackground(mContext.getDrawable(R.drawable.checkbox_complete));
+//            } else {
+//                holder.timedCheckButton.setBackground(mContext.getDrawable(R.drawable.ic_timer_accent));
+//            }
 
 
         } else {
@@ -87,11 +87,11 @@ public class PlayWorkoutSetsAdapter extends RecyclerView.Adapter<PlayWorkoutSets
             holder.noOfReps.setText(String.valueOf(exercise.getReps()));
             holder.repsWeight.setText(String.valueOf(exercise.getWeight()));
 
-            if(exercise.isComplete()){
-                holder.repsCheckButton.setBackground(mContext.getDrawable(R.drawable.checkbox_complete));
-            } else {
-                holder.repsCheckButton.setBackground(mContext.getDrawable(R.drawable.checkbox_incomplete));
-            }
+//            if(exercise.isComplete()){
+//                holder.repsCheckButton.setBackground(mContext.getDrawable(R.drawable.checkbox_complete));
+//            } else {
+//                holder.repsCheckButton.setBackground(mContext.getDrawable(R.drawable.checkbox_incomplete));
+//            }
         }
     }
 
@@ -124,8 +124,8 @@ public class PlayWorkoutSetsAdapter extends RecyclerView.Adapter<PlayWorkoutSets
         @BindView(R.id.et_timed_weight)
         EditText timedWeight;
 
-        @BindView(R.id.btn_timed_check)
-        Button timedCheckButton;
+//        @BindView(R.id.btn_timed_check)
+//        Button timedCheckButton;
 
         @BindView(R.id.tv_timed_weight)
         TextView timedKgLabel;
@@ -146,15 +146,15 @@ public class PlayWorkoutSetsAdapter extends RecyclerView.Adapter<PlayWorkoutSets
         @BindView(R.id.et_reps_weight)
         EditText repsWeight;
 
-        @BindView(R.id.btn_reps_check)
-        Button repsCheckButton;
+//        @BindView(R.id.btn_reps_check)
+//        Button repsCheckButton;
 
         public PlayWorkoutSetsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            repsCheckButton.setOnClickListener(this);
-            timedCheckButton.setOnClickListener(this);
+//            repsCheckButton.setOnClickListener(this);
+//            timedCheckButton.setOnClickListener(this);
         }
 
         @Override
