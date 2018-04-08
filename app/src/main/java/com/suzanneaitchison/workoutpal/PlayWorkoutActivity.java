@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -67,6 +69,15 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
     @BindView(R.id.iv_exercise)
     ImageView mExerciseImage;
 
+    @BindView(R.id.play_workout_loading_layout)
+    LinearLayout mLoadingLayout;
+
+    @BindView(R.id.progress_bar_play_workout)
+    ProgressBar mProgressBar;
+
+    @BindView(R.id.play_workout_sets_scrollview)
+    NestedScrollView mSetsLayout;
+
     private static final int ID_EXERCISE_LOADER = 100;
     private static final String KEY_EXERCISE_IDS = "exerciseIds";
 
@@ -76,6 +87,7 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_workout);
         ButterKnife.bind(this);
+        showLoadingLayout();
         mUser = FirebaseDatabaseHelper.getUser();
 
         Intent intent = getIntent();
@@ -112,6 +124,16 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
             updateWithTabSelection(selectedPosition);
         }
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    private void showLoadingLayout(){
+        mLoadingLayout.setVisibility(View.VISIBLE);
+        mSetsLayout.setVisibility(View.INVISIBLE);
+    }
+
+    private void hideLoadingLayout(){
+        mLoadingLayout.setVisibility(View.INVISIBLE);
+        mSetsLayout.setVisibility(View.VISIBLE);
     }
 
     private void setUpTabView(){
@@ -388,7 +410,7 @@ public class PlayWorkoutActivity extends AppCompatActivity implements PlayWorkou
         setUpToolbar();
         setUpTabView();
         setUpTabData(exercises);
-//        todo stop showing loading
+        hideLoadingLayout();
     }
 
     @Override
