@@ -33,5 +33,7 @@
     <string name="appwidget_text">Your last workout</string>
     <string name="add_widget">Add widget</string>
     <string name="widget_message">What are you waiting for?</string>
+    <string name="go_online_to_login">A data connection is required to sign in</string>
+    <string name="retry">RETRY</string>
 
 </resources>

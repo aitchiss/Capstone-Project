@@ -2,9 +2,13 @@ package com.suzanneaitchison.workoutpal;
 
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -19,12 +23,17 @@ import com.suzanneaitchison.workoutpal.utils.ExerciseSyncUtils;
 
 import java.util.Arrays;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AuthActivity extends AppCompatActivity {
 
     private static final String TAG = "AuthActivity";
     private static final int RC_SIGN_IN = 123;
+
+    @Nullable
+    @BindView(R.id.layout_splash)
+    ConstraintLayout mSplashLayout;
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -77,7 +86,21 @@ public class AuthActivity extends AppCompatActivity {
                     return;
                 }
                 if(response.getError().getErrorCode() == ErrorCodes.NO_NETWORK){
-//                    TODO show a snackbar saying no internet connection
+                    Snackbar snackbar = Snackbar.make(mSplashLayout,
+                            getResources().getString(R.string.go_online_to_login),
+                            Snackbar.LENGTH_INDEFINITE)
+                            .setAction(getResources().getString(R.string.retry), new View.OnClickListener(){
+                                @Override
+                                public void onClick(View v) {
+                                    startActivityForResult(
+                                            AuthUI.getInstance().createSignInIntentBuilder()
+                                                    .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build()))
+                                                    .build(),
+                                            RC_SIGN_IN);
+                                }
+                            });
+
+                    snackbar.show();
                     return;
                 }
 //                TODO show a snackbar saying there's been an unknown error
