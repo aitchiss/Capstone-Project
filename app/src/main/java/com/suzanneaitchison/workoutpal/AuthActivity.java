@@ -1,6 +1,7 @@
 package com.suzanneaitchison.workoutpal;
 
 
+import android.app.Application;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -45,9 +46,6 @@ public class AuthActivity extends AppCompatActivity {
 
 //        Starts a full sync of exercise data if DB is empty
         ExerciseSyncUtils.initialize(this);
-        if(!FirebaseApp.getApps(this).isEmpty()){
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        }
 
         if(mAuth.getCurrentUser() != null){
 //            user is already signed in - no need to re-authenticate
@@ -56,14 +54,18 @@ public class AuthActivity extends AppCompatActivity {
             FirebaseDatabaseHelper.listenForUser(this, intent);
 
         } else {
-            startActivityForResult(
-                    // Get an instance of AuthUI based on the default app
-                    AuthUI.getInstance().createSignInIntentBuilder()
-                            .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build()))
-                            .build(),
-                    RC_SIGN_IN);
+            startSignIn();
         }
 
+    }
+
+    private void startSignIn(){
+        startActivityForResult(
+                // Get an instance of AuthUI based on the default app
+                AuthUI.getInstance().createSignInIntentBuilder()
+                        .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build()))
+                        .build(),
+                RC_SIGN_IN);
     }
 
 
@@ -82,7 +84,6 @@ public class AuthActivity extends AppCompatActivity {
 
             } else {
                 if(response == null){
-//                    TODO handle user cancelled/tapped back
                     return;
                 }
                 if(response.getError().getErrorCode() == ErrorCodes.NO_NETWORK){
@@ -92,19 +93,24 @@ public class AuthActivity extends AppCompatActivity {
                             .setAction(getResources().getString(R.string.retry), new View.OnClickListener(){
                                 @Override
                                 public void onClick(View v) {
-                                    startActivityForResult(
-                                            AuthUI.getInstance().createSignInIntentBuilder()
-                                                    .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build()))
-                                                    .build(),
-                                            RC_SIGN_IN);
+                                    startSignIn();
                                 }
                             });
 
                     snackbar.show();
                     return;
+                } else {
+                    Snackbar snackbar = Snackbar.make(mSplashLayout,
+                            getResources().getString(R.string.unknown_error),
+                            Snackbar.LENGTH_INDEFINITE)
+                            .setAction(getResources().getString(R.string.retry), new View.OnClickListener(){
+                                @Override
+                                public void onClick(View v) {
+                                    startSignIn();
+                                }
+                            });
+                    snackbar.show();
                 }
-//                TODO show a snackbar saying there's been an unknown error
-                Log.e(TAG, "Sign in error: ", response.getError());
             }
         }
     }
