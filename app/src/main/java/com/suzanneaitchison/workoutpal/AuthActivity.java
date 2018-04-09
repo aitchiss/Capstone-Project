@@ -9,9 +9,11 @@ import android.util.Log;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUserMetadata;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.suzanneaitchison.workoutpal.data.FirebaseDatabaseHelper;
 import com.suzanneaitchison.workoutpal.utils.ExerciseSyncUtils;
 
@@ -24,7 +26,6 @@ public class AuthActivity extends AppCompatActivity {
     private static final String TAG = "AuthActivity";
     private static final int RC_SIGN_IN = 123;
 
-
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
@@ -35,6 +36,9 @@ public class AuthActivity extends AppCompatActivity {
 
 //        Starts a full sync of exercise data if DB is empty
         ExerciseSyncUtils.initialize(this);
+        if(!FirebaseApp.getApps(this).isEmpty()){
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
 
         if(mAuth.getCurrentUser() != null){
 //            user is already signed in - no need to re-authenticate
