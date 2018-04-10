@@ -4,6 +4,8 @@ package com.suzanneaitchison.workoutpal;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -27,8 +29,8 @@ import butterknife.ButterKnife;
 public class WorkoutListFragment extends Fragment implements WorkoutListRecyclerAdapter.WorkoutClickHandler {
 
     private User mCurrentUser;
-
     private WorkoutListRecyclerAdapter mAdapter;
+    private static final String KEY_LIST_POSITION = "listPosition";
 
     @BindView(R.id.fab_add_workout)
     FloatingActionButton mFab;
@@ -81,6 +83,19 @@ public class WorkoutListFragment extends Fragment implements WorkoutListRecycler
     }
 
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt(KEY_LIST_POSITION, mWorkoutRecyclerView.getVerticalScrollbarPosition());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if(savedInstanceState != null && savedInstanceState.containsKey(KEY_LIST_POSITION)){
+            mWorkoutRecyclerView.setVerticalScrollbarPosition(savedInstanceState.getInt(KEY_LIST_POSITION));
+        }
+    }
 
     @Override
     public void onAttach(Context context) {
