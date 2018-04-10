@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'WPKey'
-            keyPassword 'stirling24601'
-            storeFile file('/Users/suzanne/Documents/udacity/KeyStore')
-            storePassword 'stirling24601'
+            keyAlias 'udacityCapstone'
+            keyPassword 'udacity24601'
+            storeFile file('/Users/suzanne/Documents/udacity/capstone/Keystore')
+            storePassword 'suzanne24601'
         }
     }
     compileSdkVersion 26
