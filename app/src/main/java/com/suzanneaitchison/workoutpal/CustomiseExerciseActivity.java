@@ -43,6 +43,8 @@ public class CustomiseExerciseActivity extends AppCompatActivity {
 
     @BindView(R.id.tab_layout) TabLayout mTabLayout;
 
+    private static final String KEY_SELECTED_TAB = "selectedTab";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,5 +114,19 @@ public class CustomiseExerciseActivity extends AppCompatActivity {
             getParent().setResult(Activity.RESULT_OK, data);
         }
         finish();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(KEY_SELECTED_TAB, mTabLayout.getSelectedTabPosition());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if(savedInstanceState != null && savedInstanceState.containsKey(KEY_SELECTED_TAB)){
+            mTabLayout.getTabAt(savedInstanceState.getInt(KEY_SELECTED_TAB)).select();
+        }
     }
 }
