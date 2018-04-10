@@ -43,6 +43,7 @@ import butterknife.ButterKnife;
 public class HistoryFragment extends Fragment {
 
     private User mUser;
+    private static final String KEY_LIST_POSITION = "listPosition";
 
     private PersonalBestsRecyclerAdapter mAdapter;
 
@@ -75,6 +76,20 @@ public class HistoryFragment extends Fragment {
         showPersonalBests();
 
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt(KEY_LIST_POSITION, mRecylerPersonalBests.getVerticalScrollbarPosition());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if(savedInstanceState != null && savedInstanceState.containsKey(KEY_LIST_POSITION)){
+            mRecylerPersonalBests.setVerticalScrollbarPosition(savedInstanceState.getInt(KEY_LIST_POSITION));
+        }
     }
 
     @Override
