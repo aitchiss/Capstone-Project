@@ -35,6 +35,7 @@
 
             <ImageView
                 android:id="@+id/iv_exercise"
+                android:contentDescription="@string/exercise_img_content_desc"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/exercise_image_height"/>
 

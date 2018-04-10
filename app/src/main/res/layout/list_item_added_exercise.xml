@@ -12,6 +12,7 @@
 
     <ImageView
         android:id="@+id/iv_entry_image"
+        android:contentDescription="@string/workout_entry_content_desc"
         android:padding="10dp"
         android:layout_width="75dp"
         android:layout_height="match_parent" />

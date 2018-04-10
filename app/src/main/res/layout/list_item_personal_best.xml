@@ -10,6 +10,7 @@
     android:layout_height="100dp">
 
     <ImageView
+        android:contentDescription="@string/star_content_desc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

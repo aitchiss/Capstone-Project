@@ -36,5 +36,11 @@
     <string name="go_online_to_login">A data connection is required to sign in</string>
     <string name="retry">RETRY</string>
     <string name="unknown_error">An unknown error occurred</string>
+    <string name="exercise_img_content_desc">exercise image</string>
+    <string name="workout_entry_content_desc">image representing a single workout entry</string>
+    <string name="star_content_desc">image of a star</string>
+    <string name="thumbs_up_content_desc">thumbs up icon</string>
+    <string name="workout_name_hint">name of workout</string>
+    <string name="delete">delete</string>
 
 </resources>

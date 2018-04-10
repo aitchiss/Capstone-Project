@@ -26,6 +26,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="@string/sets_label"
+                android:labelFor="@id/et_sets_reps_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
@@ -41,6 +42,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="@string/reps_label"
+                android:labelFor="@id/et_reps_reps_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
@@ -56,6 +58,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="@string/weight_label"
+                android:labelFor="@id/et_weight_reps_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
@@ -75,6 +78,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="@string/rest_time_label"
+                android:labelFor="@id/spinner_rest_reps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -109,6 +113,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="@string/sets_label"
+                android:labelFor="@id/et_sets_timed_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
@@ -124,6 +129,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="@string/duration_label"
+                android:labelFor="@id/et_duration_timed_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
@@ -139,6 +145,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="@string/weight_label"
+                android:labelFor="@id/et_weight_timed_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
@@ -158,6 +165,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="@string/rest_time_label"
+                android:labelFor="@id/spinner_rest_timed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

@@ -11,7 +11,7 @@
 
     <FrameLayout
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginTop="?android:attr/actionBarSize"
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -30,6 +30,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <EditText
+                android:hint="@string/workout_name_hint"
                 android:id="@+id/et_workout_name"
                 android:layout_width="@dimen/workout_name_edit_text_width"
                 android:layout_height="wrap_content"
@@ -56,6 +57,7 @@
             android:layout_marginEnd="@dimen/fab_button_margin"
             android:layout_marginTop="@dimen/fab_margin_top_height"
             android:clickable="true"
+            android:focusable="true"
             android:elevation="@dimen/standard_fab_elevation"
             app:fabSize="normal"
             app:srcCompat="@drawable/ic_play_arrow" />

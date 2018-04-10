@@ -8,7 +8,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         >
 
         <include
@@ -19,6 +19,7 @@
 
         <ImageView
             android:id="@+id/iv_exercise_image"
+            android:contentDescription="@string/exercise_img_content_desc"
             android:scaleType="centerInside"
             android:background="#FFFFFF"
             android:layout_width="match_parent"

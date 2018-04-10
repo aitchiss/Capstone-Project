@@ -9,7 +9,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_workout_list"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginTop="?android:attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
