@@ -2,6 +2,7 @@ package com.suzanneaitchison.workoutpal;
 
 
 
+import android.os.PersistableBundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -46,6 +48,12 @@ public class AddExerciseActivity extends AppCompatActivity implements LoaderMana
     public static final String EXTRA_REPS = "reps";
     public static final String EXTRA_DURATION = "duration";
     public static final String EXTRA_REST = "rest";
+
+    private static final String KEY_EXERCISES = "exercises";
+    private static final String KEY_CATEGORY_SPINNER = "categorySpinner";
+    private static final String KEY_EXERCISE_SPINNER = "exerciseSpinner";
+    private boolean mUserInitiatedCategorySelect;
+    private boolean mUserInitiatedExerciseSelect;
 
     private static final int ID_EXERCISE_LOADER = 100;
 
@@ -91,37 +99,37 @@ public class AddExerciseActivity extends AppCompatActivity implements LoaderMana
         ButterKnife.bind(this);
         mNoExercisesLayout.setVisibility(View.INVISIBLE);
 
-        showLoading();
         setUpToolbar();
         mUser = FirebaseDatabaseHelper.getUser();
 
         Intent intent = getIntent();
         if(intent != null && intent.hasExtra(WorkoutDetailActivity.WORKOUT_INDEX_EXTRA)){
             mWorkoutIndex = intent.getIntExtra(WorkoutDetailActivity.WORKOUT_INDEX_EXTRA, -1);
-
             User user = FirebaseDatabaseHelper.getUser();
             mWorkout = user.getWorkoutPlans().get(mWorkoutIndex);
         }
 
-        if(mExercises == null || mExercises.size() == 0){
+        if(savedInstanceState == null && (mExercises == null || mExercises.size() == 0)){
+            showLoading();
             getSupportLoaderManager().initLoader(ID_EXERCISE_LOADER, null, this);
         }
 
 
-
+        mExerciseSpinner.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mUserInitiatedExerciseSelect = true;
+                return false;
+            }
+        });
         mExerciseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Exercise exercise = getSelectedExercise();
-                mExerciseDescription.setText(Html.fromHtml(exercise.getDescription()));
-
-                if(exercise.getImageURL() == null || exercise.getImageURL().isEmpty()){
-                    mExerciseImage.setBackgroundColor(getResources().getColor(R.color.colorPlaceholder));
-                } else {
-                    mExerciseImage.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                if(mUserInitiatedExerciseSelect){
+                    Exercise exercise = getSelectedExercise();
+                    updateFromSpinnerSelection(exercise);
+                    mUserInitiatedExerciseSelect = false;
                 }
-                Picasso.get().load(exercise.getImageURL())
-                        .placeholder(R.drawable.no_img_placeholder).into(mExerciseImage);
             }
 
             @Override
@@ -129,6 +137,42 @@ public class AddExerciseActivity extends AppCompatActivity implements LoaderMana
 
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(KEY_EXERCISES, mExercises);
+        outState.putInt(KEY_CATEGORY_SPINNER, mExerciseCategorySpinner.getSelectedItemPosition());
+        outState.putInt(KEY_EXERCISE_SPINNER, mExerciseSpinner.getSelectedItemPosition());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if(savedInstanceState != null){
+            mExercises = savedInstanceState.getParcelableArrayList(KEY_EXERCISES);
+
+            populateCategorySpinner();
+            mExerciseCategorySpinner.setSelection(savedInstanceState.getInt(KEY_CATEGORY_SPINNER));
+
+            populateExercisesSpinner();
+            mExerciseSpinner.setSelection(savedInstanceState.getInt(KEY_EXERCISE_SPINNER));
+            Exercise exercise = getSelectedExercise();
+            updateFromSpinnerSelection(exercise);
+            hideLoading();
+        }
+    }
+
+    private void updateFromSpinnerSelection(Exercise exercise){
+        mExerciseDescription.setText(Html.fromHtml(exercise.getDescription()));
+        if(exercise.getImageURL() == null || exercise.getImageURL().isEmpty()){
+            mExerciseImage.setBackgroundColor(getResources().getColor(R.color.colorPlaceholder));
+        } else {
+            mExerciseImage.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+        }
+        Picasso.get().load(exercise.getImageURL())
+                .placeholder(R.drawable.no_img_placeholder).into(mExerciseImage);
     }
 
     private void setUpToolbar(){
@@ -171,10 +215,24 @@ public class AddExerciseActivity extends AppCompatActivity implements LoaderMana
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mExerciseCategorySpinner.setAdapter(adapter);
 
+        mExerciseCategorySpinner.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mUserInitiatedCategorySelect = true;
+                mUserInitiatedExerciseSelect = true;
+                return false;
+            }
+        });
+
         mExerciseCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                populateExercisesSpinner();
+                if(mUserInitiatedCategorySelect){
+//                    Only do this if not restoring from saved instance state
+                    populateExercisesSpinner();
+                    mUserInitiatedCategorySelect = false;
+                    mUserInitiatedExerciseSelect = false;
+                }
             }
 
             @Override

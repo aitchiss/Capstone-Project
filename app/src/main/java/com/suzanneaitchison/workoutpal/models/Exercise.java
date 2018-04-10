@@ -1,10 +1,13 @@
 package com.suzanneaitchison.workoutpal.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by suzanne on 03/03/2018.
  */
 
-public class Exercise {
+public class Exercise implements Parcelable {
 
     private int id;
     private String name;
@@ -51,4 +54,42 @@ public class Exercise {
     public void setExerciseCategory(String exerciseCategory) {
         this.exerciseCategory = exerciseCategory;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.description);
+        dest.writeString(this.imageURL);
+        dest.writeString(this.exerciseCategory);
+    }
+
+    public Exercise(Parcel parcel){
+        this.id = parcel.readInt();
+        this.name = parcel.readString();
+        this.description = parcel.readString();
+        this.imageURL = parcel.readString();
+        this.exerciseCategory = parcel.readString();
+    }
+
+    public Exercise(){
+
+    }
+
+    public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {
+        @Override
+        public Exercise createFromParcel(Parcel source) {
+            return new Exercise(source);
+        }
+
+        @Override
+        public Exercise[] newArray(int size) {
+            return new Exercise[size];
+        }
+    };
 }
