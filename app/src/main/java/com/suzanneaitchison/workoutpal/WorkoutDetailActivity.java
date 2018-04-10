@@ -34,6 +34,7 @@ public class WorkoutDetailActivity extends AppCompatActivity {
     private User mUser;
     private Workout mWorkout;
     private int mWorkoutIndex;
+    private static final String KEY_LIST_POSITION = "listPosition";
 
     private WorkoutDetailRecyclerAdapter mDetailAdapter;
 
@@ -114,8 +115,19 @@ public class WorkoutDetailActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(KEY_LIST_POSITION, mExercisesRecyclerView.getVerticalScrollbarPosition());
+        super.onSaveInstanceState(outState);
+    }
 
-
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if(savedInstanceState != null && savedInstanceState.containsKey(KEY_LIST_POSITION)){
+            mExercisesRecyclerView.setVerticalScrollbarPosition(savedInstanceState.getInt(KEY_LIST_POSITION));
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
