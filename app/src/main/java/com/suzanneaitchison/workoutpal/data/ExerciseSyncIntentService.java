@@ -1,7 +1,10 @@
 package com.suzanneaitchison.workoutpal.data;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
 
 /**
@@ -16,6 +19,12 @@ public class ExerciseSyncIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        ExerciseSyncTask.syncExercises(this);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if(networkInfo.isConnectedOrConnecting()){
+            ExerciseSyncTask.syncExercises(this);
+        }
     }
 }
