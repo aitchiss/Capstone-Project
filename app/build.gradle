@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'udacityCapstone'
             keyPassword 'udacity24601'
-            storeFile file('/Users/suzanne/Documents/udacity/capstone/Keystore')
+            storeFile file('$rootDir/../../Keystore')
             storePassword 'suzanne24601'
         }
     }
