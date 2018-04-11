@@ -42,5 +42,7 @@
     <string name="thumbs_up_content_desc">thumbs up icon</string>
     <string name="workout_name_hint">name of workout</string>
     <string name="delete">delete</string>
+    <string name="fab_play_workout_content_desc">Start this workout</string>
+    <string name="fab_add_workout_content_desc">Create a new workout button</string>
 
 </resources>

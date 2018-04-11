@@ -17,6 +17,7 @@
 
     <android.support.design.widget.FloatingActionButton
         app:fabSize="normal"
+        android:contentDescription="@string/fab_add_workout_content_desc"
         android:transitionName="transition_fab"
         android:id="@+id/fab_add_workout"
         android:src="@drawable/ic_add_white"
