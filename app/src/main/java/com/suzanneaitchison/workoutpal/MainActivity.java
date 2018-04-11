@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setNavDrawerTitle(String userEmail){
-        mNavHeaderText.setText("You're signed in as " + userEmail);
+        mNavHeaderText.setText(getResources().getString(R.string.signed_in_as_string, userEmail));
     }
 
     private void setUpDrawerMenuListeners(){

@@ -31,8 +31,7 @@
         android:layout_marginTop="@dimen/standard_mobile_side_margin"
         android:layout_marginStart="@dimen/standard_mobile_side_margin"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iv_achievement_image"
-        tools:text="name of exercise" />
+        app:layout_constraintStart_toEndOf="@+id/iv_achievement_image" />
 
     <TextView
         android:id="@+id/tv_achievement_date"
@@ -42,8 +41,7 @@
         android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_achievement_exercise_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_achievement_exercise_name"
-        tools:text="13 Sep 2017" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_achievement_exercise_name" />
 
     <TextView
         android:id="@+id/tv_achievement_details"

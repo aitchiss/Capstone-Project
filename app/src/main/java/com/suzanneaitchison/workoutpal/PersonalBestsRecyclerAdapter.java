@@ -23,9 +23,11 @@ import butterknife.ButterKnife;
 public class PersonalBestsRecyclerAdapter extends RecyclerView.Adapter<PersonalBestsRecyclerAdapter.PersonalBestViewHolder> {
 
     ArrayList<Achievement> mAchievements;
+    Context mContext;
 
-    public PersonalBestsRecyclerAdapter(ArrayList<Achievement> achievements){
+    public PersonalBestsRecyclerAdapter(ArrayList<Achievement> achievements, Context context){
         mAchievements = achievements;
+        mContext = context;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class PersonalBestsRecyclerAdapter extends RecyclerView.Adapter<PersonalB
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy");
         String date = dateFormat.format(achievement.getAchievementDate());
         holder.date.setText(date);
-        holder.achievementDetail.setText(String.valueOf(achievement.getWeight()) + "kg");
+        holder.achievementDetail.setText(mContext.getString(R.string.add_kg_string, String.valueOf(achievement.getWeight())));
     }
 
     @Override

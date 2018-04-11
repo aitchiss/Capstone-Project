@@ -26,11 +26,9 @@
 
         <TextView
             android:id="@+id/tv_exercise_name"
-            tools:text="Exercise name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
-            tools:text="Exercise detail"
             android:id="@+id/tv_exercise_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

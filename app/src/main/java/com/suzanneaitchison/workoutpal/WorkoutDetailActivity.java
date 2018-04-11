@@ -65,7 +65,7 @@ public class WorkoutDetailActivity extends AppCompatActivity {
         } else {
 //            this is a new workout
             mWorkout = new Workout();
-            mWorkout.setWorkoutName("New workout");
+            mWorkout.setWorkoutName(getResources().getString(R.string.new_workout_name));
             mWorkoutIndex = mUser.addNewWorkoutPlan(mWorkout);
             mWorkoutName.setText(mWorkout.getWorkoutName());
             getSupportActionBar().setTitle(mWorkout.getWorkoutName());

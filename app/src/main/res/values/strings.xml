@@ -44,5 +44,11 @@
     <string name="delete">delete</string>
     <string name="fab_play_workout_content_desc">Start this workout</string>
     <string name="fab_add_workout_content_desc">Create a new workout button</string>
+    <string name="new_workout_name">New workout</string>
+    <string name="add_secs_string">%1$s secs</string>
+    <string name="add_kg_string">%1$skg</string>
+    <string name="add_period_string">%1$s.</string>
+    <string name="signed_in_as_string">You\'re signed in as %1$s</string>
+    <string name="snackbar_exercise_added">Exercise added</string>
 
 </resources>

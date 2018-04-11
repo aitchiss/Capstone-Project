@@ -61,8 +61,8 @@ public class PlayWorkoutSetsAdapter extends RecyclerView.Adapter<PlayWorkoutSets
             holder.repsLayout.setVisibility(View.GONE);
             holder.timedLayout.setVisibility(View.VISIBLE);
 
-            holder.timedSetNo.setText(String.valueOf(position + 1) +".");
-            holder.timedDuration.setText(String.valueOf(exercise.getDuration()) + " secs");
+            holder.timedSetNo.setText(mContext.getResources().getString(R.string.add_period_string, String.valueOf(position + 1)));
+            holder.timedDuration.setText(mContext.getResources().getString(R.string.add_secs_string, String.valueOf(exercise.getDuration())));
 
             if(exercise.getWeight() > 0){
                 holder.timedWeight.setText(String.valueOf(exercise.getWeight()));
@@ -83,7 +83,7 @@ public class PlayWorkoutSetsAdapter extends RecyclerView.Adapter<PlayWorkoutSets
             holder.timedLayout.setVisibility(View.GONE);
             holder.repsLayout.setVisibility(View.VISIBLE);
 
-            holder.repsSetNo.setText(String.valueOf(position + 1) + ".");
+            holder.repsSetNo.setText(mContext.getResources().getString(R.string.add_period_string, String.valueOf(position + 1)));
             holder.noOfReps.setText(String.valueOf(exercise.getReps()));
             holder.repsWeight.setText(String.valueOf(exercise.getWeight()));
 

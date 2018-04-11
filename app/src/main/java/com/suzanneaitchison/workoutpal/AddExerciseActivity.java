@@ -342,7 +342,7 @@ public class AddExerciseActivity extends AppCompatActivity implements LoaderMana
                 updatedWorkouts.set(mWorkoutIndex, mWorkout);
                 FirebaseDatabaseHelper.saveUsersPlannedWorkouts(updatedWorkouts);
 
-                Snackbar snackbar = Snackbar.make(mScrollView, "Exercise added", Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(mScrollView, getResources().getString(R.string.snackbar_exercise_added), Snackbar.LENGTH_LONG);
                 snackbar.show();
             }
         }

@@ -62,7 +62,6 @@
             android:layout_marginEnd="@dimen/standard_mobile_side_margin"
             android:layout_marginStart="@dimen/standard_mobile_side_margin"
             android:layout_marginTop="32dp"
-            tools:text="description of the exercise"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/btn_confirm_add_exercise"
             app:layout_constraintStart_toStartOf="parent"
